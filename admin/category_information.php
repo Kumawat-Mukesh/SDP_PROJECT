@@ -52,53 +52,55 @@ if (!isset($_SESSION["admin_id"])) {
                 <li class="breadcrumb-item active"><a href="category_information.php">Category Information</a></li>
             </ul>
         </div>
+
+
         <div class="row">
             <div class="col-md-12">
                 <div class="tile">
-                    <h3 class="tile-title">Categry Information</h3>
-                    <table class="table table-hover">
-                        <thead>
-                            <tr>
-                                <!-- <th>ID</th> -->
-                                <th>Name</th>
-                                <th>Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php
-                            include 'admin_db.php';
+                    <div class="tile-body">
+                        <div class="table-responsive">
+                            <table class="table table-hover table-bordered" id="sampleTable">
+                                <thead>
+                                    <tr>
+                                        <!-- <th>ID</th> -->
+                                        <th>Name</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php
+                                    include 'admin_db.php';
 
-                            if (isset($_GET['delete_id'])) {
-                                $delete_id = $_GET['delete_id'];
-                                $delete_query = "delete from tbl_category where category_id = $delete_id";
-                                $data = mysqli_query($connection, $delete_query);
-                                if ($data) {
-                                    echo "<script>alert('Record deleted from the database');window.location='category_information.php'</script>";
-                                } else {
-                                    echo "<script>alert('Record not deleted from the database');window.location='category_information.php'</script>";
-                                }
-                            }
+                                    if (isset($_GET['delete_id'])) {
+                                        $delete_id = $_GET['delete_id'];
+                                        $delete_query = "delete from tbl_category where category_id = $delete_id";
+                                        $data = mysqli_query($connection, $delete_query);
+                                        if ($data) {
+                                            echo "<script>alert('Record deleted from the database');window.location='category_information.php'</script>";
+                                        } else {
+                                            echo "<script>alert('Record not deleted from the database');window.location='category_information.php'</script>";
+                                        }
+                                    }
 
-                            $select = mysqli_query($connection, "select*from tbl_category");
-                            while ($category_row = mysqli_fetch_array($select)) {
-                                echo "<tr>";
-                                // echo "<td>{$category_row['category_id']}</td>";
-                                echo "<td>{$category_row['category_name']}</td>";
-                                echo "<td>
+                                    $select = mysqli_query($connection, "select*from tbl_category");
+                                    while ($category_row = mysqli_fetch_array($select)) {
+                                        echo "<tr>";
+                                        // echo "<td>{$category_row['category_id']}</td>";
+                                        echo "<td>{$category_row['category_name']}</td>";
+                                        echo "<td>
                                     <a href='category_information.php?delete_id={$category_row['category_id']}' 
                                     onclick='return confirmDelete()'>
                                     <i class='bi bi-trash'></i></a> | <a href='category_update.php?update_id={$category_row['category_id']}'><i class='bi bi-pencil-square'></i></a>   
                                     </td>";
-                                echo "</tr>";
-                            }
-                            ?>
-                        </tbody>
-                    </table>
+                                        echo "</tr>";
+                                    }
+                                    ?>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
                 </div>
             </div>
-
-
-
         </div>
     </main>
     <!-- Essential javascripts for application to work-->
@@ -106,6 +108,12 @@ if (!isset($_SESSION["admin_id"])) {
     <script src="js/bootstrap.min.js"></script>
     <script src="js/main.js"></script>
     <!-- Page specific javascripts-->
+     <!-- Data table plugin-->
+  <script type="text/javascript" src="js/plugins/jquery.dataTables.min.js"></script>
+  <script type="text/javascript" src="js/plugins/dataTables.bootstrap.min.js"></script>
+  <script type="text/javascript">
+    $('#sampleTable').DataTable();
+  </script>
     <!-- Google analytics script-->
     <script type="text/javascript">
         if (document.location.hostname == 'pratikborsadiya.in') {

@@ -69,7 +69,7 @@ if ($_POST) {
           <form class="row" method="post" id="category_form_js">
             <div class="mb-3 col-md-3">
               <label class="form-label">Name</label>
-              <input class="form-control" type="text" placeholder="Enter category" name="category_name" required>
+              <input class="form-control" type="text" onkeyup="Validatestring(this)" placeholder="Enter category" name="category_name" required>
             </div>
             <div class="mb-3 col-md-4 align-self-end">
               <button class="btn btn-primary" type="submit" name="add"><i class="bi bi-check-circle-fill me-2"></i>Add</button>
@@ -107,8 +107,28 @@ if ($_POST) {
   <script src="tools/jquery.validate.js"></script>
   <script>
     $(document).ready(function() {
-      $("#category_form_js").validate();
+      $("#category_form_js").validate({
+        rules: {
+
+          category_name: {
+            required: true,
+            minlength: 3
+          },
+        },
+        messages: {
+
+          category_name: {
+            required: "Please Enter Category",
+            minlength: "Your category name must consist of at least 3 characters"
+          },
+        }
+
+      });
     });
+
+    function Validatestring(no) {
+      no.value = no.value.replace(/[^ a-z A-Z\n\r]+/g, '');
+    }
   </script>
   <style>
     .error {

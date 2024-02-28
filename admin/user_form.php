@@ -1,7 +1,7 @@
 <?php
 require  'admin_db.php';
 session_start();
-if(!isset($_SESSION["admin_id"])){
+if (!isset($_SESSION["admin_id"])) {
   header("Location:admin_login.php");
 }
 if ($_POST) {
@@ -74,13 +74,13 @@ if ($_POST) {
         <div class="tile">
           <h3 class="tile-title">Add User</h3>
           <div class="tile-body">
-            <form class="row" method="post" id="user_from_js">
+            <form class="row" method="post" id="user_form_js">
               <div class="mb-3 col-md-3">
                 <label class="form-label">First Name</label>
-                <input class="form-control" type="text" name="user_first_name" placeholder="Enter your first name" required>
+                <input class="form-control" type="text" name="user_first_name" onkeyup="Validatestring(this)" placeholder="Enter your first name" required>
                 <br>
                 <label class="form-label">Last Name</label>
-                <input class="form-control" type="text" name="user_last_name" placeholder="Enter your last name" required>
+                <input class="form-control" type="text" name="user_last_name" onkeyup="Validatestring(this)" placeholder="Enter your last name" required>
                 <br>
                 <label class="form-label">Email</label>
                 <input class="form-control" type="email" name="user_email" placeholder="Enter your email" required>
@@ -89,6 +89,7 @@ if ($_POST) {
                 <input class="form-control" type="password" name="user_password" placeholder="Enter email password" required>
                 <br>
                 <label class="form-label">Gender</label>
+                <label id="user_gender-error" class="error" for="user_gender"></label>
                 <div class="form-check">
                   <label class="form-check-label">
                     <input class="form-check-input" type="radio" name="user_gender" value="Male">Male
@@ -104,13 +105,13 @@ if ($_POST) {
               </div>
               <div class="mb-3 col-md-3">
                 <label class="form-label">Mobile NO.</label>
-                <input class="form-control" type="tel" name="user_mobile_no" placeholder="Enter mobile number " required>
+                <input class="form-control" type="tel" name="user_mobile_no" maxlength="10" onkeyup="Validate(this)" placeholder="Enter mobile number " required>
                 <br>
                 <label class="form-label">Address</label>
                 <textarea name="user_address" class="form-control" placeholder="Enter your address" rows="5" cols="15" required></textarea>
                 <br>
                 <label class="form-label">Pincode</label>
-                <input class="form-control" type="number" minlength="6" maxlength="6" name="user_pincode" placeholder="Enter area pincode" required>
+                <input class="form-control" type="text" maxlength="6" name="user_pincode" onkeyup="Validate(this)" placeholder="Enter area pincode" required>
                 <br>
                 <label class="form-label">Area ID</label>
                 <?php
@@ -156,8 +157,82 @@ if ($_POST) {
   <script src="tools/jquery.validate.js"></script>
   <script>
     $(document).ready(function() {
-      $("#user_form_js").validate();
+      $("#user_form_js").validate({
+        rules: {
+          user_first_name: {
+            required: true,
+            minlength: 3
+          },
+          user_last_name: {
+            required: true,
+            minlength: 3
+          },
+          user_email: {
+            required: true,
+            email: true
+          },
+          user_password: {
+            required: true,
+            minlength: 6
+          },
+          user_gender: "required",
+          user_mobile_no: {
+            required: true,
+            minlength: 10,
+            maxlength: 10
+          },
+          user_address: "required",
+          user_pincode: {
+            required: true,
+            minlength: 6,
+            maxlength: 6
+          },
+          area_id: {
+            required: true
+          },
+        },
+        messages: {
+
+          user_first_name: {
+            required: "Please Enter Name",
+            minlength: "Your name must consist of at least 3 characters"
+          },
+          user_last_name: {
+            required: "Please Enter Surname",
+            minlength: "Your surname must consist of at least 3 characters"
+          },
+          user_email: {
+            required: "Please enter a valid email address",
+            email: "Email contains (@) and (.)",
+          },
+          user_password: {
+            required: "Please Enter Password",
+            minlength: "Your password must be at least 6 characters long"
+          },
+          user_mobile_no: {
+            required: "Please Enter Your Mobile no.",
+            minlength: "Enter Your 10 digit Mobile no. only",
+            maxlength: "Enter Your 10 digit Mobile no. only",
+          },
+          user_pincode: {
+            required: "Please Enter Your Mobile no.",
+            minlength: "Enter Your 6 digit pincode only",
+            maxlength: "Enter Your 6 digit pincode only",
+          },
+          area_id: {
+            required: "Select your area",
+          },
+        }
+      });
     });
+
+    function Validate(no) {
+      no.value = no.value.replace(/[^ 0-9\n\r]+/g, '');
+    }
+
+    function Validatestring(no) {
+      no.value = no.value.replace(/[^ a-z A-Z\n\r]+/g, '');
+    }
   </script>
   <style>
     .error {

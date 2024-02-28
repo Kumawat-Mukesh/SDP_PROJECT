@@ -1,7 +1,7 @@
 <?php
 include './admin_db.php';
 session_start();
-if(!isset($_SESSION["admin_id"])){
+if (!isset($_SESSION["admin_id"])) {
     header("Location:admin_login.php");
 }
 if ($_POST) {
@@ -82,7 +82,7 @@ if ($_POST) {
                                 <br>
                                 <br>
                                 <label class="form-label">Requirement Status</label>
-                                <input class="form-control" type="text" name="item_requirement_status" placeholder="Enter status" required>
+                                <input class="form-control" type="text" name="item_requirement_status" placeholder="Enter status" >
                                 <br>
                                 <button class="btn btn-primary" type="submit" name="add"><i class="bi bi-check-circle-fill me-2"></i>Add</button>
                             </div>
@@ -119,7 +119,20 @@ if ($_POST) {
     <script src="tools/jquery.validate.js"></script>
     <script>
         $(document).ready(function() {
-            $("#item_requirement_form_js").validate();
+            $("#item_requirement_form_js").validate({
+                rules: {
+                    ngo_id: {
+                        required: true
+                    },
+                    item_requirement_details: "required"
+                },
+                messages: {
+                    ngo_id: {
+                        required: "Please Select Ngo"
+                    }
+                }
+
+            });
         });
     </script>
     <style>

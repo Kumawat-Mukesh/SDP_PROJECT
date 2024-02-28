@@ -1,18 +1,22 @@
 <?php
 include './admin_db.php';
 session_start();
-if (!isset($_SESSION["admin_id"])) {
+if(!isset($_SESSION["admin_id"])){
     header("Location:admin_login.php");
 }
-if ($_POST) {
-    $ngo_id = $_POST['ngo_id'];
-    $user_id = $_POST['user_id'];
-    $feedback_details = $_POST['feedback_details'];
-    $feedback_rating = $_POST['feedback_rating'];
-    $query = mysqli_query($connection, "insert into tbl_feedback(ngo_id,user_id,feedback_details,feedback_rating) values('{$ngo_id}','{$user_id}','{$feedback_details}','{$feedback_rating}')");
+$edit_id = $_GET['edit_id'];
+$faq_select = mysqli_query($connection, "select*from tbl_faq where faq_id='{$edit_id}'");
+$faq_data = mysqli_fetch_array($faq_select);
+if($_POST)
+{
+    $user_id=$_POST["user_id"];
+    $faq_question=$_POST['faq_question'];
+    $faq_answer=$_POST['faq_answer'];
+    $query=mysqli_query($connection,"update tbl_faq set user_id='{$user_id}',faq_question='{$faq_question}',faq_answer='{$faq_answer}' where faq_id='{$edit_id}'");
+    if($query)
+    {
+        echo "<script>alert('FAQ updated to the database');window.location='faq_information.php'</script>";
 
-    if ($query) {
-        echo "<script>alert('Feedback added to the database');window.location='feedback_form.php'</script>";
     }
 }
 
@@ -33,7 +37,7 @@ if ($_POST) {
     <meta property="og:url" content="http://pratikborsadiya.in/blog/vali-admin">
     <meta property="og:image" content="http://pratikborsadiya.in/blog/vali-admin/hero-social.png">
     <meta property="og:description" content="Vali is a responsive and free admin theme built with Bootstrap 4, SASS and PUG.js. It's fully customizable and modular.">
-    <title>Feedback Form</title>
+    <title>FAQ Update Form</title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -52,34 +56,22 @@ if ($_POST) {
     <main class="app-content">
         <div class="app-title">
             <div>
-                <h1><i class="bi bi-ui-checks"></i> Feedback Form</h1>
+                <h1><i class="bi bi-ui-checks"></i>FAQ Form</h1>
             </div>
             <ul class="app-breadcrumb breadcrumb">
                 <li class="breadcrumb-item"><a href="dashboard.php"><i class="bi bi-house-door fs-6"></i></a></li>
-                <li class="breadcrumb-item">Feedback</li>
-                <li class="breadcrumb-item"><a href="feedback_form.php">Feedback-Form</a></li>
+                <li class="breadcrumb-item">FAQ</li>
+                <li class="breadcrumb-item"><a href="faq_information.php">Update-FAQ</a></li>
             </ul>
         </div>
         <div class="row">
             <div class="clearix"></div>
             <div class="col-md-12">
                 <div class="tile">
-                    <h3 class="tile-title">Add Feedback</h3>
+                    <h3 class="tile-title">Update FAQ</h3>
                     <div class="tile-body">
-                        <form method="post" class="row" id="feedback_form_js">
+                        <form method="post" class="row" id="faq_form_js">
                             <div class="mb-3 col-md-3">
-                                <label class="form-label">NGO ID</label>
-                                <!-- <input class="form-control" type="text" name="ngo_id" placeholder="Enter NGO ID" required> -->
-                                <?php
-                                $ngo_query = mysqli_query($connection, "select*from tbl_ngo");
-                                echo "<select class='form-control' name='ngo_id'>";
-                                echo "<option value=''>Select NGO</option>";
-                                while ($ngo_row = mysqli_fetch_array($ngo_query)) {
-                                    echo "<option value='{$ngo_row['ngo_id']}'>{$ngo_row['ngo_name']}</option>";
-                                }
-                                echo "</select>";
-                                ?>
-                                <br>
                                 <label class="form-label">User ID</label>
                                 <!-- <input class="form-control" type="text" name="user_id" placeholder="Enter user ID" required> -->
                                 <?php
@@ -92,12 +84,11 @@ if ($_POST) {
                                 echo "</select>";
                                 ?>
                                 <br>
-                                <label class="form-label">Feedback Details</label>
-                                <textarea name="feedback_details" class="form-control" cols="3" rows="5" placeholder="Enter feedback details" required></textarea>
+                                <label class="form-label">Questions</label>
+                                <textarea name="faq_question" class="form-control" cols="3" rows="5" placeholder="Enter question" required><?php echo $faq_data['faq_question'];?></textarea>
                                 <br>
-                                <br>
-                                <label class="form-label">Feedback Rating</label>
-                                <input class="form-control" type="number" onkeyup="Validate(this)" min="1" max="5" name="feedback_rating" placeholder="Enter rating" required>
+                                <label class="form-label">Answer</label>
+                                <textarea name="faq_answer" class="form-control" cols="3" rows="5" placeholder="Enter answer" required><?php echo $faq_data['faq_answer'];?></textarea>
                                 <br>
                                 <button class="btn btn-primary" type="submit" name="add"><i class="bi bi-check-circle-fill me-2"></i>Add</button>
                             </div>
@@ -130,45 +121,18 @@ if ($_POST) {
             ga('send', 'pageview');
         }
     </script>
-    <script src="tools/jquery-3.7.1.min.js"></script>
+      <script src="tools/jquery-3.7.1.min.js"></script>
     <script src="tools/jquery.validate.js"></script>
     <script>
-        $(document).ready(function() {
-            $("#feedback_form_js").validate({
-                rules: {
-                    ngo_id: {
-                        required: true
-                    },
-                    user_id: {
-                        required: true
-                    },
-                    feedback_details: {
-                        required: true
-                    },
-                },
-                messages: {
-                    ngo_id: {
-                        required: "Please Select NGO"
-                    },
-                    user_id: {
-                        required: "Please Select User"
-                    },
-                    feedback_details: {
-                        required: "Please Enter Details",
-                    },
-                }
-            });
-        });
-
-        function Validate(no) {
-            no.value = no.value.replace(/[^ 0-9\n\r]+/g, '');
-        }
+    $(document).ready(function(){
+      $("#faq_form_js").validate();
+      });
     </script>
     <style>
-        .error {
-            color: red
-        }
-    </style>
+      .error{
+        color:red
+      }
+      </style>
 </body>
 
 </html>

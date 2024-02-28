@@ -63,7 +63,14 @@ $ngo_data = mysqli_fetch_array($ngo_query);
         <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
         <script src="assets/js/html5shiv.js"></script>
     <![endif]-->
-
+    <style>
+        table,
+        th,
+        td {
+            border: 5px solid white;
+            border-collapse: collapse;
+        }
+    </style>
 </head>
 
 <body>
@@ -178,11 +185,20 @@ $ngo_data = mysqli_fetch_array($ngo_query);
                                 <div class="top-title">
                                     <h2><?php echo $child_data['child_name']; ?></h2>
 
-                                    <p>
-                                        <b>Gender : </b><?php echo $child_data['child_gender']; ?></br>
-                                        <b>Age : </b><?php echo $child_data['child_age']; ?></br>
-                                        <b>NGO : </b><?php echo $ngo_data['ngo_name']; ?>
-                                    </p>
+                                    <table>
+                                        <tr>
+                                            <td style="width: 6em;"><b>Gender :</b></td>
+                                            <td><?php echo $child_data['child_gender']; ?></td>
+                                        </tr>
+                                        <tr>
+                                            <td><b>Age : </b></td>
+                                            <td><?php echo $child_data['child_age']; ?></td>
+                                        </tr>
+                                        <tr>
+                                            <td><b>NGO : </b></td>
+                                            <td><?php echo $ngo_data['ngo_name']; ?></td>
+                                        </tr>
+                                    </table>
                                 </div>
                             </div>
 

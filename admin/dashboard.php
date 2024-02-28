@@ -33,6 +33,8 @@ if (!isset($_SESSION["admin_id"])) {
   <link rel="stylesheet" href="/assets/font/bootstrap-icons.min.css">
   <link rel="stylesheet" href="/assets/css/docs.css">
   <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+  <link rel="stylesheet" href="https://cdn..net/v/bs5/dt-1.13.4/datatables.min.css">
+
 
 </head>
 
@@ -51,7 +53,7 @@ if (!isset($_SESSION["admin_id"])) {
       <div>
         <h1><i class="bi bi-speedometer"></i> Dashboard</h1>
       </div>
-      <ul class="app-breadcrumb breadcrumb">
+      <ul class="app-breadcrumb breadcrumb  ">
         <li class="breadcrumb-item"><i class="bi bi-house-door fs-6"></i></li>
         <li class="breadcrumb-item"><a href="dashboard.php">Dashboard</a></li>
       </ul>
@@ -128,86 +130,89 @@ if (!isset($_SESSION["admin_id"])) {
           </div>
         </div>
       </div>
-      <div class="col-md-6" style="height: 500px;">
+    </div>
+
+    <div class="row">
+      <div class="col-md-12">
         <div class="tile">
-          <h3 class="tile-title"><a href="ngo_information.php" style="text-decoration:none">NGO</a></h3>
-          <table class="table table-hover">
-            <thead>
-              <tr>
-                <!-- <th>ID</th> -->
-                <th>NGO Name</th>
-                <th>E-mail</th>
-                <th>Contact No</th>
-                <th>Category Name</th>
-              </tr>
-            </thead>
-            <tbody>
-              <?php
-              include 'admin_db.php';
-              $select = mysqli_query($connection, "select*from tbl_ngo");
-              while ($ngo_row = mysqli_fetch_array($select)) {
-                $area_query = mysqli_query($connection, "select*from tbl_area where area_id='{$ngo_row['area_id']}'");
-                $area_row = mysqli_fetch_array($area_query);
+          <div class="tile-body">
+            <div class="table-responsive">
+              <table class="table table-hover table-bordered" id="sampleTable1">
+                <thead>
+                  <tr>
+                    <!-- <th>ID</th> -->
+                    <th>NGO Name</th>
+                    <th>E-mail</th>
+                    <th>Contact No</th>
+                    <th>Category Name</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <?php
+                  include 'admin_db.php';
+                  $select = mysqli_query($connection, "select*from tbl_ngo");
+                  while ($ngo_row = mysqli_fetch_array($select)) {
+                    $area_query = mysqli_query($connection, "select*from tbl_area where area_id='{$ngo_row['area_id']}'");
+                    $area_row = mysqli_fetch_array($area_query);
 
-                $category_query = mysqli_query($connection, "select*from tbl_category where category_id='{$ngo_row['category_id']}'");
-                $category_row = mysqli_fetch_array($category_query);
-                echo "<tr>";
-                // echo "<td>{$ngo_row['ngo_id']}</td>";
-                echo "<td>{$ngo_row['ngo_name']}</td>";
-
-                echo "<td>{$ngo_row['ngo_email']}</td>";
-
-                echo "<td>{$ngo_row['ngo_contact_no']}</td>";
-
-
-                echo "<td>{$category_row['category_name']}</td>";
-                echo "</tr>";
-              }
-              ?>
-            </tbody>
-          </table>
+                    $category_query = mysqli_query($connection, "select*from tbl_category where category_id='{$ngo_row['category_id']}'");
+                    $category_row = mysqli_fetch_array($category_query);
+                    echo "<tr>";
+                    echo "<td>{$ngo_row['ngo_name']}</td>";
+                    echo "<td>{$ngo_row['ngo_email']}</td>";
+                    echo "<td>{$ngo_row['ngo_contact_no']}</td>";
+                    echo "<td>{$category_row['category_name']}</td>";
+                    echo "</tr>";
+                  }
+                  ?>
+                </tbody>
+              </table>
+            </div>
+          </div>
         </div>
       </div>
     </div>
 
-    <div class="col-md-6">
-      <div class="tile">
-        <h3 class="tile-title"><a href="user_information.php" style="text-decoration:none">User</a></h3>
-        <table class="table table-hover">
-          <thead>
-            <tr>
-              <!-- <th>ID</th> -->
-              <th>First Name</th>
-              <th>Last Name</th>
-              <th>E-mail</th>
-              <th>Contact No</th>
-            </tr>
-          </thead>
-          <tbody>
-            <?php
-            include 'admin_db.php';
-            $select = mysqli_query($connection, "select*from tbl_user");
-            while ($user_row = mysqli_fetch_array($select)) {
-              $area_query = mysqli_query($connection, "select*from tbl_area where area_id='{$user_row['area_id']}'");
-              $area_row = mysqli_fetch_array($area_query);
+    <div class="row">
+      <div class="col-md-12">
+        <div class="tile">
+          <div class="tile-body">
+            <div class="table-responsive">
+              <table class="table table-hover table-bordered" id="sampleTable2">
+                <thead>
+                  <tr>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>E-mail</th>
+                    <th>Contact No</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <?php
+                  include 'admin_db.php';
+                  $select = mysqli_query($connection, "select*from tbl_user");
+                  while ($user_row = mysqli_fetch_array($select)) {
+                    $area_query = mysqli_query($connection, "select*from tbl_area where area_id='{$user_row['area_id']}'");
+                    $area_row = mysqli_fetch_array($area_query);
 
-              echo "<tr>";
-              // echo "<td>{$user_row['user_id']}</td>";
-              echo "<td>{$user_row['user_first_name']}</td>";
-              echo "<td>{$user_row['user_last_name']}</td>";
-              echo "<td>{$user_row['user_email']}</td>";
+                    echo "<tr>";
+                    // echo "<td>{$user_row['user_id']}</td>";
+                    echo "<td>{$user_row['user_first_name']}</td>";
+                    echo "<td>{$user_row['user_last_name']}</td>";
+                    echo "<td>{$user_row['user_email']}</td>";
 
-              echo "<td>{$user_row['user_mobile_no']}</td>";
+                    echo "<td>{$user_row['user_mobile_no']}</td>";
 
-
-              echo "</tr>";
-            }
-            ?>
-          </tbody>
-        </table>
+                    echo "</tr>";
+                  }
+                  ?>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
-
     </div>
 
   </main>
@@ -215,6 +220,14 @@ if (!isset($_SESSION["admin_id"])) {
   <script src="js/jquery-3.7.0.min.js"></script>
   <script src="js/bootstrap.min.js"></script>
   <script src="js/main.js"></script>
+  <!-- Data table plugin-->
+  <script type="text/javascript" src="js/plugins/jquery.dataTables.min.js"></script>
+  <script type="text/javascript" src="js/plugins/dataTables.bootstrap.min.js"></script>
+  <script type="text/javascript">
+    $('#sampleTable1').DataTable();
+    $('#sampleTable2').DataTable();
+  </script>
+
   <!-- Page specific javascripts-->
   <script type="text/javascript" src="js/plugins/chart.js"></script>
   <script type="text/javascript">

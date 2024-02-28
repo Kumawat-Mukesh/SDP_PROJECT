@@ -173,146 +173,94 @@ require './admin_db.php';
         <section class="event-page-one">
             <div class="container">
                 <div class="row">
-                <?php
+                    <?php
                     $event_query = mysqli_query($connection, "select * from tbl_event");
-                                        
+
 
                     while ($event_row = mysqli_fetch_array($event_query)) {
                         $ngo_query = mysqli_query($connection, "select*from tbl_ngo where ngo_id='{$event_row['ngo_id']}'");
                         $ngo_row = mysqli_fetch_array($ngo_query);
                     ?>
-                    <!--Start Single Event Style2-->
-                    <div class="col-xl-4 col-lg-6 col-md-6">
-                        <div class="single-event-style1 single-event-style2">
-                            <div class="single-event-style2_bg"
-                                style="background-image: url('/project/admin/events/<?php echo $event_row['event_photo']; ?>'">
-                            </div>
-                            <div class="static-content">
-                                <div class="date-box">
-                                    <div class="left">
-                                       
-                                        
+                        <!--Start Single Event Style2-->
+                        <div class="col-xl-4 col-lg-6 col-md-6">
+                            <div class="single-event-style1 single-event-style2">
+                                <div class="single-event-style2_bg" style="background-image: url('/project/NGO/uploads/<?php echo $event_row['event_photo']; ?>'">
+                                </div>
+                                <div class="static-content">
+                                    <div class="date-box">
+                                        <div class="left">
+                                            <h2>
+                                                <?php
+                                                $d = $event_row['event_date'];
+                                                echo date('d', strtotime($d));
+                                                ?>
+                                            </h2>
+                                        </div>
+                                        <div class="right">
+                                            <h3>
+                                                <?php
+                                                echo date('M', strtotime($d));
+                                                ?>
+                                            </h3>
+                                        </div>
                                     </div>
-                                    <div class="right">
-                                        <h3>mar</h3>
+                                    <div class="meta-info">
+
+                                        <p>Organized By:<?php echo $ngo_row['ngo_name']; ?></p>
                                     </div>
-                                </div>
-                                <div class="meta-info">
-                                    
-                                    <p>Organized By:<?php echo $ngo_row['ngo_name'];?></p>
-                                </div>
-                                <div class="title">
-                                    <h2><a href=''><?php echo $event_row['event_title']; ?></a></h2>
-                                </div>
-                                <!-- <div class="inner-text">
+                                    <div class="title">
+                                        <h2><a href=''><?php echo $event_row['event_title']; ?></a></h2>
+                                    </div>
+                                    <!-- <div class="inner-text">
                                     <p>Nostrud tem exrcitation duis laboris nisi ut aliquip sed duis aute cupidata con
                                         proident sunt culpa.</p>
                                 </div> -->
-                                <div class="border-box"></div>
-                                <div class="event-time">
-                                    <div class="icon">
-                                        <span class="flaticon-clock"></span>
-                                    </div>
-                                    <div class="text">
-                                        <p>Time: <?php echo $event_row['event_time'];?></p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="overlay-content">
-                                <div class="date-box">
-                                    <div class="left">
-                                        <h2>25</h2>
-                                    </div>
-                                    <div class="right">
-                                        <h3>mar</h3>
+                                    <div class="border-box"></div>
+                                    <div class="event-time">
+                                        <div class="icon">
+                                            <span class="flaticon-clock"></span>
+                                        </div>
+                                        <div class="text">
+                                            <p>Time: <?php echo $event_row['event_time']; ?></p>
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="meta-info">
-                                    <p>Organized By: <?php echo $ngo_row['ngo_name'];?></p>
-                                </div>
-                                <div class="title">
-                                    <h2><a href="event_details.php?event_id=<?php echo $event_row['event_id']; ?>"><?php echo $event_row['event_title']; ?></a></a>
-                                    </h2>
-                                </div>
-                               
-                                <div class="btns-box">
-                                    <a class="btn-one" href="event_book_form.php">
-                                        <span class="txt"><i class="arrow1 fa fa-check-circle"></i>Book</span>
-                                    </a>
-                                </div>
-                            </div>
+                                <div class="overlay-content">
+                                    <div class="date-box">
+                                        <div class="left">
+                                            <h2>
+                                                <?php
+                                                $d = $event_row['event_date'];
+                                                echo date('d', strtotime($d));
+                                                ?>
+                                            </h2>
+                                        </div>
+                                        <div class="right">
+                                            <h3>
+                                                <?php
+                                                echo date('M', strtotime($d));
+                                                ?>
+                                            </h3>
+                                        </div>
+                                    </div>
+                                    <div class="meta-info">
+                                        <p>Organized By: <?php echo $ngo_row['ngo_name']; ?></p>
+                                    </div>
+                                    <div class="title">
+                                        <h2><a href="event_details.php?event_id=<?php echo $event_row['event_id']; ?>"><?php echo $event_row['event_title']; ?></a></a>
+                                        </h2>
+                                    </div>
 
+                                    <div class="btns-box">
+                                        <a class="btn-one" href="event_details.php?event_id=<?php echo $event_row['event_id']; ?>">
+                                            <span class="txt"><i class="arrow1 fa fa-check-circle"></i>View</span>
+                                        </a>
+                                    </div>
+                                </div>
+
+                            </div>
                         </div>
-                    </div>
                     <?php } ?>
-                    
-                    <!-- <div class="col-xl-4 col-lg-6 col-md-6">
-                        <div class="single-event-style1 single-event-style2">
-                            <div class="single-event-style2_bg"
-                                style="background-image: url(assets/images/resources/single-event-style2_bg.jpg);">
-                            </div>
-                            <div class="static-content">
-                                <div class="date-box">
-                                    <div class="left">
-                                        <h2>10</h2>
-                                    </div>
-                                    <div class="right">
-                                        <h3>may</h3>
-                                    </div>
-                                </div>
-                                <div class="meta-info">
-                                    <p>Organized By: <a href="#">LoveIcon</a></p>
-                                </div>
-                                <div class="title">
-                                    <h2><a href="#">Make The Environment<br> Clean & Purify</a></h2>
-                                </div>
-                                <div class="inner-text">
-                                    <p>Nostrud tem exrcitation duis laboris nisi ut aliquip sed duis aute cupidata con
-                                        proident sunt culpa.</p>
-                                </div>
-                                <div class="border-box"></div>
-                                <div class="event-time">
-                                    <div class="icon">
-                                        <span class="flaticon-clock"></span>
-                                    </div>
-                                    <div class="text">
-                                        <p>15:00 EST - Newyork, USA</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="overlay-content">
-                                <div class="date-box">
-                                    <div class="left">
-                                        <h2>10</h2>
-                                    </div>
-                                    <div class="right">
-                                        <h3>may</h3>
-                                    </div>
-                                </div>
-                                <div class="meta-info">
-                                    <p>Organized By: <a href="#">LoveIcon</a></p>
-                                </div>
-                                <div class="title">
-                                    <h2><a href="events-details.html">Make The Environment<br> Clean & Purify</a></h2>
-                                </div>
-                                <div class="inner-text">
-                                    <p>Nostrud tem exrcitation duis laboris nisi ut aliquip sed duis aute cupidata con
-                                        proident sunt culpa.</p>
-                                </div>
-                                <div class="btns-box">
-                                    <a class="btn-one" href="events-details.html">
-                                        <span class="txt"><i class="arrow1 fa fa-check-circle"></i>read more</span>
-                                    </a>
-                                </div>
-                            </div>
-
-                        </div>
-                    </div> -->
-                    <!--End Single Event Style2-->
-
-
-                   
-                    <!--End Single Event Style2-->
                 </div>
 
 

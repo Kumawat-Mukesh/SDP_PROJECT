@@ -1,6 +1,6 @@
 <?php
-require  'admin_db.php';
 session_start();
+require  'admin_db.php';
 if (!isset($_SESSION['admin_id'])) {
     header("location:admin_login.php");
 }
@@ -72,7 +72,7 @@ if ($_POST) {
                 <div class="tile">
                     <h3 class="tile-title">Add Child</h3>
                     <div class="tile-body">
-                        <form class="row" method="post" id="child_from_js" enctype="multipart/form-data">
+                        <form class="row" method="post" id="child_form_js" enctype="multipart/form-data">
                             <div class="mb-3 col-md-3">
                                 <label class="form-label">NGO ID</label>
                                 <?php
@@ -86,9 +86,11 @@ if ($_POST) {
                                 ?>
                                 <br>
                                 <label class="form-label">Name</label>
-                                <input class="form-control" type="text" name="child_name" placeholder="Enter child name " required>
+                                <input class="form-control" type="text" name="child_name" onkeyup="Validatestring(this)" placeholder="Enter child name " required>
                                 <br>
+
                                 <label class="form-label">Gender</label>
+                                <label id="child_gender-error" class="error" for="child_gender"></label>
                                 <div class="form-check">
                                     <label class="form-check-label">
                                         <input class="form-check-input" type="radio" name="child_gender" value="Male">Male
@@ -99,9 +101,12 @@ if ($_POST) {
                                         <input class="form-check-input" type="radio" name="child_gender" value="Female">Female
                                     </label>
                                 </div>
+
+
+
                                 <br>
                                 <label class="form-label">Age</label>
-                                <input class="form-control" type="text" min="1" max="25" name="child_age" placeholder="Enter child age" required>
+                                <input class="form-control" type="text" name="child_age" placeholder="Enter child age" onkeyup="Validate(this)" required>
                                 <br>
                                 <label class="form-label">Photo</label>
                                 <input class="form-control" type="file" name="child_photo" placeholder="Upload child photo" required>
@@ -141,8 +146,36 @@ if ($_POST) {
     <script src="tools/jquery.validate.js"></script>
     <script>
         $(document).ready(function() {
-            $("#child_form_js").validate();
+            $("#child_form_js").validate({
+                rules: {
+                    ngo_id: {
+                        required: true
+                    },
+                    child_name: {
+                        required: true,
+                        minlength: 2
+                    },
+                    child_gender: "required",
+                },
+                messages: {
+                    ngo_id: {
+                        required: "Select NGO"
+                    },
+                    child_name: {
+                        required: "Enter Child Name",
+                        minlength: "Your name must consist of at least 2 characters"
+                    }
+                }
+            });
         });
+
+        function Validate(no) {
+            no.value = no.value.replace(/[^ 0-9\n\r]+/g, '');
+        }
+
+        function Validatestring(no) {
+            no.value = no.value.replace(/[^ a-z A-Z\n\r]+/g, '');
+        }
     </script>
     <style>
         .error {

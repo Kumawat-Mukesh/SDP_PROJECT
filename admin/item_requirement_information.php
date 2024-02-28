@@ -52,69 +52,78 @@ if (!isset($_SESSION["admin_id"])) {
                 <li class="breadcrumb-item active"><a href="item_requirement_information.php">Item Requirement Information</a></li>
             </ul>
         </div>
+
+
         <div class="row">
             <div class="col-md-12">
                 <div class="tile">
-                    <h3 class="tile-title">Item Requirement Information</h3>
-                    <table class="table table-hover">
-                        <thead>
-                            <tr>
-                                <!-- <th>ID</th> -->
-                                <th>NGO Name</th>
-                                <th>Details</th>
-                                <th>Status</th>
-                                <th>Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php
-                            include 'admin_db.php';
+                    <div class="tile-body">
+                        <div class="table-responsive">
+                            <table class="table table-hover table-bordered" id="sampleTable">
+                                <thead>
+                                    <tr>
+                                        <!-- <th>ID</th> -->
+                                        <th>NGO Name</th>
+                                        <th>Details</th>
+                                        <th>Status</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php
+                                    include 'admin_db.php';
 
-                            if (isset($_GET['delete_id'])) {
-                                $delete_id = $_GET['delete_id'];
-                                $delete_query = "delete from tbl_item_requirement where item_requirement_id = $delete_id";
-                                $data = mysqli_query($connection, $delete_query);
-                                if ($data) {
-                                    echo "<script>alert('Record deleted from the database');window.location='item_requirement_information.php'</script>";
-                                } else {
-                                    echo "<script>alert('Record not deleted from the database');window.location='item_requirement_information.php'</script>";
-                                }
-                            }
+                                    if (isset($_GET['delete_id'])) {
+                                        $delete_id = $_GET['delete_id'];
+                                        $delete_query = "delete from tbl_item_requirement where item_requirement_id = $delete_id";
+                                        $data = mysqli_query($connection, $delete_query);
+                                        if ($data) {
+                                            echo "<script>alert('Record deleted from the database');window.location='item_requirement_information.php'</script>";
+                                        } else {
+                                            echo "<script>alert('Record not deleted from the database');window.location='item_requirement_information.php'</script>";
+                                        }
+                                    }
 
-                            $select = mysqli_query($connection, "select*from tbl_item_requirement");
-                            while ($item_requirement_row = mysqli_fetch_array($select)) {
+                                    $select = mysqli_query($connection, "select*from tbl_item_requirement");
+                                    while ($item_requirement_row = mysqli_fetch_array($select)) {
 
-                                $ngo_query = mysqli_query($connection, "select*from tbl_ngo where ngo_id='{$item_requirement_row['ngo_id']}'");
-                                $ngo_row = mysqli_fetch_array($ngo_query);
+                                        $ngo_query = mysqli_query($connection, "select*from tbl_ngo where ngo_id='{$item_requirement_row['ngo_id']}'");
+                                        $ngo_row = mysqli_fetch_array($ngo_query);
 
-                                echo "<tr>";
-                                // echo "<td>{$item_requirement_row['item_requirement_id']}</td>";
-                                echo "<td>{$ngo_row['ngo_name']}</td>";
-                                echo "<td>{$item_requirement_row['item_requirement_details']}</td>";
-                                echo "<td>{$item_requirement_row['item_requirement_status']}</td>";
-                                echo "<td>
+                                        echo "<tr>";
+                                        // echo "<td>{$item_requirement_row['item_requirement_id']}</td>";
+                                        echo "<td>{$ngo_row['ngo_name']}</td>";
+                                        echo "<td>{$item_requirement_row['item_requirement_details']}</td>";
+                                        echo "<td>{$item_requirement_row['item_requirement_status']}</td>";
+                                        echo "<td>
                                     <a href='item_requirement_information.php?delete_id={$item_requirement_row['ngo_id']}' 
                                     onclick='return confirmDelete()'>
                                     <i class='bi bi-trash'></i></a>|  
-                                    <a href='#'><i class='bi bi-pencil-square'></i></a>   
+                                    <a href='item_requirement_update.php?edit_id={$item_requirement_row['ngo_id']}'><i class='bi bi-pencil-square'></i></a>   
                                     </td>";
-                                echo "</tr>";
-                            }
-                            ?>
-                        </tbody>
-                    </table>
+                                        echo "</tr>";
+                                    }
+                                    ?>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
                 </div>
             </div>
-
-
-
         </div>
+        
     </main>
     <!-- Essential javascripts for application to work-->
     <script src="js/jquery-3.7.0.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/main.js"></script>
     <!-- Page specific javascripts-->
+    <!-- Data table plugin-->
+    <script type="text/javascript" src="js/plugins/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="js/plugins/dataTables.bootstrap.min.js"></script>
+    <script type="text/javascript">
+        $('#sampleTable').DataTable();
+    </script>u
     <!-- Google analytics script-->
     <script type="text/javascript">
         if (document.location.hostname == 'pratikborsadiya.in') {

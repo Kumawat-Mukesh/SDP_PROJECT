@@ -1,6 +1,6 @@
 <?php
 session_start();
-if(!isset($_SESSION["admin_id"])){
+if (!isset($_SESSION["admin_id"])) {
     header("Location:admin_login.php");
 }
 ?>
@@ -52,66 +52,75 @@ if(!isset($_SESSION["admin_id"])){
                 <li class="breadcrumb-item active"><a href="blog_information.php">Blog Information</a></li>
             </ul>
         </div>
+
+
         <div class="row">
             <div class="col-md-12">
                 <div class="tile">
-                    <h3 class="tile-title">Blog Information</h3>
-                    <table class="table table-hover">
-                        <thead>
-                            <tr>
-                                <!-- <th>ID</th> -->
-                                <th>Title</th>
-                                <th>Details</th>
-                                <th>Photo</th>
-                                <th>Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php
-                            include 'admin_db.php';
+                    <div class="tile-body">
+                        <div class="table-responsive">
+                            <table class="table table-hover table-bordered" id="sampleTable">
+                                <thead>
+                                    <tr>
+                                        <!-- <th>ID</th> -->
+                                        <th>Title</th>
+                                        <th>Details</th>
+                                        <th>Photo</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php
+                                    include 'admin_db.php';
 
-                            if (isset($_GET['delete_id'])) {
-                                $delete_id = $_GET['delete_id'];
-                                $delete_query = "delete from tbl_blog where blog_id = $delete_id";
-                                $data = mysqli_query($connection, $delete_query);
-                                if ($data) {
-                                    echo "<script>alert('Record deleted from the database');window.location='blog_information.php'</script>";
-                                } else {
-                                    echo "<script>alert('Record not deleted from the database');window.location='blog_information.php'</script>";
-                                }
-                            }
+                                    if (isset($_GET['delete_id'])) {
+                                        $delete_id = $_GET['delete_id'];
+                                        $delete_query = "delete from tbl_blog where blog_id = $delete_id";
+                                        $data = mysqli_query($connection, $delete_query);
+                                        if ($data) {
+                                            echo "<script>alert('Record deleted from the database');window.location='blog_information.php'</script>";
+                                        } else {
+                                            echo "<script>alert('Record not deleted from the database');window.location='blog_information.php'</script>";
+                                        }
+                                    }
 
-                            $select = mysqli_query($connection, "select*from tbl_blog");
-                            while ($blog_row = mysqli_fetch_array($select)) {
-                                echo "<tr>";
-                                // echo "<td>{$blog_row['blog_id']}</td>";  
-                                echo "<td>{$blog_row['blog_title']}</td>";
-                                echo "<td>{$blog_row['blog_details']}</td>";
-                                
-                                echo "<td><a target='_blank' href='uploads/{$blog_row['blog_photo']}'><img src='uploads/{$blog_row['blog_photo']}' width='50'></a></td>";
-                                echo "<td>
+                                    $select = mysqli_query($connection, "select*from tbl_blog");
+                                    while ($blog_row = mysqli_fetch_array($select)) {
+                                        echo "<tr>";
+                                        // echo "<td>{$blog_row['blog_id']}</td>";  
+                                        echo "<td>{$blog_row['blog_title']}</td>";
+                                        echo "<td>{$blog_row['blog_details']}</td>";
+
+                                        echo "<td><a target='_blank' href='uploads/{$blog_row['blog_photo']}'><img src='uploads/{$blog_row['blog_photo']}' width='50'></a></td>";
+                                        echo "<td>
                                     <a href='blog_information.php?delete_id={$blog_row['blog_id']}' 
                                     onclick='return confirmDelete()'>
                                     <i class='bi bi-trash'></i></a>|  
-                                    <a href='#'><i class='bi bi-pencil-square'></i></a>   
+                                    <a href='blog_update.php?edit_id={$blog_row['blog_id']}'><i class='bi bi-pencil-square'></i></a>   
                                     </td>";
-                                echo "</tr>";
-                            }
-                            ?>
-                        </tbody>
-                    </table>
+                                        echo "</tr>";
+                                    }
+                                    ?>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
                 </div>
             </div>
-
-
-
         </div>
+
     </main>
     <!-- Essential javascripts for application to work-->
     <script src="js/jquery-3.7.0.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/main.js"></script>
     <!-- Page specific javascripts-->
+    <!-- Data table plugin-->
+    <script type="text/javascript" src="js/plugins/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="js/plugins/dataTables.bootstrap.min.js"></script>
+    <script type="text/javascript">
+        $('#sampleTable').DataTable();
+    </script>
     <!-- Google analytics script-->
     <script type="text/javascript">
         if (document.location.hostname == 'pratikborsadiya.in') {
@@ -130,7 +139,7 @@ if(!isset($_SESSION["admin_id"])){
             ga('send', 'pageview');
         }
     </script>
-     <script>
+    <script>
         function confirmDelete() {
             return confirm("Are you Confirm?");
         }

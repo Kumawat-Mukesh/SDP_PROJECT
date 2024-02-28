@@ -52,76 +52,84 @@ if (!isset($_SESSION["admin_id"])) {
                 <li class="breadcrumb-item active"><a href="volunteer_information.php">Volunteer Information</a></li>
             </ul>
         </div>
+
         <div class="row">
             <div class="col-md-12">
                 <div class="tile">
-                    <h3 class="tile-title">Volunteer Information</h3>
-                    <table class="table table-hover">
-                        <thead>
-                            <tr>
-                                <!-- <th>ID</th> -->
-                                <th>First Name</th>
-                                <th>Last Name</th>
-                                <th>Email</th>
-                                <!-- <th>Password</th> -->
-                                <th>Gender</th>
-                                <th>Mobile No.</th>
-                                <th>Address</th>
-                                <th>Photo</th>
-                                <th>Verified</th>
-                                <th>Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php
-                            include 'admin_db.php';
+                    <div class="tile-body">
+                        <div class="table-responsive">
+                            <table class="table table-hover table-bordered" id="sampleTable">
+                                <thead>
+                                    <tr>
+                                        <!-- <th>ID</th> -->
+                                        <th>First Name</th>
+                                        <th>Last Name</th>
+                                        <th>Email</th>
+                                        <!-- <th>Password</th> -->
+                                        <th>Gender</th>
+                                        <th>Mobile No.</th>
+                                        <th>Address</th>
+                                        <th>Photo</th>
+                                        <th>Verified</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php
+                                    include 'admin_db.php';
 
-                            if (isset($_GET['delete_id'])) {
-                                $delete_id = $_GET['delete_id'];
-                                $delete_query = "delete from tbl_volunteer where volunteer_id = $delete_id";
-                                $data = mysqli_query($connection, $delete_query);
-                                if ($data) {
-                                    echo "<script>alert('Record deleted from the database');window.location='volunteer_information.php'</script>";
-                                } else {
-                                    echo "<script>alert('Record not deleted from the database');window.location='volunteer_information.php'</script>";
-                                }
-                            }
-                            $select = mysqli_query($connection, "select*from tbl_volunteer");
-                            while ($volunteer_row = mysqli_fetch_array($select)) {
-                                echo "<tr>";
-                                // echo "<td>{$volunteer_row['volunteer_id']}</td>";
-                                echo "<td>{$volunteer_row['volunteer_first_name']}</td>";
-                                echo "<td>{$volunteer_row['volunteer_last_name']}</td>";
-                                echo "<td>{$volunteer_row['volunteer_email']}</td>";
-                                // echo "<td>{$volunteer_row['volunteer_password']}</td>";
-                                echo "<td>{$volunteer_row['volunteer_gender']}</td>";
-                                echo "<td>{$volunteer_row['volunteer_mobile_no']}</td>";
-                                echo "<td>{$volunteer_row['volunteer_address']}</td>";
-                                echo "<td><a target='_blank' href='uploads/{$volunteer_row['volunteer_photo']}'><img src='uploads/{$volunteer_row['volunteer_photo']}' width='50'></a></td>";
-                                echo "<td>{$volunteer_row['volunteer_verified']}</td>";
-                                echo "<td>
+                                    if (isset($_GET['delete_id'])) {
+                                        $delete_id = $_GET['delete_id'];
+                                        $delete_query = "delete from tbl_volunteer where volunteer_id = $delete_id";
+                                        $data = mysqli_query($connection, $delete_query);
+                                        if ($data) {
+                                            echo "<script>alert('Record deleted from the database');window.location='volunteer_information.php'</script>";
+                                        } else {
+                                            echo "<script>alert('Record not deleted from the database');window.location='volunteer_information.php'</script>";
+                                        }
+                                    }
+                                    $select = mysqli_query($connection, "select*from tbl_volunteer");
+                                    while ($volunteer_row = mysqli_fetch_array($select)) {
+                                        echo "<tr>";
+                                        // echo "<td>{$volunteer_row['volunteer_id']}</td>";
+                                        echo "<td>{$volunteer_row['volunteer_first_name']}</td>";
+                                        echo "<td>{$volunteer_row['volunteer_last_name']}</td>";
+                                        echo "<td>{$volunteer_row['volunteer_email']}</td>";
+                                        // echo "<td>{$volunteer_row['volunteer_password']}</td>";
+                                        echo "<td>{$volunteer_row['volunteer_gender']}</td>";
+                                        echo "<td>{$volunteer_row['volunteer_mobile_no']}</td>";
+                                        echo "<td>{$volunteer_row['volunteer_address']}</td>";
+                                        echo "<td><a target='_blank' href='uploads/{$volunteer_row['volunteer_photo']}'><img src='uploads/{$volunteer_row['volunteer_photo']}' width='50'></a></td>";
+                                        echo "<td>{$volunteer_row['volunteer_verified']}</td>";
+                                        echo "<td>
                                     <a href='volunteer_information.php?delete_id={$volunteer_row['volunteer_id']}' 
                                     onclick='return confirmDelete()'>
                                     <i class='bi bi-trash'></i></a>|  
-                                    <a href='#'><i class='bi bi-pencil-square'></i></a>   
+                                    <a href='volunteer_update.php?edit_id={$volunteer_row['volunteer_id']}'><i class='bi bi-pencil-square'></i></a>   
                                     </td>";
-                                echo "</tr>";
-                            }
-                            ?>
-                        </tbody>
-                    </table>
+                                        echo "</tr>";
+                                    }
+                                    ?>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
                 </div>
             </div>
-
-
-
         </div>
+
     </main>
     <!-- Essential javascripts for application to work-->
     <script src="js/jquery-3.7.0.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/main.js"></script>
     <!-- Page specific javascripts-->
+    <!-- Data table plugin-->
+    <script type="text/javascript" src="js/plugins/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="js/plugins/dataTables.bootstrap.min.js"></script>
+    <script type="text/javascript">
+        $('#sampleTable').DataTable();
+    </script>
     <!-- Google analytics script-->
     <script type="text/javascript">
         if (document.location.hostname == 'pratikborsadiya.in') {
@@ -145,6 +153,7 @@ if (!isset($_SESSION["admin_id"])) {
             return confirm("Are you Confirm?");
         }
     </script>
+   
 </body>
 
 </html>

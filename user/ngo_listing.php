@@ -171,13 +171,18 @@ require './admin_db.php';
 
         <!--Start Cause Page One-->
         <section class="cause-page-one">
-
             <div class="auto-container">
                 <div class="row">
                     <?php
                     if (isset($_GET['category_id'])) {
                         $category_id = $_GET['category_id'];
                         $ngo_query = mysqli_query($connection, "select * from tbl_ngo where category_id = '{$category_id}' and ngo_status=1");
+                    } else if (isset($_GET['q'])) {
+                        $category_id = $_GET['q'];
+                        $ngo_query = mysqli_query($connection, "select * from tbl_ngo where ngo_name like '%{$category_id}%' and ngo_status=1");
+                    } else if (isset($_GET['area_id'])) {
+                        $area_id = $_GET['area_id'];
+                        $ngo_query = mysqli_query($connection, "select * from tbl_ngo where area_id ='{$area_id}' and ngo_status=1");
                     } else {
                         $ngo_query = mysqli_query($connection, "select * from tbl_ngo where ngo_status=1");
                     }
@@ -185,7 +190,6 @@ require './admin_db.php';
                     while ($ngo_data = mysqli_fetch_array($ngo_query)) {
                     ?>
                         <div class="col-xl-4 col-lg-6 col-md-6">
-                            <!--Start Single Cause Style1-->
                             <div class="single-cause-style1">
                                 <div class="img-holder">
                                     <img src="/project/admin/uploads/<?php echo $ngo_data['ngo_photo']; ?> " alt="">
@@ -197,31 +201,7 @@ require './admin_db.php';
                                 </div>
                                 <div class="text-holder">
                                     <h3><a href="ngo_details.php?ngo_id=<?php echo $ngo_data['ngo_id']; ?>"><?php echo $ngo_data['ngo_name']; ?></a></h3>
-                                    <!-- <p><?php echo $ngo_data['ngo_details']; ?></p> -->
 
-                                    <div class="progress-levels progress-levels-style2">
-                                        <!--Skill Box-->
-                                        <div class="progress-box wow">
-                                            <div class="inner count-box">
-                                                <div class="bar">
-                                                    <div class="bar-innner">
-                                                        <div class="bar-fill" data-percent="50" title="Book"></div>
-                                                    </div>
-                                                </div>
-                                                <div class="bottom-box">
-                                                    <div class="rate-box">
-                                                        <p>Achieved<span>$25,00</span></p>
-                                                        <p>Target<span>$5,000</span></p>
-                                                    </div>
-                                                    <div class="skill-percent">
-                                                        <span class="count-text" data-speed="3000" data-stop="50">0</span>
-                                                        <span class="percent">%</span>
-                                                        <p class="outer-text">Pledged So Far</p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
                                     <div class="btns-box">
                                         <a class="btn-one" href="ngo_details.php?ngo_id=<?php echo $ngo_data['ngo_id']; ?>"><span class="txt"><i class="arrow1 fa fa-check-circle"></i>Donate Now</span></a>
                                     </div>
@@ -245,8 +225,22 @@ require './admin_db.php';
                                         <h3>Search</h3>
                                     </div>
                                     <div class="sidebar-search-box wow fadeInUp animated animated animated" data-wow-delay="0.1s" data-wow-duration="1200ms" style="visibility: visible; animation-duration: 1200ms; animation-delay: 0.1s; animation-name: fadeInUp;">
-                                        <form class="search-form" action="#">
-                                            <input placeholder="Keyword" type="text">
+                                        <form class="search-form" action="ngo_listing.php" method="get">
+                                            <input placeholder="Keyword" name="q" type="text">
+                                            <button type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
+                                        </form>
+                                        <br><br>
+
+                                        <form action="ngo_listing.php" class="search-form" action="ngo_details.php">
+                                            <?php
+                                            $area_query = mysqli_query($connection, "select * from tbl_area");
+                                            echo "<select name='area_id'>";
+                                            echo "<option value=''>Select area</option>";
+                                            while ($area_row = mysqli_fetch_array($area_query)) {
+                                                echo "<option value='{$area_row['area_id']}'>{$area_row['area_name']}</option>";
+                                            }
+                                            echo "<select>";
+                                            ?>
                                             <button type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
                                         </form>
                                     </div>
@@ -261,15 +255,13 @@ require './admin_db.php';
                                     </div>
                                     <ul class="sidebar-categories-box">
                                         <?php
-
                                         $category_query = mysqli_query($connection, "select * from tbl_category");
                                         echo "<li><a href='ngo_listing.php'><i class='fa fa-check-circle' aria-hidden='true'></i>All</li>";
                                         while ($category_data = mysqli_fetch_array($category_query)) {
                                             echo "<li><a href='ngo_listing.php?category_id={$category_data['category_id']}'><i class='fa fa-check-circle' aria-hidden='true'></i>{$category_data['category_name']}</a></li>";
                                         }
                                         ?>
-                                        <!-- <li><a href="#"><i class="fa fa-check-circle" aria-hidden="true"></i>Charity for
-                                                Poor</a></li> -->
+
                                     </ul>
                                 </div>
                             </div>

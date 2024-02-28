@@ -122,7 +122,7 @@ if (isset($_POST['add'])) {
             </div>
             <div class="mb-3 col-md-3">
               <label class="form-label">Contact NO.</label>
-              <input class="form-control" type="tel"  onkeyup="Validate(this)" placeholder="Enter contact number" name="ngo_contact_no" required>
+              <input class="form-control" type="tel" maxlength="10"  onkeyup="Validate(this)" placeholder="Enter contact number" name="ngo_contact_no" required>
               <br>
               <label class="form-label">Address</label>
               <!-- <input class="form-control" type="text" placeholder="Enter details" name="ngo_details"> -->

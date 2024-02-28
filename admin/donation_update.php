@@ -4,18 +4,21 @@ session_start();
 if (!isset($_SESSION["admin_id"])) {
     header("Location:admin_login.php");
 }
-if ($_POST) {
-    $ngo_id = $_POST['ngo_id'];
-    $user_id = $_POST['user_id'];
-    $feedback_details = $_POST['feedback_details'];
-    $feedback_rating = $_POST['feedback_rating'];
-    $query = mysqli_query($connection, "insert into tbl_feedback(ngo_id,user_id,feedback_details,feedback_rating) values('{$ngo_id}','{$user_id}','{$feedback_details}','{$feedback_rating}')");
+$edit_id = $_GET['edit_id'];
+$donation_select = mysqli_query($connection, "select*from tbl_donation where donation_id='{$edit_id}'");
+$donation_data = mysqli_fetch_array($donation_select);
 
+if ($_POST) {
+    $item_requirement_id = $_POST['item_requirement_id'];
+    $donation_details = $_POST['donation_details'];
+    $donation_status = $_POST['donation_status'];
+    $volunteer_id = $_POST['volunteer_id'];
+
+    $query = mysqli_query($connection, "update tbl_donation set item_requirement_id='{$item_requirement_id}',donation_details='{$donation_details}',donation_status='{$donation_status}',volunteer_id='{$volunteer_id}' where donation_id='{$edit_id}'");
     if ($query) {
-        echo "<script>alert('Feedback added to the database');window.location='feedback_form.php'</script>";
+        echo "<script>alert('Donation updated to the database');window.location='donation_information.php'</script>";
     }
 }
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -33,7 +36,7 @@ if ($_POST) {
     <meta property="og:url" content="http://pratikborsadiya.in/blog/vali-admin">
     <meta property="og:image" content="http://pratikborsadiya.in/blog/vali-admin/hero-social.png">
     <meta property="og:description" content="Vali is a responsive and free admin theme built with Bootstrap 4, SASS and PUG.js. It's fully customizable and modular.">
-    <title>Feedback Form</title>
+    <title>Donation Form</title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -52,54 +55,52 @@ if ($_POST) {
     <main class="app-content">
         <div class="app-title">
             <div>
-                <h1><i class="bi bi-ui-checks"></i> Feedback Form</h1>
+                <h1><i class="bi bi-ui-checks"></i> Update Donation</h1>
             </div>
             <ul class="app-breadcrumb breadcrumb">
                 <li class="breadcrumb-item"><a href="dashboard.php"><i class="bi bi-house-door fs-6"></i></a></li>
-                <li class="breadcrumb-item">Feedback</li>
-                <li class="breadcrumb-item"><a href="feedback_form.php">Feedback-Form</a></li>
+                <li class="breadcrumb-item">Donation</li>
+                <li class="breadcrumb-item"><a href="donation_information.php">Update-Donation</a></li>
             </ul>
         </div>
         <div class="row">
             <div class="clearix"></div>
             <div class="col-md-12">
                 <div class="tile">
-                    <h3 class="tile-title">Add Feedback</h3>
+                    <h3 class="tile-title">Update Donation</h3>
                     <div class="tile-body">
-                        <form method="post" class="row" id="feedback_form_js">
+                        <form method="post" class="row" id="donation_form_js">
                             <div class="mb-3 col-md-3">
-                                <label class="form-label">NGO ID</label>
-                                <!-- <input class="form-control" type="text" name="ngo_id" placeholder="Enter NGO ID" required> -->
+                                <label class="form-label">Requirement ID</label>
+                                <!-- <input class="form-control" type="text" name="item_requirement_id" placeholder="Enter Requirement ID" required> -->
                                 <?php
-                                $ngo_query = mysqli_query($connection, "select*from tbl_ngo");
-                                echo "<select class='form-control' name='ngo_id'>";
-                                echo "<option value=''>Select NGO</option>";
-                                while ($ngo_row = mysqli_fetch_array($ngo_query)) {
-                                    echo "<option value='{$ngo_row['ngo_id']}'>{$ngo_row['ngo_name']}</option>";
+                                $item_requirement_query = mysqli_query($connection, "select*from tbl_item_requirement");
+                                echo "<select class='form-control' name='item_requirement_id'>";
+                                echo "<option value=''>Select Item Requirement</option>";
+                                while ($item_requirement_row = mysqli_fetch_array($item_requirement_query)) {
+                                    echo "<option value='{$item_requirement_row['item_requirement_id']}'>{$item_requirement_row['item_requirement_details']} </option>";
                                 }
                                 echo "</select>";
                                 ?>
                                 <br>
-                                <label class="form-label">User ID</label>
-                                <!-- <input class="form-control" type="text" name="user_id" placeholder="Enter user ID" required> -->
+                                <label class="form-label">Dontion Details</label>
+                                <textarea name="donation_details" class="form-control" cols="3" rows="5" placeholder="Enter donation details" required><?php echo $donation_data['donation_details']; ?></textarea>
+                                <br>
+                                <label class="form-label">Donation Status</label>
+                                <input class="form-control" type="text" name="donation_status" placeholder="Enter status" value="<?php echo $donation_data['donation_status']; ?>" required>
+                                <br>
+                                <label class="form-label">Volunteer ID</label>
                                 <?php
-                                $user_query = mysqli_query($connection, "select*from tbl_user");
-                                echo "<select class='form-control' name='user_id'>";
-                                echo "<option value=''>Select User</option>";
-                                while ($user_row = mysqli_fetch_array($user_query)) {
-                                    echo "<option value='{$user_row['user_id']}'>{$user_row['user_first_name']}  {$user_row['user_last_name']}</option>";
+                                $volunteer_query = mysqli_query($connection, "select*from tbl_volunteer");
+                                echo "<select class='form-control' name='volunteer_id'>";
+                                echo "<option value=''>Select Volunteer</option>";
+                                while ($volunteer_row = mysqli_fetch_array($volunteer_query)) {
+                                    echo "<option value='{$volunteer_row['volunteer_id']}'>{$volunteer_row['volunteer_first_name']}  {$volunteer_row['volunteer_last_name']}</option>";
                                 }
                                 echo "</select>";
                                 ?>
                                 <br>
-                                <label class="form-label">Feedback Details</label>
-                                <textarea name="feedback_details" class="form-control" cols="3" rows="5" placeholder="Enter feedback details" required></textarea>
-                                <br>
-                                <br>
-                                <label class="form-label">Feedback Rating</label>
-                                <input class="form-control" type="number" onkeyup="Validate(this)" min="1" max="5" name="feedback_rating" placeholder="Enter rating" required>
-                                <br>
-                                <button class="btn btn-primary" type="submit" name="add"><i class="bi bi-check-circle-fill me-2"></i>Add</button>
+                                <button class="btn btn-primary" type="submit" name="update"><i class="bi bi-check-circle-fill me-2"></i>Update</button>
                             </div>
                         </form>
                     </div>
@@ -134,35 +135,8 @@ if ($_POST) {
     <script src="tools/jquery.validate.js"></script>
     <script>
         $(document).ready(function() {
-            $("#feedback_form_js").validate({
-                rules: {
-                    ngo_id: {
-                        required: true
-                    },
-                    user_id: {
-                        required: true
-                    },
-                    feedback_details: {
-                        required: true
-                    },
-                },
-                messages: {
-                    ngo_id: {
-                        required: "Please Select NGO"
-                    },
-                    user_id: {
-                        required: "Please Select User"
-                    },
-                    feedback_details: {
-                        required: "Please Enter Details",
-                    },
-                }
-            });
+            $("#donation_form_js").validate();
         });
-
-        function Validate(no) {
-            no.value = no.value.replace(/[^ 0-9\n\r]+/g, '');
-        }
     </script>
     <style>
         .error {

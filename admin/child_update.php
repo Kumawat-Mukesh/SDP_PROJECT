@@ -1,8 +1,8 @@
 <?php
-require  'admin_db.php';
 session_start();
-if (!isset($_SESSION['ngo_id'])) {
-    header("location:ngo_login.php");
+require  'admin_db.php';
+if (!isset($_SESSION['admin_id'])) {
+    header("location:admin_login.php");
 }
 $edit_id = $_GET['edit_id'];
 $child_select = mysqli_query($connection, "select *from tbl_child where child_id={$edit_id}");
@@ -53,12 +53,12 @@ if ($_POST) {
 <body class="app sidebar-mini">
     <!-- Navbar-->
     <?php
-    require 'ngo_header.php';
+    require 'admin_header.php';
     ?>
     <!-- Sidebar menu-->
     <div class="app-sidebar__overlay" data-toggle="sidebar"></div>
     <?php
-    require 'ngo_sidebar.php';
+    require 'admin_sidebar.php';
     ?>
     <main class="app-content">
         <div class="app-title">
@@ -105,7 +105,7 @@ if ($_POST) {
                                 <label class="form-label">Photo</label>
                                 <input class="form-control" type="file" name="child_photo" placeholder="Upload child photo" required>
                                 <br>
-                                <button class="btn btn-primary" type="submit" name="add"><i class="bi bi-check-circle-fill me-2"></i>Update+</button>
+                                <button class="btn btn-primary" type="submit" name="add"><i class="bi bi-check-circle-fill me-2"></i>Update</button>
                             </div>
                         </form>
                     </div>

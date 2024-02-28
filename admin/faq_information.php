@@ -52,62 +52,63 @@ if (!isset($_SESSION["admin_id"])) {
                 <li class="breadcrumb-item active"><a href="faq_information.php">FAQ Information</a></li>
             </ul>
         </div>
+
         <div class="row">
             <div class="col-md-12">
                 <div class="tile">
-                    <h3 class="tile-title">FAQ Information</h3>
-                    <table class="table table-hover">
-                        <thead>
-                            <tr>
-                                <!-- <th>ID</th> -->
-                                <th>User Name</th>
-                                <th>Question</th>
-                                <th>Answer</th>
-                                <th>Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php
-                            include 'admin_db.php';
+                    <div class="tile-body">
+                        <div class="table-responsive">
+                            <table class="table table-hover table-bordered" id="sampleTable">
+                                <thead>
+                                    <tr>
+                                        <!-- <th>ID</th> -->
+                                        <th>User Name</th>
+                                        <th>Question</th>
+                                        <th>Answer</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php
+                                    include 'admin_db.php';
 
-                            if (isset($_GET['delete_id'])) {
-                                $delete_id = $_GET['delete_id'];
-                                $delete_query = "delete from tbl_faq where faq_id = $delete_id";
-                                $data = mysqli_query($connection, $delete_query);
-                                if ($data) {
-                                    echo "<script>alert('Record deleted from the database');window.location='faq_information.php'</script>";
-                                } else {
-                                    echo "<script>alert('Record not deleted from the database');window.location='faq_information.php'</script>";
-                                }
-                            }
+                                    if (isset($_GET['delete_id'])) {
+                                        $delete_id = $_GET['delete_id'];
+                                        $delete_query = "delete from tbl_faq where faq_id = $delete_id";
+                                        $data = mysqli_query($connection, $delete_query);
+                                        if ($data) {
+                                            echo "<script>alert('Record deleted from the database');window.location='faq_information.php'</script>";
+                                        } else {
+                                            echo "<script>alert('Record not deleted from the database');window.location='faq_information.php'</script>";
+                                        }
+                                    }
 
-                            $select = mysqli_query($connection, "select*from tbl_faq");
-                            while ($faq_row = mysqli_fetch_array($select)) {
+                                    $select = mysqli_query($connection, "select*from tbl_faq");
+                                    while ($faq_row = mysqli_fetch_array($select)) {
 
-                                $user_query = mysqli_query($connection, "select*from tbl_user where user_id='{$faq_row['user_id']}'");
-                                $user_row = mysqli_fetch_array($user_query);
+                                        $user_query = mysqli_query($connection, "select*from tbl_user where user_id='{$faq_row['user_id']}'");
+                                        $user_row = mysqli_fetch_array($user_query);
 
-                                echo "<tr>";
-                                // echo "<td>{$faq_row['faq_id']}</td>";
-                                echo "<td>{$user_row['user_first_name']}  {$user_row['user_last_name']}</td>";
-                                echo "<td>{$faq_row['faq_question']}</td>";
-                                echo "<td>{$faq_row['faq_answer']}</td>";
-                                echo "<td>
+                                        echo "<tr>";
+                                        // echo "<td>{$faq_row['faq_id']}</td>";
+                                        echo "<td>{$user_row['user_first_name']}  {$user_row['user_last_name']}</td>";
+                                        echo "<td>{$faq_row['faq_question']}</td>";
+                                        echo "<td>{$faq_row['faq_answer']}</td>";
+                                        echo "<td>
                                     <a href='faq_information.php?delete_id={$faq_row['faq_id']}' 
                                     onclick='return confirmDelete()'>
                                     <i class='bi bi-trash'></i></a>|  
-                                    <a href='#'><i class='bi bi-pencil-square'></i></a>   
+                                    <a href='faq_update.php?edit_id={$faq_row['faq_id']}'><i class='bi bi-pencil-square'></i></a>   
                                     </td>";
-                                echo "</tr>";
-                            }
-                            ?>
-                        </tbody>
-                    </table>
+                                        echo "</tr>";
+                                    }
+                                    ?>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
                 </div>
             </div>
-
-
-
         </div>
     </main>
     <!-- Essential javascripts for application to work-->
@@ -115,6 +116,12 @@ if (!isset($_SESSION["admin_id"])) {
     <script src="js/bootstrap.min.js"></script>
     <script src="js/main.js"></script>
     <!-- Page specific javascripts-->
+    <!-- Data table plugin-->
+    <script type="text/javascript" src="js/plugins/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="js/plugins/dataTables.bootstrap.min.js"></script>
+    <script type="text/javascript">
+        $('#sampleTable').DataTable();
+    </script>
     <!-- Google analytics script-->
     <script type="text/javascript">
         if (document.location.hostname == 'pratikborsadiya.in') {

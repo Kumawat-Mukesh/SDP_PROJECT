@@ -8,15 +8,14 @@ $ngo_data = mysqli_fetch_array($ngo_query);
 $item_requirement_query = mysqli_query($connection, "select * from tbl_item_requirement where ngo_id = {$ngo_id}  ");
 $item_requirement_data = mysqli_fetch_array($item_requirement_query);
 
-if($_POST)
-{
-    $user_id=$_SESSION['user_id'];
-    $feedback_details=$_POST['details'];
-    $feedback_rating=$_POST['rating'];
-    $query=mysqli_query($connection,"insert into tbl_feedback(ngo_id,user_id,feedback_details,feedback_rating) values('{$ngo_id}','{$user_id}','{$feedback_details}','{$feedback_rating}')");
+$_SESSION['$item_requirement_id'] = $item_requirement_data['item_requirement_id'];
+if ($_POST) {
+    $user_id = $_SESSION['user_id'];
+    $feedback_details = $_POST['details'];
+    $feedback_rating = $_POST['rating'];
+    $query = mysqli_query($connection, "insert into tbl_feedback(ngo_id,user_id,feedback_details,feedback_rating) values('{$ngo_id}','{$user_id}','{$feedback_details}','{$feedback_rating}')");
 
-    if($query)
-    {
+    if ($query) {
         echo "<script>alert('Thank You For Your Feedback!');window.location='ngo_details.php'</script>";
     }
 }
@@ -77,7 +76,20 @@ if($_POST)
         <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
         <script src="assets/js/html5shiv.js"></script>
     <![endif]-->
+    <style>
+        table,
+        th,
+        td {
+            border: 5px solid white;
+            border-collapse: collapse;
+        }
 
+        th,
+        td {
+            padding: 0 30px;
+            background-color: #F9ECD9;
+        }
+    </style>
 </head>
 
 <body>
@@ -195,69 +207,6 @@ if($_POST)
                                 <div class="top-title">
                                     <h2><?php echo $ngo_data['ngo_name']; ?></h2>
                                 </div>
-
-                                <div class="progress-levels progress-levels-style2">
-                                    <!--Skill Box-->
-                                    <div class="progress-box wow animated" style="visibility: visible;">
-                                        <div class="inner count-box">
-                                            <div class="bar">
-                                                <div class="bar-innner">
-                                                    <div class="bar-fill" data-percent="52" title="Book"></div>
-                                                </div>
-                                            </div>
-                                            <div class="bottom-box">
-                                                <div class="rate-box">
-                                                    <p>Achieved<span>$25,00</span></p>
-                                                    <p>Target<span>$5,000</span></p>
-                                                </div>
-                                                <div class="skill-percent">
-                                                    <span class="count-text" data-speed="3000" data-stop="52"></span>
-                                                    <span class="percent">%</span>
-                                                    <p class="outer-text">Pledged So Far</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <!-- <div class="donation_wrapper">
-                                    <div class="amount_wrapper">
-                                        <input type="number" value="10.00" step="0.1" min="1.00">
-                                        <div class="suffix">$</div>
-                                    </div>
-                                    <datalist class="single_amount_wrapper">
-                                        <option class="single_amount" value="10">10$</option>
-                                        <option class="single_amount" value="20">20$</option>
-                                        <option class="single_amount" value="30">30$</option>
-                                        <option class="single_amount" value="50">50$</option>
-                                        <option class="single_amount" value="100">100$</option>
-                                        <option class="single_amount" value="0">Custom</option>
-                                    </datalist>
-                                    <div class="bottom-box">
-                                        <div class="btns">
-                                            <a class="btn-one" href="https://www.paypal.me/" target="_blank" rel="nofollow">
-                                                <span class="txt"><i class="arrow1 fa fa-check-circle"></i>Donate
-                                                    Now</span>
-                                            </a>
-                                        </div>
-                                        <div class="social-share">
-                                            <div class="title">
-                                                <h5>Share Cause</h5>
-                                            </div>
-                                            <ul class="social-links">
-                                                <li><a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a>
-                                                </li>
-                                                <li><a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a>
-                                                </li>
-                                                <li><a href="#"><i class="fa fa-instagram" aria-hidden="true"></i></a>
-                                                </li>
-                                                <li><a href="#"><i class="fa fa-linkedin" aria-hidden="true"></i></a>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div> -->
-
                             </div>
 
                             <div class="cause-details-text-box-1">
@@ -272,7 +221,23 @@ if($_POST)
                                         <img class="zoom-fade" src="assets/images/shape/cause-details-title-shape.png" alt="">
                                     </div>
                                 </div>
-                                <p><?php echo $item_requirement_data['item_requirement_details']; ?></p>
+                                <p><?php
+                                    $item_requirement_query = mysqli_query($connection, "select * from tbl_item_requirement where ngo_id = {$ngo_id} ");
+                                    echo "<table border='1'>";
+                                    echo "<tr>
+                                    <th>Requirements</th>
+                                    <th>Status</th>
+                                    </tr>";
+                                    while ($item_requirement_data = mysqli_fetch_array($item_requirement_query)) {
+                                        echo "<tr>";
+                                        echo "<td>{$item_requirement_data['item_requirement_details']}</td>";
+                                        echo "<td>{$item_requirement_data['item_requirement_status']}</td>";
+                                        echo "</tr>";
+                                    }
+
+                                    echo "</table>";
+                                    ?>
+                                </p>
                             </div>
                             <?php
                             if (isset($_SESSION['user_id'])) {
@@ -304,8 +269,10 @@ if($_POST)
                                                                         <form class="justify-content-center" method="post" action="donation_process.php">
                                                                             <div class="row">
                                                                                 <div class="input-box">
-                                                                                    <!-- <input type="text" name="donate_item" placeholder="Items" required=""> -->
-                                                                                    <textarea name="donation" cols="50" rows="3" placeholder="Enter donation details" required></textarea>
+                                                                                    <textarea name="donation_details" cols="50" rows="3" placeholder="Enter donation details" required></textarea>
+                                                                                </div>
+                                                                                <div class="input-box">
+                                                                                    <textarea name="donation_address" cols="50" rows="3" placeholder="Enter donation address" required></textarea>
                                                                                 </div>
                                                                             </div>
                                                                             <div class="row">
@@ -315,7 +282,18 @@ if($_POST)
                                                                             </div>
                                                                             <div class="row">
                                                                                 <div class="input-box">
-                                                                                    <input type="hidden" value="<?php echo $item_requirement_data['item_requirement_id']; ?>" name="item_requirement_id" required="">
+                                                                                    <?php
+                                                                                    $csq = mysqli_query($connection, "select * from tbl_item_requirement where ngo_id ='{$_GET['ngo_id']}'");
+                                                                                    echo "<select name='item_requirement_id'>";
+                                                                                    echo "<option value=''>Select</option>";
+
+                                                                                    while ($redata = mysqli_fetch_array($csq)) {
+                                                                                        echo "<option value='{$redata["item_requirement_id"]}'>{$redata['item_requirement_details']}</option>";
+                                                                                    }
+
+                                                                                    echo "</select>";
+                                                                                    ?>
+
                                                                                 </div>
                                                                             </div>
                                                                             <div class="row">
@@ -336,42 +314,36 @@ if($_POST)
                                                             <div class="tab" id="mission">
                                                                 <div class="row clearfix">
 
-                                                                    <div class="contact-form justify-content-l" style="justify-content:flex-start; ">
-                                                                        <!-- <form class="justify-content-center" method="post"> -->
-                                                                        <!-- <div class="row">
-                                                                                <div class="input-box">
-                                                                                    <input type="text" name="donate_money" placeholder="Money" required="">
-                                                                                </div>
-                                                                            </div> -->
-
-
-                                                                        <div class="donate-form-box donate-form-box--style2">
-                                                                            <div class="donation_wrapper">
-                                                                                <div class="amount_wrapper">
-                                                                                    <input type="number" value="10.00" step="0.1" min="1.00">
-                                                                                    <div class="suffix">₹</div>
-                                                                                </div>
-                                                                                <datalist class="single_amount_wrapper">
-                                                                                    <option class="single_amount" value="50">50₹</option>
-                                                                                    <option class="single_amount" value="100">100₹</option>
-                                                                                    <option class="single_amount" value="200">200₹</option>
-                                                                                    <option class="single_amount" value="50">500₹</option>
-                                                                                    <option class="single_amount" value="1000">1000₹</option>
-                                                                                    <option class="single_amount" value="0">Custom</option>
-                                                                                </datalist>
-                                                                                <div class="bottom-box">
-                                                                                    <div class="btns">
-                                                                                        <a class="btn-one" href="https://www.paypal.me/" target="_blank" rel="nofollow">
-                                                                                            <span class="txt"><i class="arrow1 fa fa-check-circle"></i>Donate
-                                                                                                Now</span>
-                                                                                        </a>
+                                                                    <form method="post" action="payment-cod-online.php?ngo_id=<?php echo $ngo_data['ngo_id']; ?>">
+                                                                        <div class="contact-form justify-content-l" style="justify-content:flex-start; ">
+                                                                            <div class="donate-form-box donate-form-box--style2">
+                                                                                <div class="donation_wrapper">
+                                                                                    <div class="amount_wrapper">
+                                                                                        <input name="amount" type="number" value="10.00" step="0.1" min="1.00">
+                                                                                        <div class="suffix">₹</div>
                                                                                     </div>
-                                                                                    
+                                                                                    <datalist class="single_amount_wrapper">
+                                                                                        <option class="single_amount" value="50">50₹</option>
+                                                                                        <option class="single_amount" value="100">100₹</option>
+                                                                                        <option class="single_amount" value="200">200₹</option>
+                                                                                        <option class="single_amount" value="500">500₹</option>
+                                                                                        <option class="single_amount" value="1000">1000₹</option>
+                                                                                        <option class="single_amount" value="0">Custom</option>
+                                                                                    </datalist>
+                                                                                    <div class="bottom-box">
+                                                                                        <div class="btns">
+                                                                                            <input class="btn-one" type="submit" value="Donate Now" />
+                                                                                            <!-- <a class="btn-one" target="_blank" rel="nofollow">
+                                                                                                <span class="txt"><i class="arrow1 fa fa-check-circle"></i>Donate
+                                                                                                    Now</span>
+                                                                                            </a> -->
+                                                                                        </div>
+                                                                                    </div>
                                                                                 </div>
                                                                             </div>
                                                                         </div>
-                                                                    </div>
 
+                                                                    </form>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -383,8 +355,8 @@ if($_POST)
                                     </div>
                                 </section>
                             <?php } else { ?>
-                                <h5>Want to Donate?  -> <a href="user_login.php"> Login</a></h5>
-                                
+                                <h5>Want to Donate? -> <a href="user_login.php"> Login</a></h5>
+
                             <?php
                             }
                             ?>
@@ -397,15 +369,13 @@ if($_POST)
                                 <?php
 
                                 $select = mysqli_query($connection, "select*from tbl_feedback where ngo_id='{$ngo_id}'");
-                                $count=mysqli_num_rows($select);
-                                if($count>0){
-                                while ($feedback_row = mysqli_fetch_array($select)) {
-                                    $user_query = mysqli_query($connection, "select*from tbl_user where user_id='{$feedback_row['user_id']}'");
-                                    $user_row = mysqli_fetch_array($user_query);
+                                $count = mysqli_num_rows($select);
+                                if ($count > 0) {
+                                    while ($feedback_row = mysqli_fetch_array($select)) {
+                                        $user_query = mysqli_query($connection, "select*from tbl_user where user_id='{$feedback_row['user_id']}'");
+                                        $user_row = mysqli_fetch_array($user_query);
                                 ?>
-                                    <!--Start Single Review Box-->
-                                    
-                                        
+                                        <!--Start Single Review Box-->
                                         <div class="text_box">
                                             <div class="inner">
                                                 <div class="top">
@@ -415,19 +385,18 @@ if($_POST)
                                                     </div>
                                                 </div>
                                                 <div class="text">
-                                                    <p><?php echo $feedback_row['feedback_details']; ?></p><br>
+                                                    <p><?php echo $feedback_row['feedback_details']; ?></p>
                                                 </div>
                                             </div>
                                         </div>
-                                    
-                                    <!--End Single Review Box-->
+
+                                        <!--End Single Review Box-->
                                 <?php
+                                    }
+                                } else {
+                                    echo "No Reviews!";
+                                    echo "<hr>";
                                 }
-                            }
-                            else{
-                                echo "No Reviews!";
-                                echo "<hr>";
-                            }
                                 ?>
                             </div>
                         </div>
@@ -495,7 +464,21 @@ if($_POST)
                                             </div>
                                             <div class="sidebar-search-box wow fadeInUp animated animated animated" data-wow-delay="0.1s" data-wow-duration="1200ms" style="visibility: visible; animation-duration: 1200ms; animation-delay: 0.1s; animation-name: fadeInUp;">
                                                 <form class="search-form" action="#">
-                                                    <input placeholder="Keyword" type="text">
+                                                    <input placeholder="NGO" type="text">
+                                                    <button type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
+                                                </form>
+                                                </br>
+                                                </br>
+                                                <form action="ngo_listing.php" class="search-form" action="ngo_details.php">
+                                                    <?php
+                                                    $area_query = mysqli_query($connection, "select * from tbl_area");
+                                                    echo "<select name='area_id'>";
+                                                    echo "<option value=''>Select area</option>";
+                                                    while ($area_row = mysqli_fetch_array($area_query)) {
+                                                        echo "<option value='{$area_row['area_id']}'>{$area_row['area_name']}</option>";
+                                                    }
+                                                    echo "<select>";
+                                                    ?>
                                                     <button type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
                                                 </form>
                                             </div>

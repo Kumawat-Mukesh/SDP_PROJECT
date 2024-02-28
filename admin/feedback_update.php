@@ -1,18 +1,23 @@
 <?php
 include './admin_db.php';
 session_start();
-if (!isset($_SESSION["admin_id"])) {
+if(!isset($_SESSION["admin_id"])){
     header("Location:admin_login.php");
 }
-if ($_POST) {
-    $ngo_id = $_POST['ngo_id'];
-    $user_id = $_POST['user_id'];
-    $feedback_details = $_POST['feedback_details'];
-    $feedback_rating = $_POST['feedback_rating'];
-    $query = mysqli_query($connection, "insert into tbl_feedback(ngo_id,user_id,feedback_details,feedback_rating) values('{$ngo_id}','{$user_id}','{$feedback_details}','{$feedback_rating}')");
+$edit_id = $_GET['edit_id'];
+$feedback_select = mysqli_query($connection, "select*from tbl_feedback where feedback_id='{$edit_id}'");
+$feedback_data = mysqli_fetch_array($feedback_select);
+if($_POST)
+{
+    $ngo_id=$_POST['ngo_id'];
+    $user_id=$_POST['user_id'];
+    $feedback_details=$_POST['feedback_details'];
+    $feedback_rating=$_POST['feedback_rating'];
+    $query=mysqli_query($connection,"update tbl_feedback set ngo_id='{$ngo_id}',user_id='{$user_id}',feedback_details='{$feedback_details}',feedback_rating='{$feedback_rating}' where feedback_id='{$edit_id}'");
 
-    if ($query) {
-        echo "<script>alert('Feedback added to the database');window.location='feedback_form.php'</script>";
+    if($query)
+    {
+        echo "<script>alert('Feedback updated to the database');window.location='feedback_information.php'</script>";
     }
 }
 
@@ -93,11 +98,11 @@ if ($_POST) {
                                 ?>
                                 <br>
                                 <label class="form-label">Feedback Details</label>
-                                <textarea name="feedback_details" class="form-control" cols="3" rows="5" placeholder="Enter feedback details" required></textarea>
+                                <textarea name="feedback_details" class="form-control" cols="3" rows="5" placeholder="Enter feedback details" required><?php echo $feedback_data['feedback_details'];?></textarea>
                                 <br>
                                 <br>
                                 <label class="form-label">Feedback Rating</label>
-                                <input class="form-control" type="number" onkeyup="Validate(this)" min="1" max="5" name="feedback_rating" placeholder="Enter rating" required>
+                                <input class="form-control" type="number" max="5" name="feedback_rating" placeholder="Enter rating" value="<?php echo $feedback_data['feedback_rating'];?>" required>
                                 <br>
                                 <button class="btn btn-primary" type="submit" name="add"><i class="bi bi-check-circle-fill me-2"></i>Add</button>
                             </div>
@@ -130,45 +135,18 @@ if ($_POST) {
             ga('send', 'pageview');
         }
     </script>
-    <script src="tools/jquery-3.7.1.min.js"></script>
+     <script src="tools/jquery-3.7.1.min.js"></script>
     <script src="tools/jquery.validate.js"></script>
     <script>
-        $(document).ready(function() {
-            $("#feedback_form_js").validate({
-                rules: {
-                    ngo_id: {
-                        required: true
-                    },
-                    user_id: {
-                        required: true
-                    },
-                    feedback_details: {
-                        required: true
-                    },
-                },
-                messages: {
-                    ngo_id: {
-                        required: "Please Select NGO"
-                    },
-                    user_id: {
-                        required: "Please Select User"
-                    },
-                    feedback_details: {
-                        required: "Please Enter Details",
-                    },
-                }
-            });
-        });
-
-        function Validate(no) {
-            no.value = no.value.replace(/[^ 0-9\n\r]+/g, '');
-        }
+    $(document).ready(function(){
+      $("#feedback_form_js").validate();
+      });
     </script>
     <style>
-        .error {
-            color: red
-        }
-    </style>
+      .error{
+        color:red
+      }
+      </style>
 </body>
 
 </html>

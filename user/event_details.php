@@ -172,13 +172,13 @@ $event_data = mysqli_fetch_array($event_query);
                         <div class="event-details_content">
 
                             <div class="event-details-image-box">
-                            <img src="/project/admin/events/<?php echo $event_data['event_photo']; ?>" alt="">  
-                                
+                                <img src="/project/admin/events/<?php echo $event_data['event_photo']; ?>" alt="">
+
                             </div>
 
                             <div class="event-details-text-box">
                                 <h2><?php echo $event_data['event_title']; ?></h2>
-                                <ul class="event-info" style="width: 900px;" >
+                                <ul class="event-info" style="width: 900px;">
                                     <li>
                                         <div class="icon">
                                             <img src="assets/images/icon/date-1.png" alt="">
@@ -188,10 +188,10 @@ $event_data = mysqli_fetch_array($event_query);
                                         </div>
                                         <div class="text">
                                             <p>Event Date Time</p>
-                                            <h3><?php echo $event_data['event_date']." ".$event_data['event_time'];?></h3>
+                                            <h3><?php echo $event_data['event_date'] . " " . $event_data['event_time']; ?></h3>
                                         </div>
                                     </li>
-                                    
+
                                     <li>
                                         <div class="icon">
                                             <img src="assets/images/icon/map-marker-1.png" alt="">
@@ -201,41 +201,31 @@ $event_data = mysqli_fetch_array($event_query);
                                         </div>
                                         <div class="text">
                                             <p>Event Location</p>
-                                            <h3><?php echo $event_data['event_location'];?></h3>
+                                            <h3><?php echo $event_data['event_location']; ?></h3>
                                         </div>
                                     </li>
-                                    
                                 </ul>
-
                                 <div class="bottom-box">
                                     <div class="btns">
-                                     
-
-                                        <?php echo $event_data['event_details']; ?> 
-
-                                        <br/>
-                                        <br/>
-                                        <a class="btn-one" href="event_book_form.php" target="_blank" rel="nofollow">
-                                            <span class="txt"><i class="arrow1 fa fa-check-circle"></i>join this
-                                                event</span>
-                                        </a>
+                                        <?php echo $event_data['event_details']; ?>
                                     </div>
                                 </div>
 
                             </div>
 
-                            
-                            
-                            
 
-                            
 
-                          
+
+
+
+
+
 
                         </div>
                         <!-- <div class="cause-details_content">
                             <div class="cause-details-image-box">
-                                <img src="/project/admin/uploads/<?php // $ngo_data['ngo_photo']; ?>" alt="">
+                                <img src="/project/admin/uploads/<?php // $ngo_data['ngo_photo']; 
+                                                                    ?>" alt="">
                                  <div class="category">
                                     <h6></h6>
                                 </div>
@@ -243,8 +233,10 @@ $event_data = mysqli_fetch_array($event_query);
 
                             <div class="donate-form-box donate-form-box--style2">
                                 <div class="top-title">
-                                    <h2><?php // $event_data['event_title']; ?></h2>
-                                    <p><?php // $event_data['event_details']; ?>
+                                    <h2><?php // $event_data['event_title']; 
+                                        ?></h2>
+                                    <p><?php // $event_data['event_details']; 
+                                        ?>
                                 </p>
                                 </div>
                             </div>

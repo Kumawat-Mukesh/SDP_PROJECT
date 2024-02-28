@@ -6,8 +6,8 @@
     </div>
   </div>
   <ul class="app-menu">
-    <li><a class="app-menu__item active" href="dashboard.php"><i class="app-menu__icon bi bi-speedometer"></i><span class="app-menu__label">Dashboard</span></a></li>
-    <li class="treeview"><a class="app-menu__item" href="#" data-toggle="treeview"><i class="app-menu__icon bi bi-building"></i><span class="app-menu__label">NGO</span><i class="treeview-indicator bi bi-chevron-right"></i></a>
+    <li><a class="app-menu__item " href="dashboard.php"><i class="app-menu__icon bi bi-speedometer"></i><span class="app-menu__label">Dashboard</span></a></li>
+    <li class="treeview"><a class="app-menu__item " href="#" data-toggle="treeview"><i class="app-menu__icon bi bi-building"></i><span class="app-menu__label">NGO</span><i class="treeview-indicator bi bi-chevron-right"></i></a>
       <ul class="treeview-menu">
         <li><a class="treeview-item" href="ngo_form.php"><i class="icon bi bi-circle-fill"></i> NGO-Form</a></li>
         <li><a class="treeview-item" href="ngo_information.php" rel="noopener"><i class="icon bi bi-circle-fill"></i> NGO-Information</a></li>
@@ -54,12 +54,26 @@
         <li><a class="treeview-item" href="donation_information.php"><i class="icon bi bi-circle-fill"></i> Donation-Information</a></li>
       </ul>
     </li>
-    <li class="treeview"><a class="app-menu__item" href="#" data-toggle="treeview"><i class="app-menu__icon bi bi-star-half"></i><span class="app-menu__label">Child</span><i class="treeview-indicator bi bi-chevron-right"></i></a>
+    <li class="treeview"><a class="app-menu__item" href="#" data-toggle="treeview">👶🏻<i class="app-menu__icon bi"></i><span class="app-menu__label">Child</span><i class="treeview-indicator bi bi-chevron-right"></i></a>
       <ul class="treeview-menu">
         <li><a class="treeview-item" href="child_form.php"><i class="icon bi bi-circle-fill"></i> Child-Form</a></li>
         <li><a class="treeview-item" href="child_information.php"><i class="icon bi bi-circle-fill"></i> Child-Information</a></li>
       </ul>
     </li>
+
+
+
+
+    <li class="treeview"><a class="app-menu__item" href="#" data-toggle="treeview"><i class="app-menuicon bi bi-box2-heart"></i><i class="app-menu__icon bi"></i><span class="app-menu__label">Events</span><i class="treeview-indicator bi bi-chevron-right"></i></a>
+      <ul class="treeview-menu">
+        <li><a class="treeview-item" href="event_form.php"><i class="icon bi bi-circle-fill"></i> Event-form</a></li>
+        <li><a class="treeview-item" href="event_information.php"><i class="icon bi bi-circle-fill"></i> Event-Information</a></li>
+      </ul>
+    </li>
+
+
+
+
     <li class="treeview"><a class="app-menu__item" href="#" data-toggle="treeview"><i class="app-menu__icon bi bi-star-half"></i><span class="app-menu__label">Feedback</span><i class="treeview-indicator bi bi-chevron-right"></i></a>
       <ul class="treeview-menu">
         <li><a class="treeview-item" href="feedback_form.php"><i class="icon bi bi-circle-fill"></i> Feedback-Form</a></li>
@@ -83,7 +97,13 @@
       <ul class="treeview-menu">
         <li><a class="treeview-item" target="_blank" href="ngo_category_report.php"><i class="icon bi bi-circle-fill"></i> NGO-category</a></li>
         <li><a class="treeview-item" target="_blank" href="ngo_area_report.php"><i class="icon bi bi-circle-fill"></i> NGO-area</a></li>
+        <li><a class="treeview-item" target="_blank" href="ngo_donation_report.php"><i class="icon bi bi-circle-fill"></i> NGO-donation</a></li>
+        <li><a class="treeview-item" target="_blank" href="ngo_feedback_report.php"><i class="icon bi bi-circle-fill"></i> NGO-feedback</a></li>
+        <li><a class="treeview-item" target="_blank" href="user_donation_report.php"><i class="icon bi bi-circle-fill"></i> User-donation</a></li>
+        <li><a class="treeview-item" target="_blank" href="date_donation_report.php"><i class="icon bi bi-circle-fill"></i> Date-wise-donation</a></li>
       </ul>
     </li>
+  </ul>
+  </li>
   </ul>
 </aside>

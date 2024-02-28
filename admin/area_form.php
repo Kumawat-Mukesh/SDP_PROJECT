@@ -73,7 +73,7 @@ if ($_POST) {
                                 <input class="form-control" type="text" name="area_name" onkeyup="Validatestring(this)" placeholder="Enter area name" required>
                                 <br>
                                 <label class="form-label">Area Pincode</label>
-                                <input class="form-control" type="text" name="area_pincode" maxlength="6" placeholder="Enter area pincode" required>
+                                <input class="form-control" type="text" name="area_pincode" onkeyup="Validate(this)" maxlength="6" placeholder="Enter area pincode" required>
                                 <br>
                                 <button class="btn btn-primary" type="submit" name="add"><i class="bi bi-check-circle-fill me-2"></i>Add</button>
                             </div>
@@ -141,6 +141,10 @@ if ($_POST) {
             });
 
         });
+
+        function Validate(no) {
+            no.value = no.value.replace(/[^ 0-9\n\r]+/g, '');
+        }
 
         function Validatestring(no) {
             no.value = no.value.replace(/[^ a-z A-Z\n\r]+/g, '');

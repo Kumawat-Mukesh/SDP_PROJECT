@@ -161,7 +161,7 @@ require './admin_db.php';
                 <div class="row">
                     <div class="col-md-12 ">
                         <div class="tile">
-                            <h3 class="tile-title" style="color:chocolate" >Donation Information</h3>
+                            <h3 class="tile-title" style="color:chocolate">Donation Information</h3>
                             <br>
                             <table class="table table-hover">
                                 <thead>
@@ -170,6 +170,9 @@ require './admin_db.php';
                                         <th>User Name</th>
                                         <th>Item Requirement Details</th>
                                         <th>Donation Details</th>
+                                        <th>Donation Date</th>
+                                        <th>Donation Address<Address></Address>
+                                        </th>
                                         <th>Donation Status</th>
                                         <th>Volunteer Name</th>
 
@@ -199,6 +202,8 @@ require './admin_db.php';
                                         echo "<td>{$user_row['user_first_name']}</td>";
                                         echo "<td>{$item_requirement_row['item_requirement_details']}</td>";
                                         echo "<td>{$donation_row['donation_details']}</td>";
+                                        echo "<td>{$donation_row['donation_date']}</td>";
+                                        echo "<td>{$donation_row['donation_address']}</td>";
                                         echo "<td>{$donation_row['donation_status']}</td>";
                                         echo "<td>{$volunteer_row['volunteer_first_name']} {$volunteer_row['volunteer_last_name']}</td>";
 

@@ -194,7 +194,8 @@ require './admin_db.php';
                                     <h3><a href="blog_details.php?blog_id=<?php echo $blog_data['blog_id']; ?>"><?php echo $blog_data['blog_title']; ?></a></h3>
 
                                     <div class="btns-box">
-                                        <a class="btn-one" href="causes-details.html"><span class="txt"><i class="arrow1 fa fa-check-circle"></i>Donate Now</span></a>
+                                        <a class="btn-one" href="blog_details.php?blog_id=<?php echo $blog_data['blog_id']; ?>">
+                                            <span class="txt"><i class="arrow1 fa fa-check-circle"></i>Read More</span></a>
                                     </div>
                                 </div>
                             </div>

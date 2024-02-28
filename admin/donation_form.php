@@ -157,7 +157,37 @@ if ($_POST) {
     <script src="tools/jquery.validate.js"></script>
     <script>
         $(document).ready(function() {
-            $("#donation_form_js").validate();
+            $("#donation_form_js").validate({
+                rules: {
+                    ngo_id: {
+                        required: true
+                    },
+                    user_id: {
+                        required: true
+                    },
+                    item_requirement_id: {
+                        required: true
+                    },
+                    donation_details: "required",
+                    volunteer_id: {
+                        required: true
+                    },
+                },
+                messages: {
+                    ngo_id: {
+                        required: "Please Select NGO",
+                    },
+                    user_id: {
+                        required: "Please Select User",
+                    },
+                    item_requirement_id: {
+                        required: "Please Select Requirement",
+                    },
+                    volunteer_id: {
+                        required: "Please Select Volunteer"
+                    },
+                }
+            });
         });
     </script>
     <style>

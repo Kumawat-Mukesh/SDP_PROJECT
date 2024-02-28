@@ -1,9 +1,10 @@
 <?php
 session_start();
+require 'admin_db.php';
+
 if (!isset($_SESSION["admin_id"])) {
     header("Location:admin_login.php");
 }
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -48,7 +49,7 @@ if (!isset($_SESSION["admin_id"])) {
                 <h1><i class="bi bi-table"></i> NGO</h1>
 
             </div>
-            <ul class="app-breadcrumb breadcrumb">
+            <ul class="app-breadcrumb breadcrumb side">
                 <li class="breadcrumb-item"><a href="dashboard.php"><i class="bi bi-house-door fs-6"></i></a></li>
                 <li class="breadcrumb-item">NGO</li>
                 <li class="breadcrumb-item active"><a href="ngo_information.php">NGO Information</a></li>
@@ -57,78 +58,91 @@ if (!isset($_SESSION["admin_id"])) {
         <div class="row">
             <div class="col-md-12">
                 <div class="tile">
-                    <h3 class="tile-title">NGO Information</h3>
-                    <table class="table table-hover">
-                        <thead>
-                            <tr>
-                                <!-- <th>ID</th> -->
-                                <th>Name</th>
-                                <th>Details</th>
-                                <th>Email</th>
-                                <!-- <th>Password</th> -->
-                                <th>Contact No.</th>
-                                <th>Adress</th>
-                                <th>Certificate</th>
-                                <th>Photo</th>
-                                <th>Area Name</th>
-                                <th>Category Name</th>
-                                <th>Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php
-                            include 'admin_db.php';
+                    <div class="tile-body">
+                        <div class="table-responsive">
+                            <table class="table table-hover table-bordered" id="sampleTable">
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Details</th>
+                                        <th>Email</th>
+                                        <th>Contact No.</th>
+                                        <th>Adress</th>
+                                        <th>Certificate</th>
+                                        <th>Photo</th>
+                                        <th>Area Name</th>
+                                        <th>Category Name</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php
 
-                            if (isset($_GET['delete_id'])) {
-                                $delete_id = $_GET['delete_id'];
-                                $delete_query = "delete from tbl_ngo where ngo_id = $delete_id";
-                                $data = mysqli_query($connection, $delete_query);
-                                if ($data) {
-                                    echo "<script>alert('Record deleted from the database');window.location='ngo_information.php'</script>";
-                                } else {
-                                    echo "<script>alert('Record not deleted from the database');window.location='ngo_information.php'</script>";
-                                }
-                            }
-                            $select = mysqli_query($connection, "select * from tbl_ngo");
-                            while ($ngo_row = mysqli_fetch_array($select)) {
-                                $area_query = mysqli_query($connection, "select*from tbl_area where area_id='{$ngo_row['area_id']}'");
-                                $area_row = mysqli_fetch_array($area_query);
+                                    if (isset($_GET['delete_id'])) {
+                                        $delete_id = $_GET['delete_id'];
+                                        $delete_query = "delete from tbl_ngo where ngo_id = $delete_id";
+                                        $data = mysqli_query($connection, $delete_query);
+                                        if ($data) {
+                                            echo "<script>alert('Record deleted from the database');window.location='ngo_information.php'</script>";
+                                        } else {
+                                            echo "<script>alert('Record not deleted from the database');window.location='ngo_information.php'</script>";
+                                        }
+                                    }
+                                    $select = mysqli_query($connection, "select * from tbl_ngo where ngo_status='1'");
+                                    while ($ngo_row = mysqli_fetch_array($select)) {
+                                        $area_query = mysqli_query($connection, "select*from tbl_area where area_id='{$ngo_row['area_id']}'");
+                                        $area_row = mysqli_fetch_array($area_query);
 
-                                $category_query = mysqli_query($connection, "select*from tbl_category where category_id='{$ngo_row['category_id']}'");
-                                $category_row = mysqli_fetch_array($category_query);
-                                echo "<tr>";
-                                // echo "<td>{$ngo_row['ngo_id']}</td>";
-                                echo "<td>{$ngo_row['ngo_name']}</td>";
-                                echo "<td>{$ngo_row['ngo_details']}</td>";
-                                echo "<td>{$ngo_row['ngo_email']}</td>";
-                                // echo "<td>{$ngo_row['ngo_password']}</td>";
-                                echo "<td>{$ngo_row['ngo_contact_no']}</td>";
-                                echo "<td>{$ngo_row['ngo_address']}</td>";
+                                        $category_query = mysqli_query($connection, "select*from tbl_category where category_id='{$ngo_row['category_id']}'");
+                                        $category_row = mysqli_fetch_array($category_query);
+                                        echo "<tr>";
+                                        // echo "<td>{$ngo_row['ngo_id']}</td>";
+                                        echo "<td>{$ngo_row['ngo_name']}</td>";
+                                        echo "<td>{$ngo_row['ngo_details']}</td>";
+                                        echo "<td>{$ngo_row['ngo_email']}</td>";
+                                        // echo "<td>{$ngo_row['ngo_password']}</td>";
+                                        echo "<td>{$ngo_row['ngo_contact_no']}</td>";
+                                        echo "<td>{$ngo_row['ngo_address']}</td>";
 
-                                echo "<td><a target='_blank' href='uploads/{$ngo_row['ngo_certificate']}'><img src='uploads/{$ngo_row['ngo_certificate']}' width='50'></a></td>";
-                                echo "<td><a target='_blank' href='uploads/{$ngo_row['ngo_photo']}'><img src='uploads/{$ngo_row['ngo_photo']}' width='50'></a></td>";
-                                echo "<td>{$area_row['area_name']}</td>";
-                                echo "<td>{$category_row['category_name']}</td>";
-                                echo "<td>
+                                        echo "<td><a target='_blank' href='uploads/{$ngo_row['ngo_certificate']}'><img src='uploads/{$ngo_row['ngo_certificate']}' width='50'></a></td>";
+                                        echo "<td><a target='_blank' href='uploads/{$ngo_row['ngo_photo']}'><img src='uploads/{$ngo_row['ngo_photo']}' width='50'></a></td>";
+                                        echo "<td>{$area_row['area_name']}</td>";
+                                        echo "<td>{$category_row['category_name']}</td>";
+                                        echo "<td>
                                     <a href='ngo_information.php?delete_id={$ngo_row['ngo_id']}' 
                                     onclick='return confirmDelete()'>
                                     <i class='bi bi-trash'></i></a>|  
-                                    <a href='#'><i class='bi bi-pencil-square'></i></a>   
+                                    <a href='ngo_update.php?edit_id={$ngo_row['ngo_id']}'><i class='bi bi-pencil-square'></i></a>   
                                     </td>";
-                                echo "</tr>";
-                            }
-                            ?>
-                        </tbody>
-                    </table>
+                                        echo "</tr>";
+                                    }
+                                    ?>
+                                </tbody>
+
+                            </table>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
+
+
     </main>
     <!-- Essential javascripts for application to work-->
     <script src="js/jquery-3.7.0.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/main.js"></script>
     <!-- Page specific javascripts-->
+    <!-- <link rel="stylesheet" href="https://cdn..net/v/bs5/dt-1.13.4/datatables.min.css"> -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/2.0.0/css/dataTables.dataTables.css">
+    <!-- Data table plugin-->
+    <script type="text/javascript" src="js/plugins/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="js/plugins/dataTables.bootstrap.min.js"></script>
+
+
+    <script type="text/javascript">
+        $('#sampleTable').DataTable();
+    </script>
     <!-- Google analytics script-->
     <script type="text/javascript">
         if (document.location.hostname == 'pratikborsadiya.in') {

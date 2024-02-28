@@ -1,19 +1,16 @@
 <?php
 include './admin_db.php';
 session_start();
-if(!isset($_SESSION["admin_id"])){
+if (!isset($_SESSION["admin_id"])) {
     header("Location:admin_login.php");
 }
-if($_POST)
-{
-    $user_id=$_POST["user_id"];
-    $faq_question=$_POST['faq_question'];
-    $faq_answer=$_POST['faq_answer'];
-    $query=mysqli_query($connection,"insert into tbl_faq (user_id,faq_question,faq_answer) values('{$user_id}','{$faq_question}','{$faq_answer}')");
-    if($query)
-    {
+if ($_POST) {
+    $user_id = $_POST["user_id"];
+    $faq_question = $_POST['faq_question'];
+    $faq_answer = $_POST['faq_answer'];
+    $query = mysqli_query($connection, "insert into tbl_faq (user_id,faq_question,faq_answer) values('{$user_id}','{$faq_question}','{$faq_answer}')");
+    if ($query) {
         echo "<script>alert('FAQ added to the database');window.location='faq_form.php'</script>";
-
     }
 }
 
@@ -118,18 +115,31 @@ if($_POST)
             ga('send', 'pageview');
         }
     </script>
-      <script src="tools/jquery-3.7.1.min.js"></script>
+    <script src="tools/jquery-3.7.1.min.js"></script>
     <script src="tools/jquery.validate.js"></script>
     <script>
-    $(document).ready(function(){
-      $("#faq_form_js").validate();
-      });
+        $(document).ready(function() {
+            $("#faq_form_js").validate({
+                rules: {
+                    user_id: {
+                        required: true,
+                    },
+                    faq_question: "required",
+                    faq_answer: "required",
+                },
+                messages: {
+                    user_id: {
+                        required: "Select user",
+                    }
+                }
+            });
+        });
     </script>
     <style>
-      .error{
-        color:red
-      }
-      </style>
+        .error {
+            color: red
+        }
+    </style>
 </body>
 
 </html>

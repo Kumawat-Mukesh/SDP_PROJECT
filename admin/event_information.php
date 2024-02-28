@@ -3,6 +3,7 @@ session_start();
 if (!isset($_SESSION["admin_id"])) {
     header("Location:admin_login.php");
 }
+$admin_id = $_SESESSION['admin_id'];
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -20,7 +21,7 @@ if (!isset($_SESSION["admin_id"])) {
     <meta property="og:url" content="http://pratikborsadiya.in/blog/vali-admin">
     <meta property="og:image" content="http://pratikborsadiya.in/blog/vali-admin/hero-social.png">
     <meta property="og:description" content="Vali is a responsive and free admin theme built with Bootstrap 4, SASS and PUG.js. It's fully customizable and modular.">
-    <title>Area Information</title>
+    <title>Event Information</title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -43,55 +44,67 @@ if (!isset($_SESSION["admin_id"])) {
     <main class="app-content">
         <div class="app-title">
             <div>
-                <h1><i class="bi bi-table"></i> Area</h1>
+                <h1><i class="bi bi-table"></i> Event</h1>
 
             </div>
             <ul class="app-breadcrumb breadcrumb">
                 <li class="breadcrumb-item"><a href="dashboard.php"><i class="bi bi-house-door fs-6"></i></a></li>
-                <li class="breadcrumb-item">Area</li>
-                <li class="breadcrumb-item active"><a href="area_information.php">Area Information</a></li>
+                <li class="breadcrumb-item">Event</li>
+                <li class="breadcrumb-item active"><a href="event_information.php">Event Information</a></li>
             </ul>
         </div>
-
         <div class="row">
             <div class="col-md-12">
                 <div class="tile">
                     <div class="tile-body">
                         <div class="table-responsive">
                             <table class="table table-hover table-bordered" id="sampleTable">
+
+
                                 <thead>
                                     <tr>
                                         <!-- <th>ID</th> -->
-                                        <th>Name</th>
-                                        <th>Pincode</th>
+                                        <th>Title</th>
+                                        <th>Date</th>
+                                        <th>Time</th>
+                                        <th>Location</th>
+                                        <th>Details</th>
+                                        <th>Photo</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <?php
                                     include 'admin_db.php';
+
                                     if (isset($_GET['delete_id'])) {
                                         $delete_id = $_GET['delete_id'];
-                                        $delete_query = "delete from tbl_area where area_id = $delete_id";
+                                        $delete_query = "delete from tbl_event where event_id = $delete_id";
                                         $data = mysqli_query($connection, $delete_query);
                                         if ($data) {
-                                            echo "<script>alert('Record deleted from the database');window.location='area_information.php'</script>";
+                                            echo "<script>alert('Record deleted from the database');window.location='event_information.php'</script>";
                                         } else {
-                                            echo "<script>alert('Record not deleted from the database');window.location='area_information.php'</script>";
+                                            echo "<script>alert('Record not deleted from the database');window.location='event_information.php'</script>";
                                         }
                                     }
 
-                                    $select = mysqli_query($connection, "select*from tbl_area");
-                                    while ($area_row = mysqli_fetch_array($select)) {
+                                    $select = mysqli_query($connection, "select*from tbl_event");
+                                    while ($event_row = mysqli_fetch_array($select)) {
                                         echo "<tr>";
-                                        echo "<td>{$area_row['area_name']}</td>";
-                                        echo "<td>{$area_row['area_pincode']}</td>";
+                                        // echo "<td>{$blog_row['blog_id']}</td>";  
+                                        echo "<td>{$event_row['event_title']}</td>";
+                                        echo "<td>{$event_row['event_date']}</td>";
+                                        echo "<td>{$event_row['event_time']}</td>";
+                                        echo "<td>{$event_row['event_location']}</td>";
+                                        echo "<td>{$event_row['event_details']}</td>";
+
+                                        echo "<td><a target='_blank' href='uploads/{$event_row['event_photo']}'><img src='uploads/{$event_row['event_photo']}' width='50'></a></td>";
                                         echo "<td>
-                                <a href='area_information.php?delete_id={$area_row['area_id']}' 
-                                onclick='return confirmDelete()'>
-                                <i class='bi bi-trash'></i></a>|  
-                                <a href='area_update.php?edit_id={$area_row['area_id']}'><i class='bi bi-pencil-square'></i></a>   
-                                </td>";
+                                    <a href='event_information.php?delete_id={$event_row['event_id']}' 
+                                    onclick='return confirmDelete()'>
+                                    <i class='bi bi-trash'></i></a>|  
+                                    <a href='event_edit.php?edit_id={$event_row['event_id']}'><i class='bi bi-pencil-square'></i></a>   
+                                    </td>";
                                         echo "</tr>";
                                     }
                                     ?>
@@ -138,11 +151,6 @@ if (!isset($_SESSION["admin_id"])) {
             return confirm("Are you Confirm?");
         }
     </script>
-    <style>
-        body {
-            font-family: "Open Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", Helvetica, Arial, sans-serif;
-        }
-    </style>
 </body>
 
 </html>

@@ -1,30 +1,28 @@
 <?php
 require  'admin_db.php';
 session_start();
-if(!isset($_SESSION["admin_id"])){
+if (!isset($_SESSION["admin_id"])) {
   header("Location:admin_login.php");
 }
-if($_POST)
-{
-  $volunteer_first_name=$_POST['volunteer_first_name'];
-  $volunteer_last_name=$_POST['volunteer_last_name'];
-  $volunteer_email=$_POST['volunteer_email'];
-  $volunteer_password=$_POST['volunteer_password'];
-  $volunteer_gender=$_POST['volunteer_gender'];
-  $volunteer_mobile_no=$_POST['volunteer_mobile_no'];
-  $volunteer_address=$_POST['volunteer_address'];
-  $volunteer_photo=$_POST['volunteer_photo'];
-  $volunteer_verified=$_POST['volunteer_verified'];
+if ($_POST) {
+  $volunteer_first_name = $_POST['volunteer_first_name'];
+  $volunteer_last_name = $_POST['volunteer_last_name'];
+  $volunteer_email = $_POST['volunteer_email'];
+  $volunteer_password = $_POST['volunteer_password'];
+  $volunteer_gender = $_POST['volunteer_gender'];
+  $volunteer_mobile_no = $_POST['volunteer_mobile_no'];
+  $volunteer_address = $_POST['volunteer_address'];
+  $volunteer_photo = $_POST['volunteer_photo'];
+  $volunteer_verified = $_POST['volunteer_verified'];
 
-  $volunteer_photo_name=$_FILES['volunteer_photo']['name'];
-  $volunteer_photo_tmp_name=$_FILES['volunteer_photo']['tmp_name'];
+  $volunteer_photo_name = $_FILES['volunteer_photo']['name'];
+  $volunteer_photo_tmp_name = $_FILES['volunteer_photo']['tmp_name'];
 
 
-  $query=mysqli_query($connection,"insert into tbl_volunteer(volunteer_first_name,volunteer_last_name,volunteer_email,volunteer_password,volunteer_gender,volunteer_mobile_no,volunteer_address,volunteer_photo,volunteer_verified) values('{$volunteer_first_name}','{$volunteer_last_name}','{$volunteer_email}','{$volunteer_password}','{$volunteer_gender}','{$volunteer_mobile_no}','{$volunteer_address}','{$volunteer_photo_name}','{$volunteer_verified}')");
+  $query = mysqli_query($connection, "insert into tbl_volunteer(volunteer_first_name,volunteer_last_name,volunteer_email,volunteer_password,volunteer_gender,volunteer_mobile_no,volunteer_address,volunteer_photo,volunteer_verified) values('{$volunteer_first_name}','{$volunteer_last_name}','{$volunteer_email}','{$volunteer_password}','{$volunteer_gender}','{$volunteer_mobile_no}','{$volunteer_address}','{$volunteer_photo_name}','{$volunteer_verified}')");
 
-  move_uploaded_file($volunteer_photo_tmp_name,"uploads/".$volunteer_photo_name);
-  if($query)
-  {
+  move_uploaded_file($volunteer_photo_tmp_name, "uploads/" . $volunteer_photo_name);
+  if ($query) {
     echo "<script>alert('Volunteer added to the database');window.location='volunteer_form.php'</script>";
   }
 }
@@ -85,18 +83,19 @@ if($_POST)
             <form class="row" method="post" enctype="multipart/form-data" id="volunteer_form_js">
               <div class="mb-3 col-md-3">
                 <label class="form-label">First Name</label>
-                <input class="form-control" type="text" name="volunteer_first_name" placeholder="Enter your first name" required>
+                <input class="form-control" type="text" name="volunteer_first_name" onkeyup="Validatestring(this)" placeholder="Enter your first name" required>
                 <br>
                 <label class="form-label">Last Name</label>
-                <input class="form-control" type="text" name="volunteer_last_name" placeholder="Enter your last name" required>
+                <input class="form-control" type="text" name="volunteer_last_name" onkeyup="Validatestring(this)" placeholder="Enter your last name" required>
                 <br>
                 <label class="form-label">Email</label>
                 <input class="form-control" type="email" name="volunteer_email" placeholder="Enter your email" required>
                 <br>
                 <label class="form-label">Password</label>
                 <input class="form-control" type="password" name="volunteer_password" placeholder="Enter email password" required>
-                <br>
+                <br><br>
                 <label class="form-label">Gender</label>
+                <label id="volunteer_gender-error" class="error" for="volunteer_gender"></label>
                 <div class="form-check">
                   <label class="form-check-label">
                     <input class="form-check-input" type="radio" name="volunteer_gender" value="Male">Male
@@ -108,11 +107,12 @@ if($_POST)
                   </label>
                 </div>
                 <br>
+                
                 <button class="btn btn-primary" type="submit" name="add"><i class="bi bi-check-circle-fill me-2"></i>Add</button>
               </div>
               <div class="mb-3 col-md-3">
                 <label class="form-label">Mobile NO.</label>
-                <input class="form-control" type="tel" name="volunteer_mobile_no" placeholder="Enter mobile number " required>
+                <input class="form-control" type="tel" maxlength="10" name="volunteer_mobile_no" onkeyup="Validate(this)" placeholder="Enter mobile number " required>
                 <br>
                 <label class="form-label">Address</label>
                 <textarea name="volunteer_address" class="form-control" placeholder="Enter your address" rows="5" cols="15" required></textarea>
@@ -120,7 +120,9 @@ if($_POST)
                 <label class="form-label">Photo</label>
                 <input class="form-control" type="file" name="volunteer_photo" placeholder="Upload your photo" required>
                 <br>
+                <br>
                 <label class="form-label">Verified</label>
+                <label id="volunteer_verified-error" class="error" for="volunteer_verified"></label>
                 <div class="form-check">
                   <label class="form-check-label">
                     <input class="form-check-input" type="radio" name="volunteer_verified" value="Yes">Yes
@@ -161,18 +163,80 @@ if($_POST)
       ga('send', 'pageview');
     }
   </script>
-    <script src="tools/jquery-3.7.1.min.js"></script>
-    <script src="tools/jquery.validate.js"></script>
-    <script>
-    $(document).ready(function(){
-      $("#volunteer_form_js").validate();
+  <script src="tools/jquery-3.7.1.min.js"></script>
+  <script src="tools/jquery.validate.js"></script>
+  <script>
+    $(document).ready(function() {
+      $("#volunteer_form_js").validate({
+
+        rules: {
+          volunteer_first_name: {
+            required: true,
+            minlength: 2
+          },
+          volunteer_last_name: {
+            required: true,
+            minlength: 2
+          },
+          volunteer_email: {
+            required: true,
+            email: true
+          },
+          volunteer_password: {
+            required: true,
+            minlength: 6
+          },
+          volunteer_gender: "required",
+          volunteer_mobile_no: {
+            required: true,
+            minlength: 10,
+            maxlength: 10
+          },
+          volunteer_address: "required",
+          file: "required",
+          volunteer_verified: "required"
+        },
+        messages: {
+
+          volunteer_first_name: {
+            required: "Please Enter Name",
+            minlength: "Your name must consist of at least 2 characters"
+          },
+          volunteer_last_name: {
+            required: "Please Enter Surname",
+            minlength: "Your surname must consist of at least 2 characters"
+          },
+          volunteer_email: {
+            required: "Please enter a valid email address",
+            email: "Email contains (@) and (.)",
+          },
+          volunteer_password: {
+            required: "Please Enter Password",
+            minlength: "Your password must be at least 6 characters long"
+          },
+          volunteer_mobile_no: {
+            required: "Please Enter Your Mobile no.",
+            minlength: "Enter Your 10 digit Mobile no. only",
+            maxlength: "Enter Your 10 digit Mobile no. only",
+          }
+
+        }
       });
-    </script>
-    <style>
-      .error{
-        color:red
-      }
-      </style>
+    });
+
+    function Validate(no) {
+      no.value = no.value.replace(/[^ 0-9\n\r]+/g, '');
+    }
+
+    function Validatestring(no) {
+      no.value = no.value.replace(/[^ a-z A-Z\n\r]+/g, '');
+    }
+  </script>
+  <style>
+    .error {
+      color: red
+    }
+  </style>
 </body>
 
 </html>

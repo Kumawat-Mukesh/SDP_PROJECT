@@ -1,25 +1,23 @@
 <?php
-include './admin_db.php';
 session_start();
-
-
+include './admin_db.php';
 if (!isset($_SESSION["admin_id"])) {
     header("Location:admin_login.php");
 }
 
-if ($_POST) {
-    $blog_title = $_POST['blog_title'];
-    $blog_details = $_POST['blog_details'];
-    $blog_photo_name = $_FILES['blog_photo']['name'];
-    $blog_photo_tmp_name = $_FILES['blog_photo']['tmp_name'];
+$edit_id = $_GET['edit_id'];
+$area_select = mysqli_query($connection, "select*from tbl_area where area_id='{$edit_id}'");
+$area_data = mysqli_fetch_array($area_select);
 
-    $query = mysqli_query($connection, "insert into tbl_blog(blog_title,blog_details,blog_photo) values('{$blog_title}','{$blog_details}','{$blog_photo_name}')");
-    move_uploaded_file($blog_photo_tmp_name, "uploads/" . $blog_photo_name);
+if ($_POST) {
+    $area_name = $_POST['area_name'];
+    $area_pincode = $_POST['area_pincode']; 
+
+    $query = mysqli_query($connection, "update tbl_area set area_name='{$area_name}',area_pincode='{$area_pincode}' where area_id='{$edit_id}'");
     if ($query) {
-        echo "<script>alert('Blog added to the database');window.location='blog_form.php'</script>";
+        echo "<script>alert('Area updated to the database');window.location='area_information.php'</script>";
     }
 }
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -37,7 +35,7 @@ if ($_POST) {
     <meta property="og:url" content="http://pratikborsadiya.in/blog/vali-admin">
     <meta property="og:image" content="http://pratikborsadiya.in/blog/vali-admin/hero-social.png">
     <meta property="og:description" content="Vali is a responsive and free admin theme built with Bootstrap 4, SASS and PUG.js. It's fully customizable and modular.">
-    <title>Blog Form</title>
+    <title>Area Form</title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -45,7 +43,6 @@ if ($_POST) {
     <link rel="stylesheet" type="text/css" href="css/main.css">
     <!-- Font-icon css-->
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
-
 </head>
 
 <body class="app sidebar-mini">
@@ -57,32 +54,29 @@ if ($_POST) {
     <main class="app-content">
         <div class="app-title">
             <div>
-                <h1><i class="bi bi-ui-checks"></i>Blog Form</h1>
+                <h1><i class="bi bi-ui-checks"></i>Area Update Form</h1>
             </div>
             <ul class="app-breadcrumb breadcrumb">
                 <li class="breadcrumb-item"><a href="dashboard.php"><i class="bi bi-house-door fs-6"></i></a></li>
-                <li class="breadcrumb-item">Blog</li>
-                <li class="breadcrumb-item"><a href="blog_form.php">Blog-Form</a></li>
+                <li class="breadcrumb-item">Area</li>
+                <li class="breadcrumb-item"><a href="area_form.php">Update-Area</a></li>
             </ul>
         </div>
         <div class="row">
             <div class="clearix"></div>
             <div class="col-md-12">
                 <div class="tile">
-                    <h3 class="tile-title">Add Blog</h3>
+                    <h3 class="tile-title">Update Area</h3>
                     <div class="tile-body">
-                        <form method="post" class="row" id="blog_form">
+                        <form method="post" class="row" id="area_form_js">
                             <div class="mb-3 col-md-3">
-                                <label class="form-label">Blog Title</label>
-                                <input class="form-control" type="text" onkeyup="Validatestring(this)" name="blog_title" placeholder="Enter blog title" required>
+                                <label class="form-label">Area Name</label>
+                                <input class="form-control" type="text" name="area_name" onkeyup="Validatestring(this)" value="<?php echo $area_data['area_name']; ?>" placeholder="Enter area name" required>
                                 <br>
-                                <label class="form-label">Blog Details</label>
-                                <textarea name="blog_details" class="form-control" cols="3" rows="5" placeholder="Enter blog details" required></textarea>
+                                <label class="form-label">Area Pincode</label>
+                                <input class="form-control" type="text" name="area_pincode" maxlength="6" placeholder="Enter area pincode" value="<?php echo $area_data['area_pincode']; ?>" required>
                                 <br>
-                                <label class="form-label">Photo</label>
-                                <input class="form-control" type="file" name="blog_photo" placeholder="Upload blog photo" required>
-                                <br>
-                                <button class="btn btn-primary" type="submit" name="add"><i class="bi bi-check-circle-fill me-2"></i>Add</button>
+                                <button class="btn btn-primary" type="submit" name="update"><i class="bi bi-check-circle-fill me-2"></i>Update</button>
                             </div>
                         </form>
                     </div>
@@ -117,23 +111,35 @@ if ($_POST) {
     <script src="tools/jquery.validate.js"></script>
     <script>
         $(document).ready(function() {
-            $("#blog_form").validate({
+            $("#area_form_js").validate({
+
                 rules: {
-                    blog_title: {
+
+                    area_name: {
                         required: true,
-                        minlength: 2
+                        minlength: 3
                     },
-                    blog_details: "required",
-                    file: "required",
+                    area_pincode: {
+                        required: true,
+                        minlength: 6,
+                        maxlength: 6
+                    },
                 },
                 messages: {
 
-                    blog_title: {
-                        required: "Please enter blog title",
-                        minlength: "Title must consist of at least 2 characters"
+                    area_name: {
+                        required: "Please Enter Area Name",
+                        minlength: "Area name must consist of at least 3 characters"
                     },
+                    area_pincode: {
+                        required: "Please Enter Area Pincode",
+                        minlength: "Enter minimum 6 digit area pincode",
+                        maxlength: "Enter maximum 6 digit area pincode",
+                    }
                 }
+
             });
+
         });
 
         function Validatestring(no) {

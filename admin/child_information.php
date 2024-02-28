@@ -3,6 +3,7 @@ session_start();
 if (!isset($_SESSION['admin_id'])) {
     header("location:admin_login.php");
 }
+$ngo_id = $_SESSION["ngo_id"];
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -59,8 +60,7 @@ if (!isset($_SESSION['admin_id'])) {
                     <table class="table table-hover">
                         <thead>
                             <tr>
-                                <th>NGO Name</th>
-                                <th>Child Name</th>
+                                <th>Name</th>
                                 <th>Gender</th>
                                 <th>Age</th>
                                 <th>Photo</th>
@@ -70,7 +70,6 @@ if (!isset($_SESSION['admin_id'])) {
                         <tbody>
                             <?php
                             require 'admin_db.php';
-
                             if (isset($_GET['delete_id'])) {
                                 $delete_id = $_GET['delete_id'];
                                 $delete_query = "delete from tbl_child where child_id = $delete_id";
@@ -81,7 +80,6 @@ if (!isset($_SESSION['admin_id'])) {
                                     echo "<script>alert('Record not deleted from the database');window.location='child_information.php'</script>";
                                 }
                             }
-
                             $select = mysqli_query($connection, "select * from tbl_child");
                             while ($child_row = mysqli_fetch_array($select)) {
                                 $child_query = mysqli_query($connection, "select * from tbl_child where child_id='{$child_row['child_id']}'");
@@ -91,16 +89,15 @@ if (!isset($_SESSION['admin_id'])) {
                                 $ngo_row = mysqli_fetch_array($ngo_query);
 
                                 echo "<tr>";
-                                echo "<td>{$ngo_row['ngo_name']}</td>";
                                 echo "<td>{$child_row['child_name']}</td>";
                                 echo "<td>{$child_row['child_gender']}</td>";
                                 echo "<td>{$child_row['child_age']}</td>";
                                 echo "<td><a target='_blank' href='uploads/{$child_row['child_photo']}'><img src='uploads/{$child_row['child_photo']}' width='50'></a></td>";
                                 echo "<td>
-                                <a href='child_information.php?delete_id={$child_row['ngo_id']}' 
+                                <a href='child_information.php?delete_id={$child_row['child_id']}' 
                                 onclick='return confirmDelete()'>
                                 <i class='bi bi-trash'></i></a>|  
-                                <a href='#'><i class='bi bi-pencil-square'></i></a>   
+                                <a href='child_update.php?edit_id={$child_row['child_id']}'><i class='bi bi-pencil-square'></i></a>   
                                 </td>";
                                 echo "</tr>";
                             }
