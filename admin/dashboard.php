@@ -130,44 +130,45 @@ if (!isset($_SESSION["admin_id"])) {
           </div>
         </div>
       </div>
+
+
     </div>
 
     <div class="row">
       <div class="col-md-12">
         <div class="tile">
           <div class="tile-body">
-            <div class="table-responsive">
-              <table class="table table-hover table-bordered" id="sampleTable1">
-                <thead>
-                  <tr>
-                    <!-- <th>ID</th> -->
-                    <th>NGO Name</th>
-                    <th>E-mail</th>
-                    <th>Contact No</th>
-                    <th>Category Name</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <?php
-                  include 'admin_db.php';
-                  $select = mysqli_query($connection, "select*from tbl_ngo");
-                  while ($ngo_row = mysqli_fetch_array($select)) {
-                    $area_query = mysqli_query($connection, "select*from tbl_area where area_id='{$ngo_row['area_id']}'");
-                    $area_row = mysqli_fetch_array($area_query);
+            <h3 class="tile-title">NGO Information</h3>
+            <table class="table table-hover table-bordered" id="sampleTable1">
+              <thead>
+                <tr>
+                  <!-- <th>ID</th> -->
+                  <th>NGO Name</th>
+                  <th>E-mail</th>
+                  <th>Contact No</th>
+                  <th>Category Name</th>
+                </tr>
+              </thead>
+              <tbody>
+                <?php
+                include 'admin_db.php';
+                $select = mysqli_query($connection, "select*from tbl_ngo");
+                while ($ngo_row = mysqli_fetch_array($select)) {
+                  $area_query = mysqli_query($connection, "select*from tbl_area where area_id='{$ngo_row['area_id']}'");
+                  $area_row = mysqli_fetch_array($area_query);
 
-                    $category_query = mysqli_query($connection, "select*from tbl_category where category_id='{$ngo_row['category_id']}'");
-                    $category_row = mysqli_fetch_array($category_query);
-                    echo "<tr>";
-                    echo "<td>{$ngo_row['ngo_name']}</td>";
-                    echo "<td>{$ngo_row['ngo_email']}</td>";
-                    echo "<td>{$ngo_row['ngo_contact_no']}</td>";
-                    echo "<td>{$category_row['category_name']}</td>";
-                    echo "</tr>";
-                  }
-                  ?>
-                </tbody>
-              </table>
-            </div>
+                  $category_query = mysqli_query($connection, "select*from tbl_category where category_id='{$ngo_row['category_id']}'");
+                  $category_row = mysqli_fetch_array($category_query);
+                  echo "<tr>";
+                  echo "<td>{$ngo_row['ngo_name']}</td>";
+                  echo "<td>{$ngo_row['ngo_email']}</td>";
+                  echo "<td>{$ngo_row['ngo_contact_no']}</td>";
+                  echo "<td>{$category_row['category_name']}</td>";
+                  echo "</tr>";
+                }
+                ?>
+              </tbody>
+            </table>
           </div>
         </div>
       </div>
@@ -177,42 +178,46 @@ if (!isset($_SESSION["admin_id"])) {
       <div class="col-md-12">
         <div class="tile">
           <div class="tile-body">
-            <div class="table-responsive">
-              <table class="table table-hover table-bordered" id="sampleTable2">
-                <thead>
-                  <tr>
-                    <th>First Name</th>
-                    <th>Last Name</th>
-                    <th>E-mail</th>
-                    <th>Contact No</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <?php
-                  include 'admin_db.php';
-                  $select = mysqli_query($connection, "select*from tbl_user");
-                  while ($user_row = mysqli_fetch_array($select)) {
-                    $area_query = mysqli_query($connection, "select*from tbl_area where area_id='{$user_row['area_id']}'");
-                    $area_row = mysqli_fetch_array($area_query);
+          <h3 class="tile-title">User Information</h3>
+            <table class="table table-hover table-bordered" id="sampleTable2">
+              <thead>
+                <tr>
+                  <th>First Name</th>
+                  <th>Last Name</th>
+                  <th>E-mail</th>
+                  <th>Contact No</th>
+                </tr>
+              </thead>
+              <tbody>
+                <?php
+                include 'admin_db.php';
+                $select = mysqli_query($connection, "select*from tbl_user");
+                while ($user_row = mysqli_fetch_array($select)) {
+                  $area_query = mysqli_query($connection, "select*from tbl_area where area_id='{$user_row['area_id']}'");
+                  $area_row = mysqli_fetch_array($area_query);
 
-                    echo "<tr>";
-                    // echo "<td>{$user_row['user_id']}</td>";
-                    echo "<td>{$user_row['user_first_name']}</td>";
-                    echo "<td>{$user_row['user_last_name']}</td>";
-                    echo "<td>{$user_row['user_email']}</td>";
+                  echo "<tr>";
+                  // echo "<td>{$user_row['user_id']}</td>";
+                  echo "<td>{$user_row['user_first_name']}</td>";
+                  echo "<td>{$user_row['user_last_name']}</td>";
+                  echo "<td>{$user_row['user_email']}</td>";
 
-                    echo "<td>{$user_row['user_mobile_no']}</td>";
+                  echo "<td>{$user_row['user_mobile_no']}</td>";
 
-                    echo "</tr>";
-                  }
-                  ?>
-                </tbody>
-              </table>
-            </div>
+                  echo "</tr>";
+                }
+                ?>
+              </tbody>
+            </table>
           </div>
         </div>
       </div>
+
     </div>
+
+    <!-- <div class="row">
+
+    </div> -->
     </div>
 
   </main>
@@ -240,8 +245,8 @@ if (!isset($_SESSION["admin_id"])) {
       type: "doughnut",
       data: {
         labels: [
+          'Old Age Home',
           'Child orphanage',
-          'Old age home',
           'Blind people orphanage'
         ],
         datasets: [{

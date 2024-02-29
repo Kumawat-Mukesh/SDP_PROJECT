@@ -12,7 +12,6 @@ if (isset($_POST['add'])) {
     $ngo_name = $_POST['ngo_name'];
     $ngo_details = $_POST['ngo_details'];
     $ngo_email = $_POST['ngo_email'];
-    $ngo_password = $_POST['ngo_password'];
     $ngo_contact_no = $_POST['ngo_contact_no'];
     $ngo_address = $_POST['ngo_address'];
     $ngo_certificate = $_POST['ngo_certificate'];
@@ -27,7 +26,7 @@ if (isset($_POST['add'])) {
     $certificate_photo_tmp_name = $_FILES['ngo_certificate']['tmp_name'];
 
 
-    $query = mysqli_query($connection, "update tbl_ngo set ngo_name='{$ngo_name}',ngo_details='{$ngo_details}',ngo_email='{$ngo_email}',ngo_password='{$ngo_password}',ngo_contact_no='{$ngo_contact_no}',ngo_address='{$ngo_address}',ngo_certificate='{$certificate_photo_name}',ngo_photo='{$ngo_photo_name}',area_id='{$area_id}',category_id='{$category_id}' where ngo_id='{$edit_id}'");
+    $query = mysqli_query($connection, "update tbl_ngo set ngo_name='{$ngo_name}',ngo_details='{$ngo_details}',ngo_email='{$ngo_email}',ngo_contact_no='{$ngo_contact_no}',ngo_address='{$ngo_address}',ngo_certificate='{$certificate_photo_name}',ngo_photo='{$ngo_photo_name}',area_id='{$area_id}',category_id='{$category_id}' where ngo_id='{$edit_id}'");
     move_uploaded_file($ngo_photo_tmp_name, "uploads/" . $ngo_photo_name);
     move_uploaded_file($certificate_photo_tmp_name, "uploads/" . $certificate_photo_name);
 

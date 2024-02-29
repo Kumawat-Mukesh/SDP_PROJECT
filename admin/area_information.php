@@ -57,47 +57,46 @@ if (!isset($_SESSION["admin_id"])) {
             <div class="col-md-12">
                 <div class="tile">
                     <div class="tile-body">
-                        <div class="table-responsive">
-                            <table class="table table-hover table-bordered" id="sampleTable">
-                                <thead>
-                                    <tr>
-                                        <!-- <th>ID</th> -->
-                                        <th>Name</th>
-                                        <th>Pincode</th>
-                                        <th>Action</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <?php
-                                    include 'admin_db.php';
-                                    if (isset($_GET['delete_id'])) {
-                                        $delete_id = $_GET['delete_id'];
-                                        $delete_query = "delete from tbl_area where area_id = $delete_id";
-                                        $data = mysqli_query($connection, $delete_query);
-                                        if ($data) {
-                                            echo "<script>alert('Record deleted from the database');window.location='area_information.php'</script>";
-                                        } else {
-                                            echo "<script>alert('Record not deleted from the database');window.location='area_information.php'</script>";
-                                        }
+                        <h3 class="tile-title">Area Information</h3>
+                        <table class="table table-hover table-bordered" id="sampleTable">
+                            <thead>
+                                <tr>
+                                    <!-- <th>ID</th> -->
+                                    <th>Name</th>
+                                    <th>Pincode</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php
+                                include 'admin_db.php';
+                                if (isset($_GET['delete_id'])) {
+                                    $delete_id = $_GET['delete_id'];
+                                    $delete_query = "delete from tbl_area where area_id = $delete_id";
+                                    $data = mysqli_query($connection, $delete_query);
+                                    if ($data) {
+                                        echo "<script>alert('Record deleted from the database');window.location='area_information.php'</script>";
+                                    } else {
+                                        echo "<script>alert('Record not deleted from the database');window.location='area_information.php'</script>";
                                     }
+                                }
 
-                                    $select = mysqli_query($connection, "select*from tbl_area");
-                                    while ($area_row = mysqli_fetch_array($select)) {
-                                        echo "<tr>";
-                                        echo "<td>{$area_row['area_name']}</td>";
-                                        echo "<td>{$area_row['area_pincode']}</td>";
-                                        echo "<td>
+                                $select = mysqli_query($connection, "select*from tbl_area");
+                                while ($area_row = mysqli_fetch_array($select)) {
+                                    echo "<tr>";
+                                    echo "<td>{$area_row['area_name']}</td>";
+                                    echo "<td>{$area_row['area_pincode']}</td>";
+                                    echo "<td>
                                 <a href='area_information.php?delete_id={$area_row['area_id']}' 
                                 onclick='return confirmDelete()'>
                                 <i class='bi bi-trash'></i></a>|  
                                 <a href='area_update.php?edit_id={$area_row['area_id']}'><i class='bi bi-pencil-square'></i></a>   
                                 </td>";
-                                        echo "</tr>";
-                                    }
-                                    ?>
-                                </tbody>
-                            </table>
-                        </div>
+                                    echo "</tr>";
+                                }
+                                ?>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>

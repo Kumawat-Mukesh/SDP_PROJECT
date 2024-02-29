@@ -2,30 +2,25 @@
 session_start();
 require 'admin_db.php';
 if ($_POST) {
+    $volunteer_email = $_GET['volunteer_email'];
     $volunteer_otp = $_POST['volunteer_otp'];
     $volunteer_new_password = $_POST['volunteer_new_password'];
     $volunteer_confirm_password = $_POST['volunteer_confirm_password'];
     $volunteer_id = $_SESSION['volunteer_id'];
-    
-    $old_password_query  = mysqli_query($connection, "select * from tbl_volunteer where volunteer_id='{$volunteer_id}'");
+
+    $old_password_query  = mysqli_query($connection, "select * from tbl_volunteer where volunteer_email='{$volunteer_email}' and volunteer_password='{$volunteer_otp}'");
     $old_password_db = mysqli_fetch_array($old_password_query);
-    if ($old_password_db['volunteer_password'] == $volunteer_otp)
-    {
-        if ($volunteer_new_password == $volunteer_confirm_password) 
-        {
-            if ($volunteer_otp == $volunteer_new_password) 
-            {
-                echo "<script>alert('OTP and New Password Must be Different')</script>";
-            } 
-            else 
-            {
-                $update_query = mysqli_query($connection, "update tbl_volunteer set volunteer_password = '{$volunteer_new_password}' where volunteer_id='{$volunteer_id}'");
-                echo "<script>alert('Password Changed');window.location='volunteer_login.php';</script>";
+    $count = mysqli_num_rows($old_password_query);
+    if ($count > 0) {
+        if ($old_password_db['volunteer_password'] != $volunteer_new_password) {
+            if ($volunteer_new_password == $volunteer_confirm_password) {
+                $update_query = mysqli_query($connection, "update tbl_volunteer set volunteer_password='{$volunteer_new_password}' where volunteer_email = '{$volunteer_email}'");
+                echo "<script>alert('Password changed');window.location='volunteer_login.php'</script>";
+            } else {
+                echo "<script>alert('New and Confirm Password no match')</script>";
             }
-        } 
-        else 
-        {
-            echo "<script>alert('New and Confirm Password Not Match');</script>";
+        } else {
+            echo "<script>alert('New Password must be different ');</script>";
         }
     } else {
         echo "<script>alert('OTP Not Match');</script>";

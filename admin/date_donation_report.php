@@ -1,6 +1,6 @@
 <?php
-session_start();
 require 'admin_db.php';
+session_start();
 if (!isset($_SESSION["admin_id"])) {
     header("Location:admin_login.php");
 }
@@ -40,81 +40,105 @@ if (!isset($_SESSION["admin_id"])) {
             padding: 30px;
 
         }
+
+        .info {
+            border-collapse: collapse;
+            margin: 20px;
+            padding: 20px;
+        }
     </style>
 </head>
 
 <body>
-    <br>
-    <h2 class="tile-title" style="text-align:center;">Connecting Dots</h2><br>
-    <hr>
-    <h3 class="tile-title" style="text-align:center;">Date Wise Donation Report</h3><br>
-    <?php
-    echo "<h6 style='color:teal;'>Date : " . date('d-m-Y') . "</h6> <br>";
-    ?>
-    <form method="get">
-        <input type="date" name="sdate" />
-        <input type="date" name="edate" /><br>
-        <input type="submit" value="search">
-    </form>
-    <table border=1 class="table table-hover" style="width: 95%;">
-        <thead>
-            <tr>
-                <!-- <th>Donation ID</th> -->
-                <th>NGO Name</th>
-                <th>User Name</th>
-                <th>Item Requirement Details</th>
-                <th>Donation Details</th>
-                <th>Donation Method</th>
-                <th>Donation Type</th>
-                <th>Donation Date</th>
-                <th>Donation Status</th>
-                <th>Volunteer Name</th>
-                <th>Amount</th>
-            </tr>
-        </thead>
-        <tbody>
-
+    <main>
+        <div class="info">
+            <br>
+            <h2 class="tile-title" style="text-align:center;">Connecting Dots</h2><br>
+            <hr>
+            <h3 class="tile-title" style="text-align:center;">Date Wise Donation Report</h3><br>
             <?php
-
-            if (isset($_GET['sdate'])) {
-                $sdate = $_GET['sdate'];
-                $edate = $_GET['edate'];
-
-                $select = mysqli_query($connection, "select * from tbl_donation where  donation_date between '{$sdate}' and '{$edate}'");
-                while ($donation_row = mysqli_fetch_array($select)) {
-                    $ngo_query = mysqli_query($connection, "select*from tbl_ngo where ngo_id='{$donation_row['ngo_id']}'");
-                    $ngo_row = mysqli_fetch_array($ngo_query);
-
-                    $item_requirement_query = mysqli_query($connection, "select*from tbl_item_requirement where item_requirement_id='{$donation_row['item_requirement_id']}'");
-                    $item_requirement_row = mysqli_fetch_array($item_requirement_query);
-
-                    $volunteer_query = mysqli_query($connection, "select*from tbl_volunteer where volunteer_id='{$donation_row['volunteer_id']}'");
-                    $volunteer_row = mysqli_fetch_array($volunteer_query);
-
-                    $user_query = mysqli_query($connection, "select * from tbl_user where user_id = '{$donation_row['user_id']}'");
-                    $user_row = mysqli_fetch_array($user_query);
-
-                    echo "<tr>";
-                    // echo "<td>{$donation_row['donation_id']}</td>";
-                    echo "<td>{$ngo_row['ngo_name']}</td>";
-                    echo "<td>{$user_row['user_first_name']}</td>";
-                    echo "<td>{$item_requirement_row['item_requirement_details']}</td>";
-                    echo "<td>{$donation_row['donation_details']}</td>";
-                    echo "<td>{$donation_row['method']}</td>";
-                    echo "<td>{$donation_row['type']}</td>";
-                    echo "<td>{$donation_row['donation_date']}</td>";
-                    echo "<td>{$donation_row['donation_status']}</td>";
-                    echo "<td>{$volunteer_row['volunteer_first_name']} {$volunteer_row['volunteer_last_name']}</td>";
-                    echo "<td>{$donation_row['amount']}</td>";
-
-                    echo "</tr>";
-                }
-            } else {
-                echo "No record found";
-            }
+            echo "<h6 style='color:teal;'>Date : " . date('d-m-Y') . "</h6> <br>";
             ?>
-        </tbody>
-    </table>
+            <form method="get">
+
+                <input type="date" name="sdate" />
+                <input type="date" name="edate" /><br>
+                <input type="submit" value="search">
+            </form>
+        </div>
+        <?php
+        if (isset($_GET['sdate'])) {
+            $sdate = $_GET['sdate'];
+            $edate = $_GET['edate'];
+
+            $select = mysqli_query($connection, "select * from tbl_donation where  donation_date between '{$sdate}' and '{$edate}'");
+            $date_select = mysqli_num_rows($select);
+            if ($date_select > 0) {
+        ?>
+                <table border=1 class="table table-hover" style="width: 95%;">
+                    <thead>
+                        <tr>
+                            <!-- <th>Donation ID</th> -->
+                            <th>NGO Name</th>
+                            <th>User Name</th>
+                            <th>Item Requirement Details</th>
+                            <th>Donation Details</th>
+                            <th>Donation Method</th>
+                            <th>Donation Type</th>
+                            <th>Donation Date</th>
+                            <th>Donation Address</th>
+                            <th>Donation Status</th>
+                            <th>Volunteer Name</th>
+                            <th>Donation Amount</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        <?php
+
+
+                        while ($donation_row = mysqli_fetch_array($select)) {
+                            $ngo_query = mysqli_query($connection, "select*from tbl_ngo where ngo_id='{$donation_row['ngo_id']}'");
+                            $ngo_row = mysqli_fetch_array($ngo_query);
+
+                            $item_requirement_query = mysqli_query($connection, "select*from tbl_item_requirement where item_requirement_id='{$donation_row['item_requirement_id']}'");
+                            $item_requirement_row = mysqli_fetch_array($item_requirement_query);
+
+                            $volunteer_query = mysqli_query($connection, "select*from tbl_volunteer where volunteer_id='{$donation_row['volunteer_id']}'");
+                            $volunteer_row = mysqli_fetch_array($volunteer_query);
+
+                            $user_query = mysqli_query($connection, "select * from tbl_user where user_id = '{$donation_row['user_id']}'");
+                            $user_row = mysqli_fetch_array($user_query);
+
+                            echo "<tr>";
+                            // echo "<td>{$donation_row['donation_id']}</td>";
+                            echo "<td>{$ngo_row['ngo_name']}</td>";
+                            echo "<td>{$user_row['user_first_name']}</td>";
+                            echo "<td>{$item_requirement_row['item_requirement_details']}</td>";
+                            echo "<td>{$donation_row['donation_details']}</td>";
+                            echo "<td>{$donation_row['donation_method']}</td>";
+                            echo "<td>{$donation_row['donation_type']}</td>";
+                            echo "<td>{$donation_row['donation_date']}</td>";
+                            echo "<td>{$donation_row['donation_address']}</td>";
+                            echo "<td>{$donation_row['donation_status']}</td>";
+                            echo "<td>{$volunteer_row['volunteer_first_name']} {$volunteer_row['volunteer_last_name']}</td>";
+                            echo "<td>{$donation_row['donation_amount']}</td>";
+
+
+                            echo "</tr>";
+                        }
+                        ?>
+                    </tbody>
+                </table>
+
+        <?php } else {
+                echo '
+             <div class="page-error">
+             <h1 class="text-danger"><i class="bi bi-exclamation-circle"></i> No Record Found</h1>
+         </div>';
+            }
+        } ?>
+    </main>
     <!-- Essential javascripts for application to work-->
     <script src="js/jquery-3.7.0.min.js"></script>
     <script src="js/bootstrap.min.js"></script>

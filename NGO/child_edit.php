@@ -1,16 +1,15 @@
 <?php
-require  'admin_db.php';
+require 'admin_db.php';
 session_start();
 if (!isset($_SESSION['ngo_id'])) {
     header("location:ngo_login.php");
 }
-$edit_id = $_GET['edit_id'];
-$child_select = mysqli_query($connection, "select *from tbl_child where child_id={$edit_id}");
-$child_data = mysqli_fetch_array($child_select);
+
+$edit_id=$_GET['edit_id'];
+$child_select=mysqli_query($connection,"select * from tbl_child where child_id={$edit_id}");
+$child_data=mysqli_fetch_array($child_select);
 
 if ($_POST) {
-
-    $ngo_id = $_POST['ngo_id'];
     $child_name = $_POST['child_name'];
     $child_gender = $_POST['child_gender'];
     $child_age = $_POST['child_age'];
@@ -20,7 +19,7 @@ if ($_POST) {
     $query = mysqli_query($connection, "update tbl_child set child_name='{$child_name}',child_gender='{$child_gender}',child_age='{$child_age}',child_photo='{$child_photo_name}' where child_id='{$edit_id}'");
     move_uploaded_file($child_photo_tmp_name, "uploads/" . $child_photo_name);
     if ($query) {
-        echo "<script>alert('Child information updated!!');window.location='child_information.php'</script>";
+        echo "<script>alert('Child Information updated');window.location='child_information.php'</script>";
     }
 }
 ?>
@@ -68,7 +67,7 @@ if ($_POST) {
             <ul class="app-breadcrumb breadcrumb">
                 <li class="breadcrumb-item"><a href="dashboard.php"><i class="bi bi-house-door fs-6"></i></a></li>
                 <li class="breadcrumb-item">Child</li>
-                <li class="breadcrumb-item"><a href="child_edit.php">Child-Form</a></li>
+                <li class="breadcrumb-item"><a href="child_form.php">Child-Form</a></li>
             </ul>
         </div>
         <div class="row">
@@ -79,33 +78,32 @@ if ($_POST) {
                     <div class="tile-body">
                         <form class="row" method="post" id="child_from_js" enctype="multipart/form-data">
                             <div class="mb-3 col-md-3">
-
                                 <label class="form-label">Name</label>
-                                <input class="form-control" type="text" name="child_name" placeholder="Enter child name " value="<?php echo $child_data['child_name']; ?>" required>
+                                <input class="form-control" type="text" name="child_name" placeholder="Enter child name " value="<?php echo $child_data['child_name'];?>" required>
                                 <br>
                                 <label class="form-label">Gender</label>
                                 <div class="form-check">
                                     <label class="form-check-label">
                                         <input class="form-check-input" type="radio" name="child_gender" value="Male" <?php if ($child_data['child_gender'] == 'Male') {
-                                                                                                                            echo "checked";
-                                                                                                                        } ?>>Male
+                                                    echo "checked";
+                                                    } ?>>Male
                                     </label>
                                 </div>
                                 <div class="form-check">
                                     <label class="form-check-label">
                                         <input class="form-check-input" type="radio" name="child_gender" value="Female" <?php if ($child_data['child_gender'] == 'Female') {
-                                                                                                                            echo "checked";
-                                                                                                                        } ?>>Female
+                                                    echo "checked";
+                                                    } ?>>Female
                                     </label>
                                 </div>
                                 <br>
                                 <label class="form-label">Age</label>
-                                <input class="form-control" type="text" name="child_age" placeholder="Enter child age" min="1" max="25" value="<?php echo $child_data['child_age']; ?>" required>
+                                <input class="form-control" type="text" name="child_age" placeholder="Enter child age" min="1" max="25" value="<?php echo $child_data['child_age'];?>" required>
                                 <br>
                                 <label class="form-label">Photo</label>
                                 <input class="form-control" type="file" name="child_photo" placeholder="Upload child photo" required>
                                 <br>
-                                <button class="btn btn-primary" type="submit" name="add"><i class="bi bi-check-circle-fill me-2"></i>Update+</button>
+                                <button class="btn btn-primary" type="submit" name="add"><i class="bi bi-check-circle-fill me-2"></i>Add</button>
                             </div>
                         </form>
                     </div>

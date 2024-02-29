@@ -1,12 +1,7 @@
 <?php
 session_start();
 require './admin_db.php';
-$event_id = $_GET['event_id'];
-$event_query = mysqli_query($connection, "select * from tbl_event where event_id = '{$event_id}'");
-$event_data = mysqli_fetch_array($event_query);
-
-
-
+$volunteer_id=$_SESSION['volunteer_id'];
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -133,7 +128,7 @@ $event_data = mysqli_fetch_array($event_query);
                             <div class="parallax-scene parallax-scene-1">
                                 <div data-depth="0.20" class="parallax-layer shape wow zoomInRight" data-wow-duration="2000ms">
                                     <div class="shape1">
-                                        <!-- <img class="float-bob" src="/project/admin/uploads/ <?php echo $event_data['event_photo'] ?>" alt=""> -->
+                                        <img class="float-bob" src="/project/admin/uploads <?php echo ""; ?>" alt="">
                                     </div>
                                 </div>
                             </div>
@@ -145,16 +140,14 @@ $event_data = mysqli_fetch_array($event_query);
                                 </div>
                             </div>
                             <div class="title">
-                                <h2>Event Details</h2>
+                                <h2>View Task</h2>
                             </div>
                             <div class="border-box"></div>
                             <div class="breadcrumb-menu">
                                 <ul>
                                     <li><a href="user_home.php">Home</a></li>
                                     <li><span class="flaticon-right-arrow"></span></li>
-                                    <li><a href="event_listing.php">Event</a></li>
-                                    <li><span class="flaticon-right-arrow"></span></li>
-                                    <li class="active">Event Details</li>
+                                    <li class="active">View Task</li>
                                 </ul>
                             </div>
                         </div>
@@ -162,170 +155,71 @@ $event_data = mysqli_fetch_array($event_query);
                 </div>
             </div>
         </section>
-        <!--End breadcrumb area-->
 
-        <!--Start Cause Details Area-->
+        <!-- Donation information -->
         <section class="cause-details-area">
             <div class="container">
                 <div class="row">
-                    <div class="col-xl-8">
-                        <div class="event-details_content">
+                    <div class="col-md-12 ">
+                        <div class="tile">
+                            <h3 class="tile-title" style="color:chocolate" >Donation Information</h3>
+                            <br>
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr style="color:black">
+                                        <th>NGO Name</th>
+                                        <th>User Name</th>
+                                       
+                                        <th>Donation Details</th>
+                                        <th>Donation Date</th>
+                                        <th>Donation Address</th>
+                                        <th>NGO Address</th>
+                                        
 
-                            <div class="event-details-image-box">
-                                <img src="/project/admin/uploads/<?php echo $event_data['event_photo']; ?>" alt="">
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php
+                                    include 'admin_db.php';
 
-                            </div>
+                                    $select = mysqli_query($connection, "select*from tbl_donation where volunteer_id='{$_SESSION['volunteer_id']}'");
+                                    while ($donation_row = mysqli_fetch_array($select)) {
 
-                            <div class="event-details-text-box">
-                                <h2><?php echo $event_data['event_title']; ?></h2>
-                                <ul class="event-info" style="width: 900px;">
-                                    <li>
-                                        <div class="icon">
-                                            <img src="assets/images/icon/date-1.png" alt="">
-                                            <div class="overlay-icon">
-                                                <img src="assets/images/icon/date-1-bg.png" alt="">
-                                            </div>
-                                        </div>
-                                        <div class="text">
-                                            <p>Event Date Time</p>
-                                            <h3><?php echo $event_data['event_date'] . " " . $event_data['event_time']; ?></h3>
-                                        </div>
-                                    </li>
+                                        $ngo_query = mysqli_query($connection, "select*from tbl_ngo where ngo_id='{$donation_row['ngo_id']}'");
+                                        $ngo_row = mysqli_fetch_array($ngo_query);
 
-                                    <li>
-                                        <div class="icon">
-                                            <img src="assets/images/icon/map-marker-1.png" alt="">
-                                            <div class="overlay-icon">
-                                                <img src="assets/images/icon/map-marker-1-bg.png" alt="">
-                                            </div>
-                                        </div>
-                                        <div class="text">
-                                            <p>Event Location</p>
-                                            <h3><?php echo $event_data['event_location']; ?></h3>
-                                        </div>
-                                    </li>
-                                </ul>
-                                <div class="bottom-box">
-                                    <div class="btns">
-                                        <?php echo $event_data['event_details']; ?>
-                                    </div>
-                                </div>
+                                        $item_requirement_query = mysqli_query($connection, "select*from tbl_item_requirement where item_requirement_id='{$donation_row['item_requirement_id']}'");
+                                        $item_requirement_row = mysqli_fetch_array($item_requirement_query);
 
-                            </div>
+                                        $volunteer_query = mysqli_query($connection, "select*from tbl_volunteer where volunteer_id='{$donation_row['volunteer_id']}'");
+                                        $volunteer_row = mysqli_fetch_array($volunteer_query);
 
+                                        $user_query = mysqli_query($connection, "select * from tbl_user where user_id = '{$donation_row['user_id']}'");
+                                        $user_row = mysqli_fetch_array($user_query);
 
-
-
-
-
-
-
-
-                        </div>
-                        <!-- <div class="cause-details_content">
-                            <div class="cause-details-image-box">
-                                <img src="/project/admin/uploads/<?php // $ngo_data['ngo_photo']; 
-                                                                    ?>" alt="">
-                                 <div class="category">
-                                    <h6></h6>
-                                </div>
-                            </div>
-
-                            <div class="donate-form-box donate-form-box--style2">
-                                <div class="top-title">
-                                    <h2><?php // $event_data['event_title']; 
-                                        ?></h2>
-                                    <p><?php // $event_data['event_details']; 
-                                        ?>
-                                </p>
-                                </div>
-                            </div>
-
-                            <div class="cause-details-text-box-1">
-                                
-                                </p>
-                            </div>
-                            <hr>
-                        </div> -->
-
-
-                        <!--Start Reply Form Box-->
-
-                    </div>
-                    <div class="auto-container">
-                        <div class="row">
-                            <div class="col-xl-12">
-                                <div class="sidebar-content-box">
-                                    <!--Start Single Sidebar Box-->
-                                    <!--End Single Sidebar Box-->
-                                    <!--Start Single Sidebar Box-->
-                                    <div class="single-sidebar-box">
-                                        <div class="single-sidebar_search_box">
-                                            <div class="title">
-                                                <h3>Search</h3>
-                                            </div>
-                                            <div class="sidebar-search-box wow fadeInUp animated animated animated" data-wow-delay="0.1s" data-wow-duration="1200ms" style="visibility: visible; animation-duration: 1200ms; animation-delay: 0.1s; animation-name: fadeInUp;">
-                                                <form class="search-form" action="#">
-                                                    <input placeholder="Keyword" type="text">
-                                                    <button type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
-                                                </form>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!--End Single Sidebar Box-->
-                                    <!--Start Single Sidebar Box-->
-
-                                    <!--End Single Sidebar Box-->
-
-                                    <!--Start Single Sidebar Box-->
-
-                                    <!--End Single Sidebar Box-->
-
-                                    <!--Start Single Sidebar Box-->
-
-                                    <div class="single-sidebar-box">
-                                        <div class="sidebar-campaigns">
-                                            <div class="title">
-                                                <h3>Recent Blog</h3>
-                                            </div>
-                                            <ul class="recent-campaigns">
-                                                <?php
-                                                $blog_query = mysqli_query($connection, "select * from tbl_blog order by blog_id desc limit 0,3");
-
-                                                while ($blog_data = mysqli_fetch_array($blog_query)) {
-                                                ?>
-                                                    <li>
-                                                        <div class="inner">
-                                                            <div class="img-box">
-                                                                <img src="/project/admin/uploads/<?php echo $blog_data['blog_photo']; ?>" alt="Awesome Image">
-                                                                <div class="overlay-content">
-                                                                    <a href="#"><i class="fa fa-link" aria-hidden="true"></i></a>
-                                                                </div>
-                                                            </div>
-                                                            <div class="title-box">
-                                                                <h4><a href="blog_listing.php"><?php echo $blog_data['blog_title']; ?></a></h4>
-                                                                <div class="btns">
-                                                                    <a href="blog_listing.php">View Details</a>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </li>
-                                                <?php } ?>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                    <!--End Single Sidebar Box-->
-                                </div>
-                            </div>
+                                        echo "<tr>";
+                                        echo "<td>{$ngo_row['ngo_name']}</td>";
+                                        echo "<td>{$user_row['user_first_name']}</td>";
+                                       
+                                        echo "<td>{$donation_row['donation_details']}</td>";
+                                        echo "<td>{$donation_row['donation_date']}</td>";
+                                        echo "<td>{$donation_row['donation_address']}</td>";
+                                        echo "<td>{$ngo_row['ngo_address']}</td>";
+                                        echo "</tr>";
+                                    }
+                                    ?>
+                                </tbody>
+                            </table>
                         </div>
                     </div>
+
+
+
                 </div>
-
-
             </div>
-
         </section>
-        <!--End Cause Details Area-->
+
+
 
         <!--Start footer area -->
         <?php require './user_footer.php'; ?>

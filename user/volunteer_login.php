@@ -8,20 +8,22 @@ if ($_POST) {
     $query = mysqli_query($connection, "select * from tbl_volunteer where volunteer_email = '{$volunteer_email}' and volunteer_password = '{$volunteer_password}' and volunteer_verified='Yes'");
     $count = mysqli_num_rows($query);
     $row = mysqli_fetch_array($query);
-
+    if ($count > 0) {
     if($row['volunteer_verified']=='Yes'){
-        if ($count > 0) {
+        
         $_SESSION['volunteer_id'] = $row['volunteer_id'];
         $_SESSION['volunteer_first_name'] = $row['volunteer_first_name'];
         $_SESSION['volunteer_last_name'] = $row['volunteer_last_name'];
         header("Location:user_home.php");
-        } else {
-        $msg = "Email and password not matched!";
+        } 
+        else{
+            echo "<script>alert('Your account is not activated');</script>";
         }
     }
-    else{
-        echo "<script>alert('Your account is not activated');</script>";
-    }
+    else {
+        $msg = "Email and password not matched!";
+        }
+    
 }
 ?>
 <!DOCTYPE html>

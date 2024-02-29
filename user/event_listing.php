@@ -221,7 +221,12 @@ require './admin_db.php';
                                             <span class="flaticon-clock"></span>
                                         </div>
                                         <div class="text">
-                                            <p>Time: <?php echo $event_row['event_time']; ?></p>
+                                            <p>Time:
+                                                <?php
+                                                $t = $event_row['event_time'];
+                                                echo date('g:i a', strtotime($t));
+                                                ?>
+                                            </p>
                                         </div>
                                     </div>
                                 </div>

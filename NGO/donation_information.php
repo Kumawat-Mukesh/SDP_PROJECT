@@ -1,9 +1,9 @@
 <?php
 session_start();
-if(!isset($_SESSION["ngo_id"])){
+if (!isset($_SESSION["ngo_id"])) {
     header("Location:ngo_login.php");
 }
-$ngo_id=$_SESSION["ngo_id"];
+$ngo_id = $_SESSION["ngo_id"];
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -44,7 +44,7 @@ $ngo_id=$_SESSION["ngo_id"];
     <main class="app-content">
         <div class="app-title">
             <div>
-                <h1><i class="bi bi-table"></i> Donation</h1>
+                <h1><i class="bi bi-table"></i> Donation Information</h1>
 
             </div>
             <ul class="app-breadcrumb breadcrumb">
@@ -53,23 +53,38 @@ $ngo_id=$_SESSION["ngo_id"];
                 <li class="breadcrumb-item active"><a href="donation_information.php">Donation Information</a></li>
             </ul>
         </div>
+        <!-- item -->
         <div class="row">
             <div class="col-md-12">
                 <div class="tile">
-                    <h3 class="tile-title">Donation Information</h3>
+                    <h3 class="tile-title">Item Donation Information</h3>
                     <table class="table table-hover">
                         <thead>
                             <tr>
+                                <th>User Name</th>
                                 <th>Item Requirement Details</th>
-                                <th>Details</th>
-                                <th>Status</th>
+                                <th>Donation Details</th>
+                                <th>Donation Date</th>
+                                <th>Donation Address</th>
+                                <th>Donation Status</th>
                                 <th>Volunteer Name</th>
                             </tr>
                         </thead>
                         <tbody>
                             <?php
                             include 'admin_db.php';
-                            $select = mysqli_query($connection, "select*from tbl_donation where ngo_id='{$ngo_id}'");
+                            if (isset($_GET['delete_id'])) {
+                                $delete_id = $_GET['delete_id'];
+                                $delete_query = "delete from tbl_donation where donation_id = $delete_id";
+                                $data = mysqli_query($connection, $delete_query);
+                                if ($data) {
+                                    echo "<script>alert('Record deleted from the database');window.location='donation_information.php'</script>";
+                                } else {
+                                    echo "<script>alert('Record not deleted from the database');window.location='donation_information.php'</script>";
+                                }
+                            }
+
+                            $select = mysqli_query($connection, "select*from tbl_donation where ngo_id='{$ngo_id}' and donation_type='item'");
                             while ($donation_row = mysqli_fetch_array($select)) {
 
                                 $ngo_query = mysqli_query($connection, "select*from tbl_ngo where ngo_id='{$donation_row['ngo_id']}'");
@@ -81,9 +96,16 @@ $ngo_id=$_SESSION["ngo_id"];
                                 $volunteer_query = mysqli_query($connection, "select*from tbl_volunteer where volunteer_id='{$donation_row['volunteer_id']}'");
                                 $volunteer_row = mysqli_fetch_array($volunteer_query);
 
+                                $user_query = mysqli_query($connection, "select * from tbl_user where user_id = '{$donation_row['user_id']}'");
+                                $user_row = mysqli_fetch_array($user_query);
+
                                 echo "<tr>";
+                                // echo "<td>{$donation_row['donation_id']}</td>";
+                                echo "<td>{$user_row['user_first_name']}</td>";
                                 echo "<td>{$item_requirement_row['item_requirement_details']}</td>";
                                 echo "<td>{$donation_row['donation_details']}</td>";
+                                echo "<td>{$donation_row['donation_date']}</td>";
+                                echo "<td>{$donation_row['donation_address']}</td>";
                                 echo "<td>{$donation_row['donation_status']}</td>";
                                 echo "<td>{$volunteer_row['volunteer_first_name']} {$volunteer_row['volunteer_last_name']}</td>";
                                 echo "</tr>";
@@ -93,9 +115,59 @@ $ngo_id=$_SESSION["ngo_id"];
                     </table>
                 </div>
             </div>
+        </div>
+        <!-- online -->
+        <div class="row">
+            <div class="col-md-12">
+                <div class="tile">
+                    <h3 class="tile-title">Item Donation Information</h3>
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>User Name</th>
+                                <th>Donation Method</th>
+                                <th>Donation Type</th>
+                                <th>Donation Date</th>
+                                <th>Donation Amount</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php
+                            include 'admin_db.php';
+                            if (isset($_GET['delete_id'])) {
+                                $delete_id = $_GET['delete_id'];
+                                $delete_query = "delete from tbl_donation where donation_id = $delete_id";
+                                $data = mysqli_query($connection, $delete_query);
+                                if ($data) {
+                                    echo "<script>alert('Record deleted from the database');window.location='donation_information.php'</script>";
+                                } else {
+                                    echo "<script>alert('Record not deleted from the database');window.location='donation_information.php'</script>";
+                                }
+                            }
 
+                            $select = mysqli_query($connection, "select*from tbl_donation where ngo_id='{$ngo_id}' and donation_type='online'");
+                            while ($donation_row = mysqli_fetch_array($select)) {
 
+                                $ngo_query = mysqli_query($connection, "select*from tbl_ngo where ngo_id='{$donation_row['ngo_id']}'");
+                                $ngo_row = mysqli_fetch_array($ngo_query);
 
+                                $user_query = mysqli_query($connection, "select * from tbl_user where user_id = '{$donation_row['user_id']}'");
+                                $user_row = mysqli_fetch_array($user_query);
+
+                                echo "<tr>";
+                                // echo "<td>{$donation_row['donation_id']}</td>";
+                                echo "<td>{$user_row['user_first_name']}</td>";
+                                echo "<td>{$donation_row['donation_method']}</td>";
+                                echo "<td>{$donation_row['donation_type']}</td>";
+                                echo "<td>{$donation_row['donation_date']}</td>";
+                                echo "<td>{$donation_row['donation_amount']}</td>";
+                                echo "</tr>";
+                            }
+                            ?>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
     </main>
     <!-- Essential javascripts for application to work-->
@@ -119,6 +191,11 @@ $ngo_id=$_SESSION["ngo_id"];
             })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
             ga('create', 'UA-72504830-1', 'auto');
             ga('send', 'pageview');
+        }
+    </script>
+    <script>
+        function confirmDelete() {
+            return confirm("Are you Confirm?");
         }
     </script>
 </body>

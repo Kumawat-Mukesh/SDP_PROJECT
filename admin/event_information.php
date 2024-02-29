@@ -3,7 +3,7 @@ session_start();
 if (!isset($_SESSION["admin_id"])) {
     header("Location:admin_login.php");
 }
-$admin_id = $_SESESSION['admin_id'];
+$ngo_id = $_SESESSION['ngo_id'];
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -57,60 +57,62 @@ $admin_id = $_SESESSION['admin_id'];
             <div class="col-md-12">
                 <div class="tile">
                     <div class="tile-body">
-                        <div class="table-responsive">
-                            <table class="table table-hover table-bordered" id="sampleTable">
+                        <h3 class="tile-title">Event Information</h3>
+                        <table class="table table-hover table-bordered" id="sampleTable">
 
 
-                                <thead>
-                                    <tr>
-                                        <!-- <th>ID</th> -->
-                                        <th>Title</th>
-                                        <th>Date</th>
-                                        <th>Time</th>
-                                        <th>Location</th>
-                                        <th>Details</th>
-                                        <th>Photo</th>
-                                        <th>Action</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <?php
-                                    include 'admin_db.php';
+                            <thead>
+                                <tr>
+                                    <th>NGO Name</th>
+                                    <th>Title</th>
+                                    <th>Date</th>
+                                    <th>Time</th>
+                                    <th>Location</th>
+                                    <th>Details</th>
+                                    <th>Photo</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php
+                                include 'admin_db.php';
 
-                                    if (isset($_GET['delete_id'])) {
-                                        $delete_id = $_GET['delete_id'];
-                                        $delete_query = "delete from tbl_event where event_id = $delete_id";
-                                        $data = mysqli_query($connection, $delete_query);
-                                        if ($data) {
-                                            echo "<script>alert('Record deleted from the database');window.location='event_information.php'</script>";
-                                        } else {
-                                            echo "<script>alert('Record not deleted from the database');window.location='event_information.php'</script>";
-                                        }
+                                if (isset($_GET['delete_id'])) {
+                                    $delete_id = $_GET['delete_id'];
+                                    $delete_query = "delete from tbl_event where event_id = $delete_id";
+                                    $data = mysqli_query($connection, $delete_query);
+                                    if ($data) {
+                                        echo "<script>alert('Record deleted from the database');window.location='event_information.php'</script>";
+                                    } else {
+                                        echo "<script>alert('Record not deleted from the database');window.location='event_information.php'</script>";
                                     }
+                                }
 
-                                    $select = mysqli_query($connection, "select*from tbl_event");
-                                    while ($event_row = mysqli_fetch_array($select)) {
-                                        echo "<tr>";
-                                        // echo "<td>{$blog_row['blog_id']}</td>";  
-                                        echo "<td>{$event_row['event_title']}</td>";
-                                        echo "<td>{$event_row['event_date']}</td>";
-                                        echo "<td>{$event_row['event_time']}</td>";
-                                        echo "<td>{$event_row['event_location']}</td>";
-                                        echo "<td>{$event_row['event_details']}</td>";
+                                $select = mysqli_query($connection, "select*from tbl_event");
+                                while ($event_row = mysqli_fetch_array($select)) {
 
-                                        echo "<td><a target='_blank' href='uploads/{$event_row['event_photo']}'><img src='uploads/{$event_row['event_photo']}' width='50'></a></td>";
-                                        echo "<td>
+                                    $ngo_query = mysqli_query($connection, "select * from tbl_ngo where ngo_id = '{$event_row['ngo_id']}'");
+                                    $ngo_row = mysqli_fetch_array($ngo_query);
+                                    echo "<tr>";
+                                    echo "<td>{$ngo_row['ngo_name']}</td>";
+                                    echo "<td>{$event_row['event_title']}</td>";
+                                    echo "<td>{$event_row['event_date']}</td>";
+                                    echo "<td>{$event_row['event_time']}</td>";
+                                    echo "<td>{$event_row['event_location']}</td>";
+                                    echo "<td>{$event_row['event_details']}</td>";
+
+                                    echo "<td><a target='_blank' href='uploads/{$event_row['event_photo']}'><img src='uploads/{$event_row['event_photo']}' width='50'></a></td>";
+                                    echo "<td>
                                     <a href='event_information.php?delete_id={$event_row['event_id']}' 
                                     onclick='return confirmDelete()'>
                                     <i class='bi bi-trash'></i></a>|  
                                     <a href='event_edit.php?edit_id={$event_row['event_id']}'><i class='bi bi-pencil-square'></i></a>   
                                     </td>";
-                                        echo "</tr>";
-                                    }
-                                    ?>
-                                </tbody>
-                            </table>
-                        </div>
+                                    echo "</tr>";
+                                }
+                                ?>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>

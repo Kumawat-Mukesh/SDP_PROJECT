@@ -58,52 +58,51 @@ if (!isset($_SESSION["admin_id"])) {
             <div class="col-md-12">
                 <div class="tile">
                     <div class="tile-body">
-                        <div class="table-responsive">
-                            <table class="table table-hover table-bordered" id="sampleTable">
-                                <thead>
-                                    <tr>
-                                        <!-- <th>ID</th> -->
-                                        <th>Title</th>
-                                        <th>Details</th>
-                                        <th>Photo</th>
-                                        <th>Action</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <?php
-                                    include 'admin_db.php';
+                        <h3 class="tile-title">Blog Information</h3>
+                        <table class="table table-hover table-bordered" id="sampleTable">
+                            <thead>
+                                <tr>
+                                    <!-- <th>ID</th> -->
+                                    <th>Title</th>
+                                    <th>Details</th>
+                                    <th>Photo</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php
+                                include 'admin_db.php';
 
-                                    if (isset($_GET['delete_id'])) {
-                                        $delete_id = $_GET['delete_id'];
-                                        $delete_query = "delete from tbl_blog where blog_id = $delete_id";
-                                        $data = mysqli_query($connection, $delete_query);
-                                        if ($data) {
-                                            echo "<script>alert('Record deleted from the database');window.location='blog_information.php'</script>";
-                                        } else {
-                                            echo "<script>alert('Record not deleted from the database');window.location='blog_information.php'</script>";
-                                        }
+                                if (isset($_GET['delete_id'])) {
+                                    $delete_id = $_GET['delete_id'];
+                                    $delete_query = "delete from tbl_blog where blog_id = $delete_id";
+                                    $data = mysqli_query($connection, $delete_query);
+                                    if ($data) {
+                                        echo "<script>alert('Record deleted from the database');window.location='blog_information.php'</script>";
+                                    } else {
+                                        echo "<script>alert('Record not deleted from the database');window.location='blog_information.php'</script>";
                                     }
+                                }
 
-                                    $select = mysqli_query($connection, "select*from tbl_blog");
-                                    while ($blog_row = mysqli_fetch_array($select)) {
-                                        echo "<tr>";
-                                        // echo "<td>{$blog_row['blog_id']}</td>";  
-                                        echo "<td>{$blog_row['blog_title']}</td>";
-                                        echo "<td>{$blog_row['blog_details']}</td>";
+                                $select = mysqli_query($connection, "select*from tbl_blog");
+                                while ($blog_row = mysqli_fetch_array($select)) {
+                                    echo "<tr>";
+                                    // echo "<td>{$blog_row['blog_id']}</td>";  
+                                    echo "<td>{$blog_row['blog_title']}</td>";
+                                    echo "<td>{$blog_row['blog_details']}</td>";
 
-                                        echo "<td><a target='_blank' href='uploads/{$blog_row['blog_photo']}'><img src='uploads/{$blog_row['blog_photo']}' width='50'></a></td>";
-                                        echo "<td>
+                                    echo "<td><a target='_blank' href='uploads/{$blog_row['blog_photo']}'><img src='uploads/{$blog_row['blog_photo']}' width='50'></a></td>";
+                                    echo "<td>
                                     <a href='blog_information.php?delete_id={$blog_row['blog_id']}' 
                                     onclick='return confirmDelete()'>
                                     <i class='bi bi-trash'></i></a>|  
                                     <a href='blog_update.php?edit_id={$blog_row['blog_id']}'><i class='bi bi-pencil-square'></i></a>   
                                     </td>";
-                                        echo "</tr>";
-                                    }
-                                    ?>
-                                </tbody>
-                            </table>
-                        </div>
+                                    echo "</tr>";
+                                }
+                                ?>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>

@@ -40,81 +40,109 @@ if (!isset($_SESSION["admin_id"])) {
             padding: 30px;
 
         }
+
+        .info {
+            border-collapse: collapse;
+            margin: 20px;
+            padding: 20px;
+        }
     </style>
 </head>
 
 <body>
-    <br>
-    <h2 class="tile-title" style="text-align:center;">Reports</h2><br>
-    <hr>
-    <h3 class="tile-title" style="text-align:center;">NGO Information</h3><br>
-    <form method="get">
-        <?php
-        echo "<h6 style='color:teal;'>Date : " . date('d-m-Y') . "</h6> <br>";
+    <main>
+        <div class="info">
+            <br>
+            <h2 class="tile-title" style="text-align:center;">Connecting Dots</h2><br>
+            <hr>
+            <h3 class="tile-title" style="text-align:center;">Category Wise NGO Information</h3><br>
+            <form method="get">
+                <?php
+                echo "<h6 style='color:teal;'>Date : " . date('d-m-Y') . "</h6> <br>";
 
-        $category_query = mysqli_query($connection, "select*from tbl_category");
-        $count = mysqli_num_rows($category_query);
-        echo "<select class='form-control' name='category_id' style='width:300px;'>";
-        echo "<option value=''>Select Category</option>";
-        while ($category_row = mysqli_fetch_array($category_query)) {
-            echo "<option value='{$category_row['category_id']}'>{$category_row['category_name']}</option>";
-        }
-        echo "</select>";
-        ?>
-        <input type="submit" value="search">
-    </form>
-    <table border=1 class="table table-hover" style="width: 95%;">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Name</th>
-                <th>Details</th>
-                <th>Email</th>
-                <th>Password</th>
-                <th>Contact No.</th>
-                <th>Adress</th>
-                <th>Certificate</th>
-                <th>Photo</th>
-                <th>Area Name</th>
-                <th>Category Name</th>
-            </tr>
-        </thead>
-        <tbody>
-
-            <?php
-            if ($count > 1) {
-                if (isset($_GET['category_id'])) {
-                    $category_id = $_GET['category_id'];
-
-                    $select = mysqli_query($connection, "select * from tbl_ngo where category_id = '{$category_id}'");
-                    while ($ngo_row = mysqli_fetch_array($select)) {
-                        $area_query = mysqli_query($connection, "select*from tbl_area where area_id='{$ngo_row['area_id']}'");
-                        $area_row = mysqli_fetch_array($area_query);
-
-                        $category_query = mysqli_query($connection, "select*from tbl_category where category_id='{$ngo_row['category_id']}'");
-                        $category_row = mysqli_fetch_array($category_query);
-                        echo "<tr>";
-                        echo "<td>{$ngo_row['ngo_id']}</td>";
-                        echo "<td>{$ngo_row['ngo_name']}</td>";
-                        echo "<td>{$ngo_row['ngo_details']}</td>";
-                        echo "<td>{$ngo_row['ngo_email']}</td>";
-                        echo "<td>{$ngo_row['ngo_password']}</td>";
-                        echo "<td>{$ngo_row['ngo_contact_no']}</td>";
-                        echo "<td>{$ngo_row['ngo_address']}</td>";
-
-                        echo "<td><a target='_blank' href='uploads/{$ngo_row['ngo_certificate']}'><img src='uploads/{$ngo_row['ngo_certificate']}' width='50'></a></td>";
-                        echo "<td><a target='_blank' href='uploads/{$ngo_row['ngo_photo']}'><img src='uploads/{$ngo_row['ngo_photo']}' width='50'></a></td>";
-                        echo "<td>{$area_row['area_name']}</td>";
-                        echo "<td>{$category_row['category_name']}</td>";
-                        echo "</tr>";
-                    }
+                $category_query = mysqli_query($connection, "select*from tbl_category");
+                $count = mysqli_num_rows($category_query);
+                echo "<select class='form-control' name='category_id' style='width:300px;'>";
+                echo "<option value=''>Select Category</option>";
+                while ($category_row = mysqli_fetch_array($category_query)) {
+                    echo "<option value='{$category_row['category_id']}'>{$category_row['category_name']}</option>";
                 }
-            } else {
-                echo "No record found"; 
+                echo "</select>";
+                ?>
+                <input type="submit" value="search">
+            </form>
+        </div>
+
+        <?php
+        if (isset($_GET['category_id'])) {
+            $category_id = $_GET['category_id'];
+
+            $select = mysqli_query($connection, "select * from tbl_ngo where category_id = '{$category_id}'");
+            $category_count = mysqli_num_rows($select);
+            if ($category_count > 0) {
+        ?>
+                <table border=1 class="table table-hover" style="width: 95%;">
+                    <thead>
+                        <tr>
+                          
+                            <th>Name</th>
+                            <th>Details</th>
+                            <th>Email</th>
+                           
+                            <th>Contact No.</th>
+                            <th>Adress</th>
+                           
+                            <th>Photo</th>
+                            <th>Area Name</th>
+                            <th>Category Name</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        <?php
+
+                        while ($ngo_row = mysqli_fetch_array($select)) {
+                            $area_query = mysqli_query($connection, "select*from tbl_area where area_id='{$ngo_row['area_id']}'");
+                            $area_row = mysqli_fetch_array($area_query);
+
+                            $category_query = mysqli_query($connection, "select*from tbl_category where category_id='{$ngo_row['category_id']}'");
+                            $category_row = mysqli_fetch_array($category_query);
+                            echo "<tr>";
+                           
+                            echo "<td>{$ngo_row['ngo_name']}</td>";
+                            echo "<td>{$ngo_row['ngo_details']}</td>";
+                            echo "<td>{$ngo_row['ngo_email']}</td>";
+                            
+                            echo "<td>{$ngo_row['ngo_contact_no']}</td>";
+                            echo "<td>{$ngo_row['ngo_address']}</td>";
+
+                           
+                            echo "<td><a target='_blank' href='uploads/{$ngo_row['ngo_photo']}'><img src='uploads/{$ngo_row['ngo_photo']}' width='50'></a></td>";
+                            echo "<td>{$area_row['area_name']}</td>";
+                            echo "<td>{$category_row['category_name']}</td>";
+                            echo "</tr>";
+                        }
+                        ?>
+                    </tbody>
+                </table>
+
+        <?php } else {
+                echo '
+            
+            <div class="page-error">
+            <h1 class="text-danger"><i class="bi bi-exclamation-circle"></i> No Record Found</h1>
+            </div>
+            ';
             }
-            ?>
-        </tbody>
-    </table>
+        } ?>
+
+    </main>
+
+    <!-- <h1 class="text-danger"><i class="bi bi-exclamation-circle"></i> Error 404: Page not found</h1>
+    <p>The page you have requested is not found.</p>
+    <p><a class="btn btn-primary" href="javascript:window.history.back();">Go Back</a></p> -->
+
+
     <!-- Essential javascripts for application to work-->
     <script src="js/jquery-3.7.0.min.js"></script>
     <script src="js/bootstrap.min.js"></script>

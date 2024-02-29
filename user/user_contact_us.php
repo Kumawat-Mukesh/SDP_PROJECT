@@ -360,8 +360,8 @@
                                                 <h3>Phone</h3>
                                             </div>
                                         </div>
-                                        <p>Support <a href="tel:+91 8756412398">+91 8756412398</a></p>
-                                        <p>Events <a href="tel:+91 9898741235">+91 9898741235</a></p>
+                                        <p>Support <a href="tel:+91 8756412398">+91 80001 47888</a></p>
+                                        <p>Events <a href="tel:+91 9898741235">+91 95862 48516</a></p>
                                     </li>
 
                                     <li>
@@ -373,8 +373,8 @@
                                                 <h3>Phone</h3>
                                             </div>
                                         </div>
-                                        <p><a href="mailto:info@aarnikt.com">info@aarnikt.com</a></p>
-                                        <p><a href="mailto:info@aarnikt.com">support@aarnikt.com</a></p>
+                                        <p><a href="mailto:info@aarniktechnology.com">info@aarniktechnology.com</a></p>
+                                        
                                     </li>
 
                                 </ul>

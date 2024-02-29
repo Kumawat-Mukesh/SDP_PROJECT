@@ -57,62 +57,61 @@ if (!isset($_SESSION["admin_id"])) {
             <div class="col-md-12">
                 <div class="tile">
                     <div class="tile-body">
-                        <div class="table-responsive">
-                            <table class="table table-hover table-bordered" id="sampleTable">
-                                <thead>
-                                    <tr>
-                                        <!-- <th>ID</th> -->
-                                        <th>First Name</th>
-                                        <th>Last Name</th>
-                                        <th>Email</th>
-                                        <!-- <th>Password</th> -->
-                                        <th>Gender</th>
-                                        <th>Mobile No.</th>
-                                        <th>Address</th>
-                                        <th>Photo</th>
-                                        <th>Verified</th>
-                                        <th>Action</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <?php
-                                    include 'admin_db.php';
+                        <h3 class="tile-title">Volunteer Information</h3>
+                        <table class="table table-hover table-bordered" id="sampleTable">
+                            <thead>
+                                <tr>
+                                    <!-- <th>ID</th> -->
+                                    <th>First Name</th>
+                                    <th>Last Name</th>
+                                    <th>Email</th>
+                                    <!-- <th>Password</th> -->
+                                    <th>Gender</th>
+                                    <th>Mobile No.</th>
+                                    <th>Address</th>
+                                    <th>Photo</th>
+                                    <th>Verified</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php
+                                include 'admin_db.php';
 
-                                    if (isset($_GET['delete_id'])) {
-                                        $delete_id = $_GET['delete_id'];
-                                        $delete_query = "delete from tbl_volunteer where volunteer_id = $delete_id";
-                                        $data = mysqli_query($connection, $delete_query);
-                                        if ($data) {
-                                            echo "<script>alert('Record deleted from the database');window.location='volunteer_information.php'</script>";
-                                        } else {
-                                            echo "<script>alert('Record not deleted from the database');window.location='volunteer_information.php'</script>";
-                                        }
+                                if (isset($_GET['delete_id'])) {
+                                    $delete_id = $_GET['delete_id'];
+                                    $delete_query = "delete from tbl_volunteer where volunteer_id = $delete_id";
+                                    $data = mysqli_query($connection, $delete_query);
+                                    if ($data) {
+                                        echo "<script>alert('Record deleted from the database');window.location='volunteer_information.php'</script>";
+                                    } else {
+                                        echo "<script>alert('Record not deleted from the database');window.location='volunteer_information.php'</script>";
                                     }
-                                    $select = mysqli_query($connection, "select*from tbl_volunteer");
-                                    while ($volunteer_row = mysqli_fetch_array($select)) {
-                                        echo "<tr>";
-                                        // echo "<td>{$volunteer_row['volunteer_id']}</td>";
-                                        echo "<td>{$volunteer_row['volunteer_first_name']}</td>";
-                                        echo "<td>{$volunteer_row['volunteer_last_name']}</td>";
-                                        echo "<td>{$volunteer_row['volunteer_email']}</td>";
-                                        // echo "<td>{$volunteer_row['volunteer_password']}</td>";
-                                        echo "<td>{$volunteer_row['volunteer_gender']}</td>";
-                                        echo "<td>{$volunteer_row['volunteer_mobile_no']}</td>";
-                                        echo "<td>{$volunteer_row['volunteer_address']}</td>";
-                                        echo "<td><a target='_blank' href='uploads/{$volunteer_row['volunteer_photo']}'><img src='uploads/{$volunteer_row['volunteer_photo']}' width='50'></a></td>";
-                                        echo "<td>{$volunteer_row['volunteer_verified']}</td>";
-                                        echo "<td>
+                                }
+                                $select = mysqli_query($connection, "select*from tbl_volunteer");
+                                while ($volunteer_row = mysqli_fetch_array($select)) {
+                                    echo "<tr>";
+                                    // echo "<td>{$volunteer_row['volunteer_id']}</td>";
+                                    echo "<td>{$volunteer_row['volunteer_first_name']}</td>";
+                                    echo "<td>{$volunteer_row['volunteer_last_name']}</td>";
+                                    echo "<td>{$volunteer_row['volunteer_email']}</td>";
+                                    // echo "<td>{$volunteer_row['volunteer_password']}</td>";
+                                    echo "<td>{$volunteer_row['volunteer_gender']}</td>";
+                                    echo "<td>{$volunteer_row['volunteer_mobile_no']}</td>";
+                                    echo "<td>{$volunteer_row['volunteer_address']}</td>";
+                                    echo "<td><a target='_blank' href='uploads/{$volunteer_row['volunteer_photo']}'><img src='uploads/{$volunteer_row['volunteer_photo']}' width='50'></a></td>";
+                                    echo "<td>{$volunteer_row['volunteer_verified']}</td>";
+                                    echo "<td>
                                     <a href='volunteer_information.php?delete_id={$volunteer_row['volunteer_id']}' 
                                     onclick='return confirmDelete()'>
                                     <i class='bi bi-trash'></i></a>|  
                                     <a href='volunteer_update.php?edit_id={$volunteer_row['volunteer_id']}'><i class='bi bi-pencil-square'></i></a>   
                                     </td>";
-                                        echo "</tr>";
-                                    }
-                                    ?>
-                                </tbody>
-                            </table>
-                        </div>
+                                    echo "</tr>";
+                                }
+                                ?>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
@@ -153,7 +152,7 @@ if (!isset($_SESSION["admin_id"])) {
             return confirm("Are you Confirm?");
         }
     </script>
-   
+
 </body>
 
 </html>

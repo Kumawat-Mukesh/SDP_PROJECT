@@ -117,26 +117,7 @@
         <?php require './user_header.php'; ?>
 
         <section class="main-slider style3">
-            <div class="slider-social-links-box">
-                <div class="title">
-                    <h3>follow us</h3>
-                </div>
-                <div class="border-box"></div>
-                <ul class="clearfix">
-                    <li class="active">
-                        <a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a>
-                    </li>
-                    <li>
-                        <a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a>
-                    </li>
-                    <li>
-                        <a href="#"><i class="fa fa-linkedin" aria-hidden="true"></i></a>
-                    </li>
-                    <li>
-                        <a href="#"><i class="fa fa-google-plus" aria-hidden="true"></i></a>
-                    </li>
-                </ul>
-            </div>
+           
             <div class="slider-box">
                 <!-- Banner Carousel -->
                 <div class="banner-carousel owl-theme owl-carousel">

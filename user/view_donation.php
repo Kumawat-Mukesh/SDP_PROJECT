@@ -159,39 +159,41 @@ require './admin_db.php';
         <section class="cause-details-area">
             <div class="container">
                 <div class="row">
-                    <div class="col-md-12 ">
+                    <div class="col-md-12">
                         <div class="tile">
-                            <h3 class="tile-title" style="color:chocolate">Donation Information</h3>
-                            <br>
-                            <table class="table table-hover">
-                                <thead>
-                                    <tr style="color:black">
-                                        <th>NGO Name</th>
-                                        <th>User Name</th>
-                                        <th>Item Requirement Details</th>
-                                        <th>Donation Details</th>
-                                        <th>Donation Date</th>
-                                        <th>Donation Address<Address></Address>
-                                        </th>
-                                        <th>Donation Status</th>
-                                        <th>Volunteer Name</th>
+                            <?php
+                            include 'admin_db.php';
+                            $item_select = mysqli_query($connection, "select*from tbl_donation where user_id='{$_SESSION['user_id']}' and donation_type='item'");
+                            $item_count = mysqli_num_rows($item_select);
+                            if ($item_count > 0) {
+                            ?>
+                                <h3 class="tile-title" style="color:chocolate">Donation Information</h3>
+                                <br>
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr style="color:black">
+                                            <th>NGO Name</th>
+                                            <th>User Name</th>
+                                            <th>Item Requirement Details</th>
+                                            <th>Donation Details</th>
+                                            <th>Donation Date</th>
+                                            <th>Donation Address</th>
+                                            <th>Donation Status</th>
+                                            <th>Volunteer Name</th>
 
-                                    </tr>
-                                </thead>
-                                <tbody>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
                                     <?php
-                                    include 'admin_db.php';
+                                    while ($donation_row = mysqli_fetch_array($item_select)) {
 
-                                    $select = mysqli_query($connection, "select*from tbl_donation where user_id='{$_SESSION['user_id']}'");
-                                    while ($donation_row = mysqli_fetch_array($select)) {
-
-                                        $ngo_query = mysqli_query($connection, "select*from tbl_ngo where ngo_id='{$donation_row['ngo_id']}'");
+                                        $ngo_query = mysqli_query($connection, "select*from tbl_ngo where ngo_id='{$donation_row['ngo_id']}'"); 
                                         $ngo_row = mysqli_fetch_array($ngo_query);
 
                                         $item_requirement_query = mysqli_query($connection, "select*from tbl_item_requirement where item_requirement_id='{$donation_row['item_requirement_id']}'");
                                         $item_requirement_row = mysqli_fetch_array($item_requirement_query);
 
-                                        $volunteer_query = mysqli_query($connection, "select*from tbl_volunteer where volunteer_id='{$donation_row['volunteer_id']}'");
+                                        $volunteer_query = mysqli_query($connection, "select*from tbl_volunteer where volunteer_id='{$donation_row['volunteer_id']}' ");
                                         $volunteer_row = mysqli_fetch_array($volunteer_query);
 
                                         $user_query = mysqli_query($connection, "select * from tbl_user where user_id = '{$donation_row['user_id']}'");
@@ -209,9 +211,9 @@ require './admin_db.php';
 
                                         echo "</tr>";
                                     }
-                                    ?>
-                                </tbody>
-                            </table>
+                                } ?>
+                                    </tbody>
+                                </table>
                         </div>
                     </div>
 
@@ -221,6 +223,59 @@ require './admin_db.php';
             </div>
         </section>
 
+
+
+        <!--online Donation information -->
+        <section class="cause-details-area">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12 ">
+                        <div class="tile">
+                            <br>
+                            <?php
+                            include 'admin_db.php';
+                            $online_select = mysqli_query($connection, "select*from tbl_donation where user_id='{$_SESSION['user_id']}' and donation_type='online'");
+                            $online_count = mysqli_num_rows($online_select);
+
+                            if ($online_count > 0) {
+                            ?>
+                                <h3 class="tile-title" style="color:chocolate">Online Donation Information</h3>
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr style="color:black">
+                                            <th>NGO Name</th>
+                                            <th>User Name</th>
+                                            <th>Donation Date</th>
+                                            <th>Donation Method</th>
+                                            <th>Donation Type</th>
+                                            <th>Donation Amount</th>
+
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    <?php
+                                    while ($online_row = mysqli_fetch_array($online_select)) {
+                                        echo "<tr>";
+                                        echo "<td>{$ngo_row['ngo_name']}</td>";
+                                        echo "<td>{$user_row['user_first_name']}</td>";
+                                        echo "<td>{$online_row['donation_date']}</td>";
+                                        echo "<td>{$online_row['donation_method']}</td>";
+                                        echo "<td>{$online_row['donation_type']}</td>";
+                                        echo "<td>{$online_row['donation_amount']}</td>";
+
+                                        echo "</tr>";
+                                    }
+                                } ?>
+                                    </tbody>
+                                </table>
+                        </div>
+                    </div>
+
+
+
+                </div>
+            </div>
+        </section>
 
 
         <!--Start footer area -->

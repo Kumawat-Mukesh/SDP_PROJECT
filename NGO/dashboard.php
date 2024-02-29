@@ -63,19 +63,21 @@ $ngo_id = $_SESSION["ngo_id"];
       </center>
     </div>
     <div class="row">
-      <div class="col-md-6 col-lg-3"><a href="donation_information.php" style="text-decoration:none">
-          <div class="widget-small primary coloured-icon"><i class="icon bi bi-heart fs-1" style="background-color:steelblue;"></i>
-        </a>
-        <div class="info">
-          <h4>Donation</h4>
-          <?php
-          $select = mysqli_query($connection, "select * from tbl_donation where ngo_id='{$ngo_id}'");
-          $count = mysqli_num_rows($select);
-          echo "<p><b>{$count}</b></p>";
-          ?>
-        </div>
+
+    <div class="col-md-6 col-lg-3"><a href="donation_information.php" style="text-decoration:none">
+        <div class="widget-small primary coloured-icon"><i class="icon bi bi-heart fs-1" style="background-color:steelblue;"></i>
+      </a>
+      <div class="info">
+        <h4>Donation</h4>
+        <?php
+        $select = mysqli_query($connection, "select * from tbl_donation where ngo_id='{$ngo_id}'");
+        $count = mysqli_num_rows($select);
+        echo "<p><b>{$count}</b></p>";
+        ?>
       </div>
     </div>
+    </div>
+
     <div class="col-md-6 col-lg-3"><a href="user_information.php" style="text-decoration:none">
         <div class="widget-small warning coloured-icon"><i class="icon bi bi-people fs-1"></i>
       </a>
@@ -89,6 +91,7 @@ $ngo_id = $_SESSION["ngo_id"];
       </div>
     </div>
     </div>
+
     <div class="col-md-6 col-lg-3"><a href="feedback_information.php" style="text-decoration:none">
         <div class="widget-small danger coloured-icon"><i class="icon bi bi-star-half fs-1"></i>
       </a>
@@ -102,13 +105,14 @@ $ngo_id = $_SESSION["ngo_id"];
       </div>
     </div>
     </div>
+
     </div>
-    <br>
+   <br>
     <div class="row">
       <?php
       $select = mysqli_query($connection, "select * from tbl_ngo where ngo_id='{$ngo_id}'");
       $ngo_row = mysqli_fetch_array($select);
-      echo "<a target='_blank' href='uploads/{$ngo_row['ngo_photo']}'><img src='uploads/{$ngo_row['ngo_photo']}' width='1550' height='600' alt='NGO Photo'></a>";
+      echo "<a target='_blank' href='uploads/{$ngo_row['ngo_photo']}'><img src='/project/admin/uploads/{$ngo_row['ngo_photo']}' width='1550' height='600' alt='NGO Photo'></a>";
       ?>
     </div>
 

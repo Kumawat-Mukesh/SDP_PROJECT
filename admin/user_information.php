@@ -57,66 +57,65 @@ if (!isset($_SESSION["admin_id"])) {
             <div class="col-md-12">
                 <div class="tile">
                     <div class="tile-body">
-                        <div class="table-responsive">
-                            <table class="table table-hover table-bordered" id="sampleTable">
-                                <thead>
-                                    <tr>
-                                        <!-- <th>ID</th> -->
-                                        <th>First Name</th>
-                                        <th>Last Name</th>
-                                        <th>Email</th>
-                                        <!-- <th>Password</th> -->
-                                        <th>Gender</th>
-                                        <th>Mobile No.</th>
-                                        <th>Address</th>
-                                        <th>Pincode</th>
-                                        <th>Area Name</th>
-                                        <th>Action</th>
+                        <h3 class="tile-title">User Information</h3>
+                        <table class="table table-hover table-bordered" id="sampleTable">
+                            <thead>
+                                <tr>
+                                    <!-- <th>ID</th> -->
+                                    <th>First Name</th>
+                                    <th>Last Name</th>
+                                    <th>Email</th>
+                                    <!-- <th>Password</th> -->
+                                    <th>Gender</th>
+                                    <th>Mobile No.</th>
+                                    <th>Address</th>
+                                    <th>Pincode</th>
+                                    <th>Area Name</th>
+                                    <th>Action</th>
 
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <?php
-                                    include 'admin_db.php';
-                                    if (isset($_GET['delete_id'])) {
-                                        $delete_id = $_GET['delete_id'];
-                                        $delete_query = "delete from tbl_user where user_id = $delete_id";
-                                        $data = mysqli_query($connection, $delete_query);
-                                        if ($data) {
-                                            echo "<script>alert('Record deleted from the database');window.location='user_information.php'</script>";
-                                        } else {
-                                            echo "<script>alert('Record not deleted from the database');window.location='user_information.php'</script>";
-                                        }
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php
+                                include 'admin_db.php';
+                                if (isset($_GET['delete_id'])) {
+                                    $delete_id = $_GET['delete_id'];
+                                    $delete_query = "delete from tbl_user where user_id = $delete_id";
+                                    $data = mysqli_query($connection, $delete_query);
+                                    if ($data) {
+                                        echo "<script>alert('Record deleted from the database');window.location='user_information.php'</script>";
+                                    } else {
+                                        echo "<script>alert('Record not deleted from the database');window.location='user_information.php'</script>";
                                     }
+                                }
 
-                                    $select = mysqli_query($connection, "select*from tbl_user");
-                                    while ($user_row = mysqli_fetch_array($select)) {
-                                        $area_query = mysqli_query($connection, "select*from tbl_area where area_id='{$user_row['area_id']}'");
-                                        $area_row = mysqli_fetch_array($area_query);
+                                $select = mysqli_query($connection, "select*from tbl_user");
+                                while ($user_row = mysqli_fetch_array($select)) {
+                                    $area_query = mysqli_query($connection, "select*from tbl_area where area_id='{$user_row['area_id']}'");
+                                    $area_row = mysqli_fetch_array($area_query);
 
-                                        echo "<tr>";
-                                        // echo "<td>{$user_row['user_id']}</td>";
-                                        echo "<td>{$user_row['user_first_name']}</td>";
-                                        echo "<td>{$user_row['user_last_name']}</td>";
-                                        echo "<td>{$user_row['user_email']}</td>";
-                                        // echo "<td>{$user_row['user_password']}</td>";
-                                        echo "<td>{$user_row['user_gender']}</td>";
-                                        echo "<td>{$user_row['user_mobile_no']}</td>";
-                                        echo "<td>{$user_row['user_address']}</td>";
-                                        echo "<td>{$user_row['user_pincode']}</td>";
-                                        echo "<td>{$area_row['area_name']}</td>";
-                                        echo "<td>
+                                    echo "<tr>";
+                                    // echo "<td>{$user_row['user_id']}</td>";
+                                    echo "<td>{$user_row['user_first_name']}</td>";
+                                    echo "<td>{$user_row['user_last_name']}</td>";
+                                    echo "<td>{$user_row['user_email']}</td>";
+                                    // echo "<td>{$user_row['user_password']}</td>";
+                                    echo "<td>{$user_row['user_gender']}</td>";
+                                    echo "<td>{$user_row['user_mobile_no']}</td>";
+                                    echo "<td>{$user_row['user_address']}</td>";
+                                    echo "<td>{$user_row['user_pincode']}</td>";
+                                    echo "<td>{$area_row['area_name']}</td>";
+                                    echo "<td>
                                 <a href='user_information.php?delete_id={$user_row['user_id']}' 
                                 onclick='return confirmDelete()'>
                                 <i class='bi bi-trash'></i></a>|  
                                 <a href='user_update.php?edit_id={$user_row['user_id']}'><i class='bi bi-pencil-square'></i></a>    
                                 </td>";
-                                        echo "</tr>";
-                                    }
-                                    ?>
-                                </tbody>
-                            </table>
-                        </div>
+                                    echo "</tr>";
+                                }
+                                ?>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>

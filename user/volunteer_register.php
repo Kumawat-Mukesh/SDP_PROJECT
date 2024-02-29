@@ -164,7 +164,7 @@ if($_POST)
                                                 <input type="radio" name="volunteer_gender" value="female" required=""> Female
                                             </div>
                                             <div class="input-box">
-                                                <input type="text" name="volunteer_mobile_no" placeholder="Enter mobile number " required>
+                                                <input type="text" name="volunteer_mobile_no" placeholder="Enter mobile number " minlength="10" maxlength="10" title="Please enter 10 digit number" required>
                                             </div>
                                             <div class="input-box">
                                                 <textarea name="volunteer_address" class="form-control" placeholder="Enter your address" rows="5" cols="15" required></textarea>

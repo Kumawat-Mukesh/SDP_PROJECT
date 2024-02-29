@@ -3,16 +3,18 @@ include './admin_db.php';
 session_start();
 
 
-if (!isset($_SESSION["ngo_id"])) {
-    header("Location:ngo_login.php");
+if (!isset($_SESSION["admin_id"])) {
+    header("Location:admin_login.php");
 }
 
 
 if ($_POST) {
     $ngo_id = $_SESSION['ngo_id'];
     $event_title = $_POST['event_title'];
-    $event_date = $_POST['event_date'];
-    $event_time = $_POST['event_time'];
+    $d = $_POST['event_date'];
+    $event_date = date('Y-m-d', strtotime($d));
+    $t = $_POST['event_time'];
+    $event_time = date('H:i', strtotime($t));
     $event_location = $_POST['event_location'];
     $event_details = $_POST['event_details'];
     $event_photo_name = $_FILES['event_photo']['name'];
@@ -78,14 +80,25 @@ if ($_POST) {
                     <div class="tile-body">
                         <form method="post" class="row" id="blog_form" enctype="multipart/form-data">
                             <div class="mb-3 col-md-3">
+                                <label class="form-label">NGO ID</label>
+                                <?php
+                                $ngo_query = mysqli_query($connection, "select*from tbl_ngo");
+                                echo "<select class='form-control' name='ngo_id'>";
+                                echo "<option value=''>Select NGO</option>";
+                                while ($ngo_row = mysqli_fetch_array($ngo_query)) {
+                                    echo "<option value='{$ngo_row['ngo_id']}'>{$ngo_row['ngo_name']}</option>";
+                                }
+                                echo "</select>";
+                                ?>
+                                <br>
                                 <label class="form-label">Event Title</label>
                                 <input class="form-control" type="text" name="event_title" placeholder="Enter event title" required>
                                 <br>
                                 <label class="form-label">Date</label>
-                                <input class="form-control" type="text" name="event_date" placeholder="YYYY-MM-DD" required>
+                                <input class="form-control" type="date" name="event_date" placeholder="YYYY-MM-DD" required>
                                 <br>
                                 <label class="form-label">Time</label>
-                                <input class="form-control" type="text" name="event_time" placeholder="HH:MM:SS" required>
+                                <input class="form-control" type="time" name="event_time" placeholder="HH:MM:SS" required>
                                 <br>
                                 <label class="form-label">Location</label>
                                 <textarea name="event_location" class="form-control" cols="3" rows="5" placeholder="Enter event location" required></textarea>

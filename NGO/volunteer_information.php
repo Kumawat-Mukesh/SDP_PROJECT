@@ -82,7 +82,7 @@ if(!isset($_SESSION["ngo_id"])){
                                 echo "<td>{$volunteer_row['volunteer_mobile_no']}</td>";
                                 echo "<td>{$volunteer_row['volunteer_address']}</td>";
 
-                                echo "<td><a target='_blank' href='uploads/{$volunteer_row['volunteer_photo']}'><img src='uploads/{$volunteer_row['volunteer_photo']}' width='50'></a></td>";
+                                echo "<td><a target='_blank' href='/project/admin/uploads/{$volunteer_row['volunteer_photo']}'><img src='/project/admin/uploads/{$volunteer_row['volunteer_photo']}' width='50'></a></td>";
                                 echo "<td>{$volunteer_row['volunteer_verified']}</td>";
                                 echo "</tr>";
                             }

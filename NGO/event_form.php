@@ -3,28 +3,28 @@ include './admin_db.php';
 session_start();
 
 
-if(!isset($_SESSION["ngo_id"])){
+if (!isset($_SESSION["ngo_id"])) {
     header("Location:ngo_login.php");
 }
 
 
-if($_POST)
-{
-    $ngo_id=$_SESSION['ngo_id'];
-  $event_title=$_POST['event_title'];
-  $event_date=$_POST['event_date'];
-  $event_time=$_POST['event_time'];
-  $event_location=$_POST['event_location'];
-  $event_details=$_POST['event_details'];
-  $event_photo_name = $_FILES['event_photo']['name'];
-  $event_photo_tmp_name = $_FILES['event_photo']['tmp_name'];
+if ($_POST) {
+    $ngo_id = $_SESSION['ngo_id'];
+    $event_title = $_POST['event_title'];
+    $d = $_POST['event_date'];
+    $event_date = date('Y-m-d', strtotime($d));
+    $t = $_POST['event_time'];
+    $event_time = date('H:i', strtotime($t));
+    $event_location = $_POST['event_location'];
+    $event_details = $_POST['event_details'];
+    $event_photo_name = $_FILES['event_photo']['name'];
+    $event_photo_tmp_name = $_FILES['event_photo']['tmp_name'];
 
-  $query=mysqli_query($connection,"insert into tbl_event(ngo_id,event_title,event_date,event_time,event_location,event_details,event_photo) values('{$ngo_id}','{$event_title}','{$event_date}','{$event_time}','{$event_location}','{$event_details}','{$event_photo_name}')");
-  move_uploaded_file($event_photo_tmp_name, "uploads/" . $event_photo_name);
-  if($query)
-  {
-    echo "<script>alert('Event added to the database');window.location='event_form.php'</script>";
-  }
+    $query = mysqli_query($connection, "insert into tbl_event(ngo_id,event_title,event_date,event_time,event_location,event_details,event_photo) values('{$ngo_id}','{$event_title}','{$event_date}','{$event_time}','{$event_location}','{$event_details}','{$event_photo_name}')");
+    move_uploaded_file($event_photo_tmp_name, "uploads/" . $event_photo_name);
+    if ($query) {
+        echo "<script>alert('Event added to the database');window.location='event_form.php'</script>";
+    }
 }
 
 ?>
@@ -52,7 +52,7 @@ if($_POST)
     <link rel="stylesheet" type="text/css" href="css/main.css">
     <!-- Font-icon css-->
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
-  
+
 </head>
 
 <body class="app sidebar-mini">
@@ -129,18 +129,18 @@ if($_POST)
             ga('send', 'pageview');
         }
     </script>
-      <script src="tools/jquery-3.7.1.min.js"></script>
+    <script src="tools/jquery-3.7.1.min.js"></script>
     <script src="tools/jquery.validate.js"></script>
     <script>
-    $(document).ready(function(){
-      $("#blog_form").validate();
-      });
+        $(document).ready(function() {
+            $("#blog_form").validate();
+        });
     </script>
     <style>
-      .error{
-        color:red
-      }
-      </style>
+        .error {
+            color: red
+        }
+    </style>
 </body>
 
 </html>

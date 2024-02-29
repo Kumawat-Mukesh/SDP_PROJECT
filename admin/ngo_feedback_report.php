@@ -40,70 +40,87 @@ if (!isset($_SESSION["admin_id"])) {
             padding: 30px;
 
         }
+
+        .info {
+            border-collapse: collapse;
+            margin: 20px;
+            padding: 20px;
+        }
     </style>
 </head>
 
 <body>
-    <br>
-    <h2 class="tile-title" style="text-align:center;">Connecting Dots</h2><br>
-    <hr>
-    <h3 class="tile-title" style="text-align:center;">NGO Wise Feedback Report</h3><br>
-    <form method="get">
+    <main>
+        <div class="info">
+            <br>
+            <h2 class="tile-title" style="text-align:center;">Connecting Dots</h2><br>
+            <hr>
+            <h3 class="tile-title" style="text-align:center;">NGO Wise Feedback Report</h3><br>
+            <form method="get">
+                <?php
+                echo "<h6 style='color:teal;'>Date : " . date('d-m-Y') . "</h6> <br>";
+
+                $ngo_query = mysqli_query($connection, "select*from tbl_ngo");
+                $count = mysqli_num_rows($ngo_query);
+                echo "<select class='form-control' name='ngo_id' style='width:300px;'>";
+                echo "<option value=''>Select NGO</option>";
+                while ($ngo_row = mysqli_fetch_array($ngo_query)) {
+                    echo "<option value='{$ngo_row['ngo_id']}'>{$ngo_row['ngo_name']}</option>";
+                }
+                echo "</select>";
+                ?>
+                <input type="submit" value="search">
+            </form>
+        </div>
         <?php
-        echo "<h6 style='color:teal;'>Date : " . date('d-m-Y') . "</h6> <br>";
-
-        $ngo_query = mysqli_query($connection, "select*from tbl_ngo");
-        $count = mysqli_num_rows($ngo_query);
-        echo "<select class='form-control' name='ngo_id' style='width:300px;'>";
-        echo "<option value=''>Select NGO</option>";
-        while ($ngo_row = mysqli_fetch_array($ngo_query)) {
-            echo "<option value='{$ngo_row['ngo_id']}'>{$ngo_row['ngo_name']}</option>";
-        }
-        echo "</select>";
-        ?>
-        <input type="submit" value="search">
-    </form>
-    <table border=1 class="table table-hover" style="width: 95%;">
-        <thead>
-            <tr>
-                <!-- <th>ID</th> -->
-                <th>NGO Name</th>
-                <th>User Name</th>
-                <th>Details</th>
-                <th>Rating</th>
-
-            </tr>
-        </thead>
-        <tbody>
-            <?php
-            include 'admin_db.php';
-            if(isset($_GET['ngo_id'])){
-                $ngo_id=$_GET['ngo_id'];
-            
+        if (isset($_GET['ngo_id'])) {
+            $ngo_id = $_GET['ngo_id'];
 
             $select = mysqli_query($connection, "select*from tbl_feedback  where ngo_id = '{$ngo_id}'");
-            while ($feedback_row = mysqli_fetch_array($select)) {
+            $feedback_count = mysqli_num_rows($select);
+            if ($feedback_count > 0) {
 
-                $ngo_query = mysqli_query($connection, "select*from tbl_ngo where ngo_id='{$feedback_row['ngo_id']}'");
-                $ngo_row = mysqli_fetch_array($ngo_query);
+        ?>
+                <table border=1 class="table table-hover" style="width: 95%;">
+                    <thead>
+                        <tr>
+                            <!-- <th>ID</th> -->
+                            <th>NGO Name</th>
+                            <th>User Name</th>
+                            <th>Details</th>
+                            <th>Rating</th>
 
-                $user_query = mysqli_query($connection, "select*from tbl_user where user_id='{$feedback_row['user_id']}'");
-                $user_row = mysqli_fetch_array($user_query);
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php
+                        while ($feedback_row = mysqli_fetch_array($select)) {
 
+                            $ngo_query = mysqli_query($connection, "select*from tbl_ngo where ngo_id='{$feedback_row['ngo_id']}'");
+                            $ngo_row = mysqli_fetch_array($ngo_query);
 
-                echo "<tr>";
-                // echo "<td>{$feedback_row['feedback_id']}</td>";
-                echo "<td>{$ngo_row['ngo_name']}</td>";
-                echo "<td>{$user_row['user_first_name']}  {$user_row['user_last_name']}</td>";
-                echo "<td>{$feedback_row['feedback_details']}</td>";
-                echo "<td>{$feedback_row['feedback_rating']}</td>";
-               
-                echo "</tr>";
+                            $user_query = mysqli_query($connection, "select*from tbl_user where user_id='{$feedback_row['user_id']}'");
+                            $user_row = mysqli_fetch_array($user_query);
+
+                            echo "<tr>";
+                            echo "<td>{$ngo_row['ngo_name']}</td>";
+                            echo "<td>{$user_row['user_first_name']}  {$user_row['user_last_name']}</td>";
+                            echo "<td>{$feedback_row['feedback_details']}</td>";
+                            echo "<td>{$feedback_row['feedback_rating']}</td>";
+
+                            echo "</tr>";
+                        }
+                        ?>
+                    </tbody>
+                </table>
+        <?php } else {
+                echo '
+                <div class="page-error">
+                <h1 class="text-danger"><i class="bi bi-exclamation-circle"></i> No Record Found</h1>
+            </div>';
             }
-        }
-            ?>
-        </tbody>
-    </table>
+        } ?>
+    </main>
     <!-- Essential javascripts for application to work-->
     <script src="js/jquery-3.7.0.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
@@ -127,6 +144,7 @@ if (!isset($_SESSION["admin_id"])) {
             ga('send', 'pageview');
         }
     </script>
+
     <script>
         function confirmDelete() {
             return confirm("Are you Confirm?");

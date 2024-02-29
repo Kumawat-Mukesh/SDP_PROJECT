@@ -1,9 +1,9 @@
 <?php
 session_start();
-if (!isset($_SESSION["ngo_id"])) {
+if(!isset($_SESSION["ngo_id"])){
     header("Location:ngo_login.php");
 }
-$ngo_id = $_SESESSION['ngo_id'];
+$ngo_id=$_SESESSION['ngo_id'];
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -94,8 +94,8 @@ $ngo_id = $_SESESSION['ngo_id'];
                                 echo "<td>{$event_row['event_date']}</td>";
                                 echo "<td>{$event_row['event_location']}</td>";
                                 echo "<td>{$event_row['event_details']}</td>";
-
-                                echo "<td><a target='_blank' href='uploads/{$event_row['event_photo']}'><img src='uploads/{$event_row['event_photo']}' width='50'></a></td>";
+                                
+                                echo "<td><a target='_blank' href='/project/admin/uploads/{$event_row['event_photo']}'><img src='/project/admin/uploads/{$event_row['event_photo']}' width='50'></a></td>";
                                 echo "<td>
                                     <a href='event_information.php?delete_id={$event_row['event_id']}' 
                                     onclick='return confirmDelete()'>
@@ -137,7 +137,7 @@ $ngo_id = $_SESESSION['ngo_id'];
             ga('send', 'pageview');
         }
     </script>
-    <script>
+     <script>
         function confirmDelete() {
             return confirm("Are you Confirm?");
         }

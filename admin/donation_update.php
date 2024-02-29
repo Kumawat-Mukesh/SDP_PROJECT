@@ -78,7 +78,8 @@ if ($_POST) {
                                 echo "<select class='form-control' name='item_requirement_id'>";
                                 echo "<option value=''>Select Item Requirement</option>";
                                 while ($item_requirement_row = mysqli_fetch_array($item_requirement_query)) {
-                                    echo "<option value='{$item_requirement_row['item_requirement_id']}'>{$item_requirement_row['item_requirement_details']} </option>";
+                                    $select_item =  $item_requirement_row['item_requirement_id'] == $donation_data['item_requirement_id'] ? "selected" : "";
+                                    echo "<option value='{$item_requirement_row['item_requirement_id']}' $select_item>{$item_requirement_row['item_requirement_details']} </option>";
                                 }
                                 echo "</select>";
                                 ?>
@@ -95,7 +96,8 @@ if ($_POST) {
                                 echo "<select class='form-control' name='volunteer_id'>";
                                 echo "<option value=''>Select Volunteer</option>";
                                 while ($volunteer_row = mysqli_fetch_array($volunteer_query)) {
-                                    echo "<option value='{$volunteer_row['volunteer_id']}'>{$volunteer_row['volunteer_first_name']}  {$volunteer_row['volunteer_last_name']}</option>";
+                                    $select_volunteer =  $volunteer_row['volunteer_id'] == $donation_data['volunteer_id'] ? "selected" : "";
+                                    echo "<option value='{$volunteer_row['volunteer_id']}' $select_volunteer>{$volunteer_row['volunteer_first_name']}  {$volunteer_row['volunteer_last_name']}</option>";
                                 }
                                 echo "</select>";
                                 ?>

@@ -11,6 +11,7 @@ if ($_POST) {
     $old_password_db = mysqli_fetch_array($old_password_query);
     if ($old_password_db['admin_password'] == $admin_otp) {
         if ($old_password_db['admin_password'] != $admin_new_password) {
+
             if ($admin_new_password == $admin_confirm_password) {
                 $update_query = mysqli_query($connection, "update tbl_admin set admin_password = '{$admin_new_password}' where admin_email='{$email}'");
                 echo "<script>alert('Password changes');window.location='dashboard.php'</script>";
@@ -86,31 +87,29 @@ if ($_POST) {
     <script>
         $(document).ready(function() {
             $("#change_password_form_js").validate({
-                rules: {
+                // rules: {
 
-
-                    admin_new_password: {
-                        required: true,
-                        minlength: 6
-                    },
-                    admin_confirm_password: {
-                        required: true,
-                        minlength: 6,
-                        equalTo: "#admin_new_password"
-                    },
-
-                },
-                messages: {
-                    admin_new_password: {
-                        required: "Please Enter Password",
-                        minlength: "Your password must be at least 6 characters long"
-                    },
-                    admin_confirm_password: {
-                        required: "Please Confirm Password",
-                        minlength: "Your password must be at least 6 characters long",
-                        equalTo: "Please enter the same password as above"
-                    }
-                }
+                //     admin_new_password: {
+                //         required: true,
+                //         minlength: 6
+                //     },
+                //     admin_confirm_password: {
+                //         required: true,
+                //         minlength: 6,
+                //         equalTo: "#admin_new_password"
+                //     },
+                // },
+                // messages: {
+                //     admin_new_password: {
+                //         required: "Please Enter Password",
+                //         minlength: "Your password must be at least 6 characters long"
+                //     },
+                //     admin_confirm_password: {
+                //         required: "Please Confirm Password",
+                //         minlength: "Your password must be at least 6 characters long",
+                //         equalTo: "Please enter the same password as above"
+                //     }
+                // }
 
             });
         });

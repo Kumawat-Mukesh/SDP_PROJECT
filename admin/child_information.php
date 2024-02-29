@@ -57,7 +57,7 @@ $ngo_id = $_SESSION["ngo_id"];
             <div class="col-md-12">
                 <div class="tile">
                     <h3 class="tile-title">Child Information</h3>
-                    <table class="table table-hover">
+                    <table class="table table-hover" id='child'>
                         <thead>
                             <tr>
                                 <th>Name</th>
@@ -114,6 +114,13 @@ $ngo_id = $_SESSION["ngo_id"];
     <script src="js/main.js"></script>
     <!-- Page specific javascripts-->
     <!-- Google analytics script-->
+    <script type="text/javascript" src="js/plugins/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="js/plugins/dataTables.bootstrap.min.js"></script>
+    <script type="text/javascript">
+        $('#child').DataTable();
+       
+    </script>
+
     <script type="text/javascript">
         if (document.location.hostname == 'pratikborsadiya.in') {
             (function(i, s, o, g, r, a, m) {

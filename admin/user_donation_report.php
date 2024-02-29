@@ -40,80 +40,159 @@ if (!isset($_SESSION["admin_id"])) {
             padding: 30px;
 
         }
+
+        .info {
+            border-collapse: collapse;
+            margin: 20px;
+            padding: 20px;
+        }
     </style>
 </head>
 
 <body>
-    <br>
-    <h2 class="tile-title" style="text-align:center;">Connecting Dots</h2><br>
-    <hr>
-    <h3 class="tile-title" style="text-align:center;">User Wise Donation Report</h3><br>
-    <form method="get">
-        <?php
-        echo "<h6 style='color:teal;'>Date : " . date('d-m-Y') . "</h6> <br>";
+    <main>
+        <div class="info">
+            <br>
+            <h2 class="tile-title" style="text-align:center;">Connecting Dots</h2><br>
+            <hr>
+            <h3 class="tile-title" style="text-align:center;">User Wise Donation Report</h3><br>
+            <form method="get">
+                <?php
+                echo "<h6 style='color:teal;'>Date : " . date('d-m-Y') . "</h6> <br>";
 
-        $user_query = mysqli_query($connection, "select*from tbl_user");
-        $count = mysqli_num_rows($user_query);
-        echo "<select class='form-control' name='user_id' style='width:300px;'>";
-        echo "<option value=''>Select User</option>";
-        while ($user_row = mysqli_fetch_array($user_query)) {
-            echo "<option value='{$user_row['user_id']}'>{$user_row['user_first_name']} {$user_row['user_last_name']}</option>";
-        }
-        echo "</select>";
-        ?>
-        <input type="submit" value="search">
-    </form>
-    <table border=1 class="table table-hover" style="width: 95%;">
-        <thead>
-            <tr>
-                <!-- <th>Donation ID</th> -->
-                <th>NGO Name</th>
-                <th>User Name</th>
-                <th>Item Requirement Details</th>
-                <th>Donation Details</th>
-                <th>Donation Status</th>
-                <th>Volunteer Name</th>
-               
-            </tr>
-        </thead>
-        <tbody>
-
-            <?php
-            if ($count > 1) {
-                if (isset($_GET['user_id'])) {
-                    $user_id = $_GET['user_id'];
-
-                    $select = mysqli_query($connection, "select * from tbl_donation where user_id = '{$user_id}'");
-                    while ($donation_row = mysqli_fetch_array($select)) {
-                        $ngo_query = mysqli_query($connection, "select*from tbl_ngo where ngo_id='{$donation_row['ngo_id']}'");
-                                $ngo_row = mysqli_fetch_array($ngo_query);
-
-                                $item_requirement_query = mysqli_query($connection, "select*from tbl_item_requirement where item_requirement_id='{$donation_row['item_requirement_id']}'");
-                                $item_requirement_row = mysqli_fetch_array($item_requirement_query);
-
-                                $volunteer_query = mysqli_query($connection, "select*from tbl_volunteer where volunteer_id='{$donation_row['volunteer_id']}'");
-                                $volunteer_row = mysqli_fetch_array($volunteer_query);
-
-                                $user_query = mysqli_query($connection, "select * from tbl_user where user_id = '{$donation_row['user_id']}'");
-                                $user_row = mysqli_fetch_array($user_query);
-
-                                echo "<tr>";
-                                // echo "<td>{$donation_row['donation_id']}</td>";
-                                echo "<td>{$ngo_row['ngo_name']}</td>";
-                                echo "<td>{$user_row['user_first_name']}</td>";
-                                echo "<td>{$item_requirement_row['item_requirement_details']}</td>";
-                                echo "<td>{$donation_row['donation_details']}</td>";
-                                echo "<td>{$donation_row['donation_status']}</td>";
-                                echo "<td>{$volunteer_row['volunteer_first_name']} {$volunteer_row['volunteer_last_name']}</td>";
-                                echo "</tr>";
-                    }
+                $user_query = mysqli_query($connection, "select*from tbl_user");
+                $count = mysqli_num_rows($user_query);
+                echo "<select class='form-control' name='user_id' style='width:300px;'>";
+                echo "<option value=''>Select User</option>";
+                while ($user_row = mysqli_fetch_array($user_query)) {
+                    echo "<option value='{$user_row['user_id']}'>{$user_row['user_first_name']} {$user_row['user_last_name']}</option>";
                 }
-            } else {
-                echo "No record found";
-            }
-            ?>
-        </tbody>
-    </table>
+                echo "</select>";
+                ?>
+                <input type="submit" value="search">
+            </form>
+        </div>
+        <?php
+        if (isset($_GET['user_id'])) {
+            $user_id = $_GET['user_id'];
+
+            $select = mysqli_query($connection, "select * from tbl_donation where user_id = '{$user_id}' and donation_type='item'");
+            $item_count = mysqli_num_rows($select);
+            if ($item_count > 0) {
+        ?>
+                <table border=1 class="table table-hover" style="width: 95%;">
+                <h2 style="margin: 30px;">Item Donation Information</h2>
+                    <thead>
+                        <tr>
+                            <!-- <th>Donation ID</th> -->
+                            <th>NGO Name</th>
+                            <th>User Name</th>
+                            <th>Item Requirement Details</th>
+                            <th>Donation Details</th>
+                            <th>Donation Status</th>
+                            <th>Volunteer Name</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        <?php
+
+                        while ($donation_row = mysqli_fetch_array($select)) {
+                            $ngo_query = mysqli_query($connection, "select*from tbl_ngo where ngo_id='{$donation_row['ngo_id']}'");
+                            $ngo_row = mysqli_fetch_array($ngo_query);
+
+                            $item_requirement_query = mysqli_query($connection, "select*from tbl_item_requirement where item_requirement_id='{$donation_row['item_requirement_id']}'");
+                            $item_requirement_row = mysqli_fetch_array($item_requirement_query);
+
+                            $volunteer_query = mysqli_query($connection, "select*from tbl_volunteer where volunteer_id='{$donation_row['volunteer_id']}'");
+                            $volunteer_row = mysqli_fetch_array($volunteer_query);
+
+                            $user_query = mysqli_query($connection, "select * from tbl_user where user_id = '{$donation_row['user_id']}'");
+                            $user_row = mysqli_fetch_array($user_query);
+
+                            echo "<tr>";
+                            // echo "<td>{$donation_row['donation_id']}</td>";
+                            echo "<td>{$ngo_row['ngo_name']}</td>";
+                            echo "<td>{$user_row['user_first_name']}</td>";
+                            echo "<td>{$item_requirement_row['item_requirement_details']}</td>";
+                            echo "<td>{$donation_row['donation_details']}</td>";
+                            echo "<td>{$donation_row['donation_status']}</td>";
+                            echo "<td>{$volunteer_row['volunteer_first_name']} {$volunteer_row['volunteer_last_name']}</td>";
+                            echo "</tr>";
+                        }
+
+                        ?>
+                    </tbody>
+                </table>
+
+        <?php    }
+        } ?>
+
+
+
+
+        <!-- online -->
+
+        <?php
+        if (isset($_GET['user_id'])) {
+            $user_id = $_GET['user_id'];
+
+            $select = mysqli_query($connection, "select * from tbl_donation where user_id = '{$user_id}' and donation_type='online'");
+            $item_count = mysqli_num_rows($select);
+            if ($item_count > 0) {
+        ?>
+                <table border=1 class="table table-hover" style="width: 95%;">
+                    <h2 style="margin: 30px;">Online Donation Information</h2>
+                    <thead>
+                        <tr>
+                            <!-- <th>Donation ID</th> -->
+                            <th>NGO Name</th>
+                            <th>User Name</th>
+                            <th>User Date</th>
+                            <th>Donation Method</th>
+                            <th>Donation Type</th>
+                            <th>Donation Amount</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        <?php
+
+                        while ($donation_row = mysqli_fetch_array($select)) {
+                            $ngo_query = mysqli_query($connection, "select*from tbl_ngo where ngo_id='{$donation_row['ngo_id']}'");
+                            $ngo_row = mysqli_fetch_array($ngo_query);
+
+                            $item_requirement_query = mysqli_query($connection, "select*from tbl_item_requirement where item_requirement_id='{$donation_row['item_requirement_id']}'");
+                            $item_requirement_row = mysqli_fetch_array($item_requirement_query);
+
+                            $volunteer_query = mysqli_query($connection, "select*from tbl_volunteer where volunteer_id='{$donation_row['volunteer_id']}'");
+                            $volunteer_row = mysqli_fetch_array($volunteer_query);
+
+                            $user_query = mysqli_query($connection, "select * from tbl_user where user_id = '{$donation_row['user_id']}'");
+                            $user_row = mysqli_fetch_array($user_query);
+
+                            echo "<tr>";
+                            // echo "<td>{$donation_row['donation_id']}</td>";
+                            echo "<td>{$ngo_row['ngo_name']}</td>";
+                            echo "<td>{$user_row['user_first_name']}</td>";
+                            echo "<td>{$donation_row['donation_date']}</td>";
+                            echo "<td>{$donation_row['donation_method']}</td>";
+                            echo "<td>{$donation_row['donation_type']}</td>";
+                            echo "<td>{$donation_row['donation_amount']}</td>";
+                            echo "</tr>";
+                        }
+
+                        ?>
+                    </tbody>
+                </table>
+
+        <?php    }
+        } ?>
+
+
+    </main>
     <!-- Essential javascripts for application to work-->
     <script src="js/jquery-3.7.0.min.js"></script>
     <script src="js/bootstrap.min.js"></script>

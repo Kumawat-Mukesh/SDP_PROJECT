@@ -15,19 +15,17 @@ if (isset($_POST['ngo_login_button'])) {
   $count = mysqli_num_rows($query);
   $row = mysqli_fetch_array($query);
 
-  if($row['ngo_status'] == 1)
-  {
-    if ($count > 0) {
+
+  if ($count > 0) {
+    if ($row['ngo_status'] == 1) {
       $_SESSION['ngo_id'] = $row['ngo_id'];
       $_SESSION['ngo_name'] = $row['ngo_name'];
       header("Location:dashboard.php");
     } else {
-    $msg = "Email and password not matched!";
+      echo "<script>alert('Account is not Activated');</script>";
     }
-  } 
-  else
-  {
-    echo "<script>alert('Account is not Activated');</script>";
+  } else {
+    $msg = "Email and password not matched!";
   }
 }
 
@@ -117,7 +115,7 @@ if (isset($_POST["ngo_forgot_button"])) {
             <p class="semibold-text mb-2"><a href="#" data-toggle="flip">Forgot Password ?</a></p>
           </div>
           <div>
-            <p class="semibold-text mb-2"><a href="ngo_form.php" >Don't have an account ?</a></p>
+            <p class="semibold-text mb-2"><a href="ngo_form.php">Don't have an account ?</a></p>
           </div>
         </div>
         <div class="mb-3 btn-container d-grid">

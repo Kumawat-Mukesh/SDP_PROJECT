@@ -1,8 +1,7 @@
 <?php
 session_start();
-require './admin_db.php';
+require 'admin_db.php';
 $ngo_id=$_SESSION['ngo_id'];
-
 ?>
 <aside class="app-sidebar">
       <div class="app-sidebar__user"><i class="icon bi bi-building fs-1"></i>
@@ -31,10 +30,10 @@ $ngo_id=$_SESSION['ngo_id'];
           </ul>
         </li>
         <?php
-          $child_query=mysqli_query($connection,"select*from tbl_child where ngo_id='{$ngo_id}'");
-          $child_row = mysqli_fetch_array($child_query);
-    $count = mysqli_num_rows($child_query);
-    if ($count > 0) {
+        $child_query=mysqli_query($connection,"select * from tbl_child where ngo_id='{$ngo_id}'");
+        $child_row=mysqli_fetch_array($child_query);
+        $count=mysqli_num_rows($child_query);
+        if($count>0){
         ?>
         <li class="treeview"><a class="app-menu__item" href="#" data-toggle="treeview"><i class="app-menu__icon bi bi-box2-heart"></i><span class="app-menu__label">Child</span><i class="treeview-indicator bi bi-chevron-right"></i></a>
           <ul class="treeview-menu">
@@ -44,9 +43,9 @@ $ngo_id=$_SESSION['ngo_id'];
         <?php
         }
         ?>
-        <li class="treeview"><a class="app-menu__item" href="#" data-toggle="treeview"><i class="app-menu__icon bi bi-box2-heart"></i><span class="app-menu__label">Events</span><i class="treeview-indicator bi bi-chevron-right"></i></a>
+        <li class="treeview"><a class="app-menu__item" href="#" data-toggle="treeview"><i class="app-menu__icon bi bi-box2-heart"></i><span class="app-menu__label">Event</span><i class="treeview-indicator bi bi-chevron-right"></i></a>
           <ul class="treeview-menu">
-          <li><a class="treeview-item" href="event_form.php"><i class="icon bi bi-circle-fill"></i> Event-form</a></li>
+          <li><a class="treeview-item" href="event_form.php"><i class="icon bi bi-circle-fill"></i> Event-Form</a></li>
             <li><a class="treeview-item" href="event_information.php"><i class="icon bi bi-circle-fill"></i> Event-Information</a></li>
           </ul>
         </li>
@@ -67,7 +66,7 @@ $ngo_id=$_SESSION['ngo_id'];
         <li class="treeview"><a class="app-menu__item" href="#" data-toggle="treeview"><i class="app-menu__icon bi bi-gear me-2 fs-5"></i><span class="app-menu__label">Settings</span><i class="treeview-indicator bi bi-chevron-right"></i></a>
           <ul class="treeview-menu">
             <li><a class="treeview-item" href="ngo_setting.php"><i class="icon bi bi-circle-fill"></i> Change Password</a></li>
-            <li><a class="treeview-item" href="ngo_logout.php"><i class="icon bi bi-circle-fill"></i> Logout</a></li>
+            <li><a class="treeview-item" href="ngo_edit.php"><i class="icon bi bi-circle-fill"></i> Edit Profile</a></li>
           </ul>
         </li>
       </ul>

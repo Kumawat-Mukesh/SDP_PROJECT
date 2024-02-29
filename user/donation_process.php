@@ -6,7 +6,7 @@ $user_id = $_SESSION['user_id'];
 $ngo_id = $_POST['ngo_id'];
 $item_requirement_id = $_POST['item_requirement_id'];
 $donation_details = $_POST['donation_details'];
-$donation_date = date('d-m-Y');
+$donation_date = date('Y-m-d');
 $donation_address = $_POST['donation_address'];
 if (!isset($_SESSION['user_id'])) {
     header("location:user_login.php");

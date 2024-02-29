@@ -19,7 +19,6 @@ if ($_POST) {
         header("Location:user_home.php");
     } else {
         $_SESSION['set_dalert'] = "1";
-
         // echo "<script>alert('Email and password not matched!');</script>";
         $msg = "Email and password not matched!";
     }

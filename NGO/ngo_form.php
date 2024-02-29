@@ -78,7 +78,7 @@ move_uploaded_file($certificate_photo_tmp_name,"uploads/".$certificate_photo_nam
   <main class="center">
     <div class="col-md-12">
       <div class="tile" style="background-color: #D9DDDC;">
-        <h3 class="tile-title">Registration Form</h3>
+        <h3 class="tile-title">NGO Registration Form</h3>
         <div class="tile-body">
           <form class="row" method="post" id="ngo_form_js" enctype="multipart/form-data">
             <div class="mb-5 col-md-5">

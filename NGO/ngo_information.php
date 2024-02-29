@@ -67,11 +67,9 @@ $ngo_id=$_SESSION["ngo_id"];
                                 <th>Password</th>
                                 <th>Contact No.</th>
                                 <th>Address</th>
-                                <th>Certificate</th>
                                 <th>Photo</th>
                                 <th>Area Name</th>
                                 <th>Category Name</th>
-                                <th>Edit</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -91,14 +89,10 @@ $ngo_id=$_SESSION["ngo_id"];
                                 echo "<td>{$ngo_row['ngo_password']}</td>";
                                 echo "<td>{$ngo_row['ngo_contact_no']}</td>";
                                 echo "<td>{$ngo_row['ngo_address']}</td>";
-
-                                echo "<td><a target='_blank' href='uploads/{$ngo_row['ngo_certificate']}'><img src='uploads/{$ngo_row['ngo_certificate']}' width='50'></a></td>";
                                 echo "<td><a target='_blank' href='uploads/{$ngo_row['ngo_photo']}'><img src='uploads/{$ngo_row['ngo_photo']}' width='50'></a></td>";
                                 echo "<td>{$area_row['area_name']}</td>";
                                 echo "<td>{$category_row['category_name']}</td>";
-                                echo "<td>  
-                                    <a href='ngo_edit.php?edit_id={$ngo_row['ngo_id']}'><i class='bi bi-pencil-square'></i></a>   
-                                    </td>";
+                                
                                 echo "</tr>";
                             }
                             ?>

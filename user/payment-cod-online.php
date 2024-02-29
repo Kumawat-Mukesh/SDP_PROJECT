@@ -8,14 +8,11 @@ if (isset($_POST['payment_now'])) {
     $ngo_id = $_GET['ngo_id'];
     $method = $_POST['payment_method'];
     $amount = $_POST['amount'];
-    $type = "Paisa";
+    $type = "online";
     //Null nai chale
-    $q = mysqli_query($connection, "insert into tbl_donation(ngo_id,user_id,method,type,amount) values('{$ngo_id}','{$user_id}','{$method}','{$type}','{$amount}')");
-    if ($q) {
-        header("location:thank_you.php");
-    } else {
-        echo "not added";
-    }
+    $q = mysqli_query($connection, "insert into tbl_donation(ngo_id,user_id,donation_method,donation_type,donation_amount) values('{$ngo_id}','{$user_id}','{$method}','{$type}','{$amount}')");
+
+    header("location:thank_you.php");
 }
 
 ?>
@@ -90,8 +87,8 @@ if (isset($_POST['payment_now'])) {
                                     <p><b>Payment Amount : </b>Rs.<?php echo $_POST['amount'] ?>
                                         <input type="hidden" name="amount" value="<?php echo $_POST['amount'] ?>" />
                                     <table class="table table-borderless" style="width: 100%;">
-                                        <input hidden name="payment_method" value="Bank-Transfer" hidden>
-                                        <input hidden name="payment_status" value="Completed" hidden>
+                                        <input hidden name="payment_method" value="Bank-Transfer">
+                                        <input hidden name="payment_status" value="Completed">
                                         <tr>
                                             <td>Bank Name</td>
                                             <td>Bank Holder Name</td>
@@ -119,8 +116,8 @@ if (isset($_POST['payment_now'])) {
                                     <p><b>Payment Amount : </b>Rs.<?php echo $_POST['amount'] ?></p>
                                     <input type="hidden" name="amount" value="<?php echo $_POST['amount'] ?>" />
                                     <table class="table table-borderless" style="width: 500px;">
-                                        <input hidden name="payment_method" value="Credit-Debit" hidden>
-                                        <input hidden name="payment_status" value="Completed" hidden>
+                                        <input hidden name="payment_method" value="Credit-Debit">
+                                        <input hidden name="payment_status" value="Completed">
                                         <tr>
                                             <td colspan="2">Card Owner Name <span class="float-right"><b></b></span></td>
                                         </tr>

@@ -16,7 +16,7 @@ if ($_POST) {
     $query = mysqli_query($connection, "insert into tbl_feedback(ngo_id,user_id,feedback_details,feedback_rating) values('{$ngo_id}','{$user_id}','{$feedback_details}','{$feedback_rating}')");
 
     if ($query) {
-        echo "<script>alert('Thank You For Your Feedback!');window.location='ngo_details.php'</script>";
+        echo "<script>alert('Thank You For Your Feedback!');window.location='ngo_details.php?ngo_id=$ngo_id';</script>";
     }
 }
 
@@ -223,13 +223,17 @@ if ($_POST) {
                                 </div>
                                 <p><?php
                                     $item_requirement_query = mysqli_query($connection, "select * from tbl_item_requirement where ngo_id = {$ngo_id} ");
+                                    $i = 0;
                                     echo "<table border='1'>";
                                     echo "<tr>
+                                    <th>NO.</th>
                                     <th>Requirements</th>
                                     <th>Status</th>
                                     </tr>";
                                     while ($item_requirement_data = mysqli_fetch_array($item_requirement_query)) {
+                                        $i++;
                                         echo "<tr>";
+                                        echo "<td>{$i}</td>";
                                         echo "<td>{$item_requirement_data['item_requirement_details']}</td>";
                                         echo "<td>{$item_requirement_data['item_requirement_status']}</td>";
                                         echo "</tr>";
@@ -368,7 +372,7 @@ if ($_POST) {
                             <div class="inner">
                                 <?php
 
-                                $select = mysqli_query($connection, "select*from tbl_feedback where ngo_id='{$ngo_id}'");
+                                $select = mysqli_query($connection, "select*from tbl_feedback where ngo_id='{$ngo_id}' limit 0,3");
                                 $count = mysqli_num_rows($select);
                                 if ($count > 0) {
                                     while ($feedback_row = mysqli_fetch_array($select)) {
@@ -469,18 +473,7 @@ if ($_POST) {
                                                 </form>
                                                 </br>
                                                 </br>
-                                                <form action="ngo_listing.php" class="search-form" action="ngo_details.php">
-                                                    <?php
-                                                    $area_query = mysqli_query($connection, "select * from tbl_area");
-                                                    echo "<select name='area_id'>";
-                                                    echo "<option value=''>Select area</option>";
-                                                    while ($area_row = mysqli_fetch_array($area_query)) {
-                                                        echo "<option value='{$area_row['area_id']}'>{$area_row['area_name']}</option>";
-                                                    }
-                                                    echo "<select>";
-                                                    ?>
-                                                    <button type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
-                                                </form>
+
                                             </div>
                                         </div>
                                     </div>
@@ -540,7 +533,7 @@ if ($_POST) {
                                                     <li>
                                                         <div class="inner">
                                                             <div class="img-box">
-                                                                <img src="assets/images/sidebar/campaigns-1.jpg" alt="Awesome Image">
+                                                                <img src="/project/admin/uploads/<?php echo $blog_data['blog_photo']; ?>" alt="Awesome Image">
                                                                 <div class="overlay-content">
                                                                     <a href="#"><i class="fa fa-link" aria-hidden="true"></i></a>
                                                                 </div>

@@ -180,35 +180,43 @@ require './admin_db.php';
                     } else if (isset($_GET['q'])) {
                         $category_id = $_GET['q'];
                         $ngo_query = mysqli_query($connection, "select * from tbl_ngo where ngo_name like '%{$category_id}%' and ngo_status=1");
-                    } else if (isset($_GET['area_id'])) {
-                        $area_id = $_GET['area_id'];
-                        $ngo_query = mysqli_query($connection, "select * from tbl_ngo where area_id ='{$area_id}' and ngo_status=1");
+                    } else if (isset($_GET['area'])) {
+                        $area = $_GET['area'];
+                        $select_area_name = mysqli_query($connection, "select * from tbl_area where area_name='$area'");
+                        $select_area_data = mysqli_fetch_array($select_area_name);
+                        $area_id = $select_area_data['area_id'];
+                        $ngo_query = mysqli_query($connection, "select * from tbl_ngo where area_id like '%{$area_id}%' and ngo_status=1");
                     } else {
                         $ngo_query = mysqli_query($connection, "select * from tbl_ngo where ngo_status=1");
                     }
 
-                    while ($ngo_data = mysqli_fetch_array($ngo_query)) {
+                    $row = mysqli_num_rows($ngo_query);
+                    if ($row > 0) {
+                        while ($ngo_data = mysqli_fetch_array($ngo_query)) {
                     ?>
-                        <div class="col-xl-4 col-lg-6 col-md-6">
-                            <div class="single-cause-style1">
-                                <div class="img-holder">
-                                    <img src="/project/admin/uploads/<?php echo $ngo_data['ngo_photo']; ?> " alt="">
-                                    <div class="overlay-icon">
-                                        <a class="lightbox-image" data-fancybox="gallery" href="/project/admin/uploads/<?php echo $ngo_data['ngo_photo']; ?> ">
-                                            <img src="/project/admin/uploads/<?php echo $ngo_data['ngo_photo']; ?> " alt="">
-                                        </a>
+                            <div class="col-xl-4 col-lg-6 col-md-6">
+                                <div class="single-cause-style1">
+                                    <div class="img-holder">
+                                        <img src="/project/admin/uploads/<?php echo $ngo_data['ngo_photo']; ?> " alt="">
+                                        <div class="overlay-icon">
+                                            <a class="lightbox-image" data-fancybox="gallery" href="/project/admin/uploads/<?php echo $ngo_data['ngo_photo']; ?> ">
+                                                <img src="/project/admin/uploads/<?php echo $ngo_data['ngo_photo']; ?> " alt="">
+                                            </a>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="text-holder">
-                                    <h3><a href="ngo_details.php?ngo_id=<?php echo $ngo_data['ngo_id']; ?>"><?php echo $ngo_data['ngo_name']; ?></a></h3>
+                                    <div class="text-holder">
+                                        <h3><a href="ngo_details.php?ngo_id=<?php echo $ngo_data['ngo_id']; ?>"><?php echo $ngo_data['ngo_name']; ?></a></h3>
 
-                                    <div class="btns-box">
-                                        <a class="btn-one" href="ngo_details.php?ngo_id=<?php echo $ngo_data['ngo_id']; ?>"><span class="txt"><i class="arrow1 fa fa-check-circle"></i>Donate Now</span></a>
+                                        <div class="btns-box">
+                                            <a class="btn-one" href="ngo_details.php?ngo_id=<?php echo $ngo_data['ngo_id']; ?>"><span class="txt"><i class="arrow1 fa fa-check-circle"></i>Donate Now</span></a>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    <?php } ?>
+                    <?php }
+                    } else {
+                        echo "<h3>No Record Found!!!</h3>";
+                    } ?>
                     <!--End Single Cause Style1-->
                 </div>
             </div>
@@ -230,19 +238,11 @@ require './admin_db.php';
                                             <button type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
                                         </form>
                                         <br><br>
-
-                                        <form action="ngo_listing.php" class="search-form" action="ngo_details.php">
-                                            <?php
-                                            $area_query = mysqli_query($connection, "select * from tbl_area");
-                                            echo "<select name='area_id'>";
-                                            echo "<option value=''>Select area</option>";
-                                            while ($area_row = mysqli_fetch_array($area_query)) {
-                                                echo "<option value='{$area_row['area_id']}'>{$area_row['area_name']}</option>";
-                                            }
-                                            echo "<select>";
-                                            ?>
+                                        <form class="search-form" action="ngo_listing.php" method="get">
+                                            <input placeholder="Area" name="area" type="text">
                                             <button type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
                                         </form>
+
                                     </div>
                                 </div>
                             </div>
@@ -299,7 +299,7 @@ require './admin_db.php';
                                             <li>
                                                 <div class="inner">
                                                     <div class="img-box">
-                                                        <img src="assets/images/sidebar/campaigns-1.jpg" alt="Awesome Image">
+                                                        <img src="/project/admin/uploads/<?php echo $blog_data['blog_photo']; ?>" alt="Awesome Image">
                                                         <div class="overlay-content">
                                                             <a href="#"><i class="fa fa-link" aria-hidden="true"></i></a>
                                                         </div>

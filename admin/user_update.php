@@ -129,7 +129,7 @@ if ($_POST) {
                                     $select_area = $area_row['area_id'] == $user_data['area_id'] ? "selected" : "";
                                     echo "<option value='{$area_row['area_id']}' $select_area>{$area_row['area_name']}</option>";
                                 }
-                                echo "</select>";
+                                echo "</select>";   
                                 ?>
                             </div>
                         </form>

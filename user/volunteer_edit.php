@@ -1,29 +1,17 @@
 <?php
 session_start();
-require 'admin_db.php';
+require  'admin_db.php';
+$volunteer_id = $_SESSION['volunteer_id'];
+$volunteer_select = mysqli_query($connection, "select *from tbl_volunteer where volunteer_id={$volunteer_id}");
+$volunteer_data = mysqli_fetch_array($volunteer_select);
 if ($_POST) {
-    $user_otp = $_POST['user_otp'];
-    $user_email = $_GET['user_email'];
-    $user_new_password = $_POST['user_new_password'];
-    $user_confirm_password = $_POST['user_confirm_password'];
-    $user_id = $_SESSION['user_id'];
+    $volunteer_email = $_POST['volunteer_email'];
+    $volunteer_mobile_no = $_POST['volunteer_mobile_no'];
+    $volunteer_address = $_POST['volunteer_address'];
 
-    $old_password_query  = mysqli_query($connection, "select * from tbl_user where user_email = '{$user_email}' and user_password = '{$user_otp}'");
-    $old_password_db = mysqli_fetch_array($old_password_query);
-    $count = mysqli_num_rows($old_password_query);
-    if ($count > 0) {
-        if ($old_password_db['user_password'] != $user_new_password) {
-            if ($user_new_password == $user_confirm_password) {
-                $update_query = mysqli_query($connection, "update tbl_user set user_password = '{$user_new_password}' where user_email = '{$user_email}'");
-                echo "<script>alert('Password changed');window.location='user_login.php'</script>";
-            } else {
-                echo "<script>alert('New and Confirm Password no match')</script>";
-            }
-        } else {
-            echo "<script>alert('New Password must be different ');</script>";
-        }
-    } else {
-        echo "<script>alert('OTP Not Match!');</script>";
+    $query = mysqli_query($connection, "update tbl_volunteer set volunteer_email='{$volunteer_email}',volunteer_mobile_no='{$volunteer_mobile_no}',volunteer_address='{$volunteer_address}' where volunteer_id='{$volunteer_id}'");
+    if ($query) {
+        echo "<script>alert('Your information has been updated');window.location='user_home.php'</script>";
     }
 }
 ?>
@@ -35,7 +23,7 @@ if ($_POST) {
 
 <head>
     <meta charset="UTF-8">
-    <title>Change Password</title>
+    <title>Registration</title>
 
     <!-- responsive meta -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -73,9 +61,9 @@ if ($_POST) {
     <link rel="stylesheet" href="assets/css/style.css">
     <link rel="stylesheet" href="assets/css/responsive.css">
     <!-- Favicon -->
-    <!-- <link rel="apple-touch-icon" sizes="180x180" href="assets/images/favicon/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/images/favicon/apple-touch-icon.png">
     <link rel="icon" type="image/png" href="assets/images/favicon/favicon-32x32.png" sizes="32x32">
-    <link rel="icon" type="image/png" href="assets/images/favicon/favicon-16x16.png" sizes="16x16"> -->
+    <link rel="icon" type="image/png" href="assets/images/favicon/favicon-16x16.png" sizes="16x16">
 
     <!-- Fixing Internet Explorer-->
     <!--[if lt IE 9]>
@@ -86,7 +74,10 @@ if ($_POST) {
 </head>
 
 <body>
-
+    <?php
+    require 'user_header.php';
+    require 'user_sidebar.php';
+    ?>
     <div class="boxed_wrapper ltr">
         <section class="breadcrumb-area" style="background-image: url(assets/images/breadcrumb/breadcrumb-7.jpg);">
             <div class="container">
@@ -108,14 +99,14 @@ if ($_POST) {
                                 </div>
                             </div>
                             <div class="title">
-                                <h2>Change Password</h2>
+                                <h2>Registration Form</h2>
                             </div>
                             <div class="border-box"></div>
                             <div class="breadcrumb-menu">
                                 <ul>
                                     <li><a href="user_home.php">Home</a></li>
                                     <li><span class="flaticon-right-arrow"></span></li>
-                                    <li class="active">Change Password</li>
+                                    <li class="active">Update Profile</li>
                                 </ul>
                             </div>
                         </div>
@@ -133,57 +124,46 @@ if ($_POST) {
 
                             <div class="sec-title">
                                 <div class="mx-auto col-10 col-md-8 col-lg-6">
-                                    <div class="sub-title martop0">
-                                        <div class="inner">
-                                            <h3>Support People With Heart!</h3>
-                                        </div>
-                                    </div>
-                                    <h2>Change Password</h2>
+                                    <h2>Update Profile <i class="fa fa-pencil-square-o" aria-hidden="true"></i></h2>
                                 </div>
                             </div>
                             <div class="contact-form">
-                                <form id="user_change_password" name="contact_form" class="justify-content-center" style="justify-content: center; " method="post">
+                                <form id="volunteer_register" class="justify-content-center" style="justify-content: center; " method="post" enctype="multipart/form-data">
 
                                     <div class="row">
                                         <div class="mx-auto col-10 col-md-8 col-lg-6">
-                                            <div class="input-box">
-                                                <input type="password" name="user_otp" value="" placeholder="Enter OTP" required><?php echo $msg; ?>
-                                                <div class="icon"><span class="fa fa-key"></span></div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="mx-auto col-10 col-md-8 col-lg-6">
-                                            <div class="input-box">
-                                                <input type="password" name="user_new_password" value="" placeholder="Enter New Password" required><?php echo $msg; ?>
-                                                <div class="icon"><span class="fa fa-key"></span></div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="mx-auto col-10 col-md-8 col-lg-6">
-                                            <div class="input-box">
-                                                <input type="password" name="user_confirm_password" value="" placeholder="Enter Confirm Password" required><?php echo $msg; ?>
-                                                <div class="icon"><span class="fa fa-key"></span></div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="mx-auto col-10 col-md-8 col-lg-6">
 
+                                            <div class="input-box">
+                                                <input type="email" name="volunteer_email" placeholder="Enter your email" value="<?php echo $volunteer_data['volunteer_email']; ?>" required>
+                                            </div>
+                                            <div class="input-box">
+                                                <input type="text" name="volunteer_mobile_no" placeholder="Enter mobile number " value="<?php echo $volunteer_data['volunteer_mobile_no']; ?>" required>
+                                            </div>
+                                            <div class="input-box">
+                                                <textarea name="volunteer_address" class="form-control" placeholder="Enter your address" rows="5" cols="15" required><?php echo $volunteer_data['volunteer_address']; ?></textarea>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="mx-auto col-10 col-md-8 col-lg-6">
                                             <div class="button-box">
-                                                <input id="form_botcheck" name="form_botcheck" class="form-control" type="hidden" value="">
+                                                <input id="form_botcheck" name="form_botcheck" class="form-control" type="hidden">
                                                 <button class="btn-one" type="submit" data-loading-text="Please wait...">
-                                                    <span class="txt"><i class="arrow1 fa fa-check-circle"></i> Save
+                                                    <span class="txt"><i class="arrow1 fa fa-check-circle"></i> Update
                                                     </span>
                                                 </button>
                                             </div>
                                         </div>
                                     </div>
+
                                 </form>
                             </div>
                         </div>
                     </div>
+
+
+
                 </div>
             </div>
         </section>
@@ -234,7 +214,32 @@ if ($_POST) {
     <script src="tools/jquery.validate.js"></script>
     <script>
         $(document).ready(function() {
-            $("#user_change_password").validate();
+            $("#volunteer_register").validate({
+                rules: {
+                    volunteer_email: {
+                        required: true,
+                        email: true
+                    },
+                    volunteer_mobile_no: {
+                        required: true,
+                        minlength: 10,
+                        maxlength: 10
+                    },
+                    item_requirement_details: "required"
+                },
+                messages: {
+                    volunteer_email: {
+                        required: "Please enter a valid email address",
+                        email: "Email contains (@) and (.)",
+                    },
+                    volunteer_mobile_no: {
+                        required: "Please Enter Your Mobile no.",
+                        minlength: "Enter Your 10 digit Mobile no. only",
+                        maxlength: "Enter Your 10 digit Mobile no. only",
+                    },
+                }
+
+            });
         });
     </script>
     <style>
@@ -244,6 +249,7 @@ if ($_POST) {
     </style>
 
 </body>
+
 
 <!-- Mirrored from mehedi.asiandevelopers.com/loveicon/contact.html by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 16 Sep 2023 07:55:48 GMT -->
 

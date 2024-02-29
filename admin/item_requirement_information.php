@@ -58,6 +58,7 @@ if (!isset($_SESSION["admin_id"])) {
             <div class="col-md-12">
                 <div class="tile">
                     <div class="tile-body">
+                    <h3 class="tile-title">Item Requirement Information</h3>
                         <div class="table-responsive">
                             <table class="table table-hover table-bordered" id="sampleTable">
                                 <thead>

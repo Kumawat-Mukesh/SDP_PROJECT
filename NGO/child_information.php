@@ -92,7 +92,7 @@ $ngo_id=$_SESSION["ngo_id"];
                                 echo "<td>{$child_row['child_name']}</td>";
                                 echo "<td>{$child_row['child_gender']}</td>";
                                 echo "<td>{$child_row['child_age']}</td>";
-                                echo "<td><a target='_blank' href='uploads/{$child_row['child_photo']}'><img src='uploads/{$child_row['child_photo']}' width='50'></a></td>";
+                                echo "<td><a target='_blank' href='/project/admin/uploads/{$child_row['child_photo']}'><img src='/project/admin/uploads/{$child_row['child_photo']}' width='50'></a></td>";
                                 echo "<td>
                                 <a href='child_information.php?delete_id={$child_row['child_id']}' 
                                 onclick='return confirmDelete()'>

@@ -70,7 +70,7 @@ if ($_POST) {
         </div>
         <div class="col-md-12">
             <div class="tile">
-                <h3 class="tile-title">Add Category</h3>
+                <h3 class="tile-title">Update Category</h3>
                 <div class="tile-body">
                     <form class="row" method="post" id="category_form_js">
                         <div class="mb-3 col-md-3">

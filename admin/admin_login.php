@@ -35,8 +35,25 @@ if (isset($_POST["admin_forgot_button"])) {
   $forgot_row = mysqli_fetch_array($forgot_query);
   if ($forgot_count == 1) {
     $otp = rand(1111, 9999);
-    mysqli_query($connection, "update tbl_admin set admin_password = '{$otp}' where admin_email = '{$admin_forgot_email}'");
-    $forgot_msg = "Hi {$forgot_row['admin_name']},<br/> your password is " . $otp . " <br/>Do not Share with anyone";
+    $admin_query =  mysqli_query($connection, "update tbl_admin set admin_password = '{$otp}' where admin_email = '{$admin_forgot_email}'");
+
+    // $forgot_msg = "Hi {$forgot_row['admin_name']},<br/> your password is " . $otp . " <br/>Do not Share with anyone";
+
+    $forgot_msg = "Dear {$forgot_row['admin_name']},</br>
+
+    We have received a request to reset the password for your administrator account associated with Connecting Dots.</br>
+    As a security measure, we require you to verify your identity before proceeding with the password reset.</br>  
+    To complete the password reset process, please use the following One-Time Password (OTP):</br>
+
+  OTP: $otp </br>
+
+  Please enter this OTP on the password reset page to verify your identity and create a new password.";
+
+
+
+
+
+
     //Load Composer's autoloader
     //Create an instance; passing `true` enables exceptions
     $mail = new PHPMailer(true);
@@ -57,7 +74,7 @@ if (isset($_POST["admin_forgot_button"])) {
 
       //Content
       $mail->isHTML(true);                                  //Set email format to HTML
-      $mail->Subject = 'Forgot password';
+      $mail->Subject = 'Password Reset OTP Request for Admin Account';
       $mail->Body    = $forgot_msg;
       $mail->AltBody = $forgot_msg;
 
@@ -98,6 +115,9 @@ if (isset($_POST["admin_forgot_button"])) {
       <h1>Connecting Dots</h1>
     </div>
     <?php
+
+
+
     if (isset($_SESSION["set_dalert"])) {
       unset($_SESSION["set_dalert"]);
     ?>
@@ -128,6 +148,8 @@ if (isset($_POST["admin_forgot_button"])) {
           <a href="/opt/lampp/htdocs/SDP/Admin/dashboard.php"><button type="submit" name="admin_login_button" class="btn btn-primary btn-block"><i class="bi bi-box-arrow-in-right me-2 fs-5"></i>SIGN IN</button></a>
         </div>
       </form>
+
+
       <form class="forget-form" method="post">
 
         <h3 class="login-head"><i class="bi bi-person-lock me-2"></i>Forgot Password ?</h3>

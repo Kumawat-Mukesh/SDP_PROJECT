@@ -57,60 +57,59 @@ if (!isset($_SESSION["admin_id"])) {
             <div class="col-md-12">
                 <div class="tile">
                     <div class="tile-body">
-                        <div class="table-responsive">
-                            <table class="table table-hover table-bordered" id="sampleTable">
-                                <thead>
-                                    <tr>
-                                        <!-- <th>ID</th> -->
-                                        <th>NGO Name</th>
-                                        <th>User Name</th>
-                                        <th>Details</th>
-                                        <th>Rating</th>
-                                        <th>Action</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <?php
-                                    include 'admin_db.php';
-                                    if (isset($_GET['delete_id'])) {
-                                        $delete_id = $_GET['delete_id'];
-                                        $delete_query = "delete from tbl_feedback where feedback_id = $delete_id";
-                                        $data = mysqli_query($connection, $delete_query);
-                                        if ($data) {
-                                            echo "<script>alert('Record deleted from the database');window.location='feedback_information.php'</script>";
-                                        } else {
-                                            echo "<script>alert('Record not deleted from the database');window.location='feedback_information.php'</script>";
-                                        }
+                        <h3 class="tile-title">Feedback Information</h3>
+                        <table class="table table-hover table-bordered" id="sampleTable">
+                            <thead>
+                                <tr>
+                                    <!-- <th>ID</th> -->
+                                    <th>NGO Name</th>
+                                    <th>User Name</th>
+                                    <th>Details</th>
+                                    <th>Rating</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php
+                                include 'admin_db.php';
+                                if (isset($_GET['delete_id'])) {
+                                    $delete_id = $_GET['delete_id'];
+                                    $delete_query = "delete from tbl_feedback where feedback_id = $delete_id";
+                                    $data = mysqli_query($connection, $delete_query);
+                                    if ($data) {
+                                        echo "<script>alert('Record deleted from the database');window.location='feedback_information.php'</script>";
+                                    } else {
+                                        echo "<script>alert('Record not deleted from the database');window.location='feedback_information.php'</script>";
                                     }
+                                }
 
-                                    $select = mysqli_query($connection, "select*from tbl_feedback");
-                                    while ($feedback_row = mysqli_fetch_array($select)) {
+                                $select = mysqli_query($connection, "select*from tbl_feedback");
+                                while ($feedback_row = mysqli_fetch_array($select)) {
 
-                                        $ngo_query = mysqli_query($connection, "select*from tbl_ngo where ngo_id='{$feedback_row['ngo_id']}'");
-                                        $ngo_row = mysqli_fetch_array($ngo_query);
+                                    $ngo_query = mysqli_query($connection, "select*from tbl_ngo where ngo_id='{$feedback_row['ngo_id']}'");
+                                    $ngo_row = mysqli_fetch_array($ngo_query);
 
-                                        $user_query = mysqli_query($connection, "select*from tbl_user where user_id='{$feedback_row['user_id']}'");
-                                        $user_row = mysqli_fetch_array($user_query);
+                                    $user_query = mysqli_query($connection, "select*from tbl_user where user_id='{$feedback_row['user_id']}'");
+                                    $user_row = mysqli_fetch_array($user_query);
 
 
-                                        echo "<tr>";
-                                        // echo "<td>{$feedback_row['feedback_id']}</td>";
-                                        echo "<td>{$ngo_row['ngo_name']}</td>";
-                                        echo "<td>{$user_row['user_first_name']}  {$user_row['user_last_name']}</td>";
-                                        echo "<td>{$feedback_row['feedback_details']}</td>";
-                                        echo "<td>{$feedback_row['feedback_rating']}</td>";
-                                        echo "<td>
+                                    echo "<tr>";
+                                    // echo "<td>{$feedback_row['feedback_id']}</td>";
+                                    echo "<td>{$ngo_row['ngo_name']}</td>";
+                                    echo "<td>{$user_row['user_first_name']}  {$user_row['user_last_name']}</td>";
+                                    echo "<td>{$feedback_row['feedback_details']}</td>";
+                                    echo "<td>{$feedback_row['feedback_rating']}</td>";
+                                    echo "<td>
                                 <a href='feedback_information.php?delete_id={$feedback_row['feedback_id']}' 
                                 onclick='return confirmDelete()'>
                                 <i class='bi bi-trash'></i></a>|  
                                 <a href='feedback_update.php?edit_id={$feedback_row['feedback_id']}'><i class='bi bi-pencil-square'></i></a>   
                                 </td>";
-                                        echo "</tr>";
-                                    }
-                                    ?>
-                                </tbody>
-                            </table>
-                        </div>
+                                    echo "</tr>";
+                                }
+                                ?>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>

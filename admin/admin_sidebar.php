@@ -61,18 +61,12 @@
       </ul>
     </li>
 
-
-
-
     <li class="treeview"><a class="app-menu__item" href="#" data-toggle="treeview"><i class="app-menuicon bi bi-box2-heart"></i><i class="app-menu__icon bi"></i><span class="app-menu__label">Events</span><i class="treeview-indicator bi bi-chevron-right"></i></a>
       <ul class="treeview-menu">
         <li><a class="treeview-item" href="event_form.php"><i class="icon bi bi-circle-fill"></i> Event-form</a></li>
         <li><a class="treeview-item" href="event_information.php"><i class="icon bi bi-circle-fill"></i> Event-Information</a></li>
       </ul>
     </li>
-
-
-
 
     <li class="treeview"><a class="app-menu__item" href="#" data-toggle="treeview"><i class="app-menu__icon bi bi-star-half"></i><span class="app-menu__label">Feedback</span><i class="treeview-indicator bi bi-chevron-right"></i></a>
       <ul class="treeview-menu">

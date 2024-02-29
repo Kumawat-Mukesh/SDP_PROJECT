@@ -57,7 +57,7 @@ if (!isset($_SESSION["admin_id"])) {
             <div class="col-md-12">
                 <div class="tile">
                     <div class="tile-body">
-                        <div class="table-responsive">
+                        <h3 class="tile-title">FAQ Information</h3>
                             <table class="table table-hover table-bordered" id="sampleTable">
                                 <thead>
                                     <tr>
@@ -105,7 +105,6 @@ if (!isset($_SESSION["admin_id"])) {
                                     ?>
                                 </tbody>
                             </table>
-                        </div>
                     </div>
                 </div>
             </div>

@@ -64,7 +64,7 @@ if ($_POST) {
             <div class="clearix"></div>
             <div class="col-md-12">
                 <div class="tile">
-                    <h3 class="tile-title">Add Items</h3>
+                    <h3 class="tile-title">Update Items</h3>
                     <div class="tile-body">
                         <form method="post" class="row" id="item_requirement_form_js">
                             <div class="mb-3 col-md-3">

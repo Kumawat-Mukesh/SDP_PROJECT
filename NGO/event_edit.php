@@ -6,12 +6,13 @@ session_start();
 if (!isset($_SESSION["ngo_id"])) {
     header("Location:ngo_login.php");
 }
+$edit_id=$_GET['edit_id'];
+$event_select=mysqli_query($connection,"select*from tbl_event where event_id={$edit_id}");
+$event_data=mysqli_fetch_array($event_select);
 
-$edit_id = $_GET['edit_id'];
-$event_select = mysqli_query($connection, "select *from tbl_event where event_id={$edit_id}");
-$event_data = mysqli_fetch_array($event_select);
+
 if ($_POST) {
-    $ngo_id = $_SESSION['ngo_id'];
+    //$admin_id = $_SESSION['admin_id'];
     $event_title = $_POST['event_title'];
     $event_date = $_POST['event_date'];
     $event_time = $_POST['event_time'];
@@ -20,10 +21,10 @@ if ($_POST) {
     $event_photo_name = $_FILES['event_photo']['name'];
     $event_photo_tmp_name = $_FILES['event_photo']['tmp_name'];
 
-    $query = mysqli_query($connection, "update tbl_event set event_title ='{$event_title}',event_date='{$event_date}',event_time='{$event_time}',event_location='{$event_location}',event_details='{$event_details}',event_photo_name='{$event_photo_name}')");
+    $query = mysqli_query($connection, "update tbl_event set event_title='{$event_title}',event_date='{$event_date}',event_time='{$event_time}',event_location='{$event_location}',event_details='{$event_details}',event_photo='{$event_photo_name}' where event_id='{$edit_id}'");
     move_uploaded_file($event_photo_tmp_name, "uploads/" . $event_photo_name);
     if ($query) {
-        echo "<script>alert('Event data updated to the database');window.location='event_infromation.php'</script>";
+        echo "<script>alert('Event data updated!');window.location='event_information.php'</script>";
     }
 }
 
@@ -69,36 +70,36 @@ if ($_POST) {
             <ul class="app-breadcrumb breadcrumb">
                 <li class="breadcrumb-item"><a href="dashboard.php"><i class="bi bi-house-door fs-6"></i></a></li>
                 <li class="breadcrumb-item">Event</li>
-                <li class="breadcrumb-item"><a href="event_form.php">Event-Form</a></li>
+                <li class="breadcrumb-item"><a href="event_information.php">Update-Event</a></li>
             </ul>
         </div>
         <div class="row">
             <div class="clearix"></div>
             <div class="col-md-12">
                 <div class="tile">
-                    <h3 class="tile-title">Add Event</h3>
+                    <h3 class="tile-title">Update Event</h3>
                     <div class="tile-body">
                         <form method="post" class="row" id="blog_form" enctype="multipart/form-data">
                             <div class="mb-3 col-md-3">
                                 <label class="form-label">Event Title</label>
-                                <input class="form-control" type="text" name="event_title" value="<?php echo $event_data['event_title']; ?>" placeholder="Enter event title" required>
+                                <input class="form-control" type="text" name="event_title" placeholder="Enter event title" value="<?php echo $event_data['event_title'];?>" required>
                                 <br>
                                 <label class="form-label">Date</label>
-                                <input class="form-control" type="text" name="event_date" value="<?php echo $event_data['event_date']; ?>" placeholder="YYYY-MM-DD" required>
+                                <input class="form-control" type="text" name="event_date" placeholder="YYYY-MM-DD" value="<?php echo $event_data['event_date'];?>"required>
                                 <br>
                                 <label class="form-label">Time</label>
-                                <input class="form-control" type="text" name="event_time" value="<?php echo $event_data['event_time']; ?>" placeholder="HH:MM:SS" required>
+                                <input class="form-control" type="text" name="event_time" placeholder="HH:MM:SS" value="<?php echo $event_data['event_time'];?>"required>
                                 <br>
                                 <label class="form-label">Location</label>
-                                <textarea name="event_location" class="form-control" cols="3" rows="5" placeholder="Enter event location" required><?php echo $event_data['event_location']; ?></textarea>
+                                <textarea name="event_location" class="form-control" cols="3" rows="5" placeholder="Enter event location" required><?php echo $event_data['event_location'];?></textarea>
                                 <br>
                                 <label class="form-label">Details</label>
-                                <textarea name="event_details" class="form-control" cols="3" rows="5" placeholder="Enter event details" required><?php echo $event_data['event_details']; ?></textarea>
+                                <textarea name="event_details" class="form-control" cols="3" rows="5" placeholder="Enter event details" required><?php echo $event_data['event_details'];?></textarea>
                                 <br>
                                 <label class="form-label">Photo</label>
                                 <input class="form-control" type="file" name="event_photo" placeholder="Upload event photo" required>
                                 <br>
-                                <button class="btn btn-primary" type="submit" name="add"><i class="bi bi-check-circle-fill me-2"></i>Add</button>
+                                <button class="btn btn-primary" type="submit" name="add"><i class="bi bi-check-circle-fill me-2"></i>Update</button>
                             </div>
                         </form>
                     </div>
