@@ -10,6 +10,9 @@ $user_count = mysqli_num_rows($user_query);
 
 $volunteer_query_db = mysqli_query($connection, 'select * from tbl_volunteer');
 $volunteer_count = mysqli_num_rows($volunteer_query_db);
+
+$donation_complete_query = mysqli_query($connection, 'select * from tbl_volunteer');
+$donation_complete_count = mysqli_num_rows($donation_complete_query);
 ?>
 <!DOCTYPE html>
 <html lang="en">

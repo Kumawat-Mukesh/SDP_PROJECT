@@ -5,10 +5,12 @@ $msg = "";
 if ($_POST) {
     $volunteer_email = $_POST['volunteer_email'];
     $volunteer_password = $_POST['volunteer_password'];
-    $query = mysqli_query($connection, "select * from tbl_volunteer where volunteer_email = '{$volunteer_email}' and volunteer_password = '{$volunteer_password}' and volunteer_verified='Yes'");
+    $query = mysqli_query($connection, "select * from tbl_volunteer where volunteer_email = '{$volunteer_email}' and volunteer_password = '{$volunteer_password}'");
     $count = mysqli_num_rows($query);
-    $row = mysqli_fetch_array($query);
     if ($count > 0) {
+
+        $row = mysqli_fetch_array($query);
+
         if ($row['volunteer_verified'] == 'Yes') {
 
             $_SESSION['volunteer_id'] = $row['volunteer_id'];
@@ -17,7 +19,8 @@ if ($_POST) {
             $_SESSION['set_alert'] = "1";
             header("Location:user_home.php");
         } else {
-            echo "<script>alert('Your account is not activated');</script>";
+
+            $msg = "Your account is not activated";
         }
     } else {
         $_SESSION['set_dalert'] = "1";
@@ -25,6 +28,8 @@ if ($_POST) {
     }
 }
 ?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 

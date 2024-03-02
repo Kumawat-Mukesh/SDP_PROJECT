@@ -11,22 +11,22 @@ $msg = "";
 if (isset($_POST['ngo_login_button'])) {
   $ngo_email = $_POST['ngo_email'];
   $ngo_password = $_POST['ngo_password'];
-  $query = mysqli_query($connection, "select*from tbl_ngo where ngo_email = '{$ngo_email}' and ngo_password = '{$ngo_password}' and ngo_status=1");
+  $query = mysqli_query($connection, "select*from tbl_ngo where ngo_email = '{$ngo_email}' and ngo_password = '{$ngo_password}' ");
   $count = mysqli_num_rows($query);
   $row = mysqli_fetch_array($query);
 
-  if ($row['ngo_status'] == 1) {
-    if ($count > 0) {
+  if ($count > 0) {
+    if ($row['ngo_status'] == 1) {
       $_SESSION['ngo_id'] = $row['ngo_id'];
       $_SESSION['ngo_name'] = $row['ngo_name'];
       $_SESSION['set_alert'] = "1";
       header("Location:dashboard.php");
     } else {
-      $_SESSION['set_dalert'] = "1";
-      $msg = "Email and password not matched!";
+      $msg = "Account is not Activated";
     }
   } else {
-    echo "<script>alert('Account is not Activated');</script>";
+    $_SESSION['set_dalert'] = "1";
+    $msg = "Email and password not matched!";
   }
 }
 

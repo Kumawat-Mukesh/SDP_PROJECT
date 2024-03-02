@@ -2,7 +2,7 @@
 session_start();
 require 'admin_db.php';
 if ($_POST) {
-    $volunteer_email = $_GET['volunteer_email'];
+    $volunteer_email = $_GET['email'];
     $volunteer_otp = $_POST['volunteer_otp'];
     $volunteer_new_password = $_POST['volunteer_new_password'];
     $volunteer_confirm_password = $_POST['volunteer_confirm_password'];

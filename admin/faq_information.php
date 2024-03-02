@@ -62,7 +62,6 @@ if (!isset($_SESSION["admin_id"])) {
                                 <thead>
                                     <tr>
                                         <!-- <th>ID</th> -->
-                                        <th>User Name</th>
                                         <th>Question</th>
                                         <th>Answer</th>
                                         <th>Action</th>
@@ -91,7 +90,6 @@ if (!isset($_SESSION["admin_id"])) {
 
                                         echo "<tr>";
                                         // echo "<td>{$faq_row['faq_id']}</td>";
-                                        echo "<td>{$user_row['user_first_name']}  {$user_row['user_last_name']}</td>";
                                         echo "<td>{$faq_row['faq_question']}</td>";
                                         echo "<td>{$faq_row['faq_answer']}</td>";
                                         echo "<td>

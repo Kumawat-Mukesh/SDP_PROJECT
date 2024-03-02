@@ -182,10 +182,10 @@ require './admin_db.php';
                         $ngo_query = mysqli_query($connection, "select * from tbl_ngo where ngo_name like '%{$category_id}%' and ngo_status=1");
                     } else if (isset($_GET['area'])) {
                         $area = $_GET['area'];
-                        $select_area_name = mysqli_query($connection, "select * from tbl_area where area_name='$area'");
+                        $select_area_name = mysqli_query($connection, "select * from tbl_area where area_name like '%{$area}%'");
                         $select_area_data = mysqli_fetch_array($select_area_name);
                         $area_id = $select_area_data['area_id'];
-                        $ngo_query = mysqli_query($connection, "select * from tbl_ngo where area_id like '%{$area_id}%' and ngo_status=1");
+                        $ngo_query = mysqli_query($connection, "select * from tbl_ngo where area_id = '{$area_id}' and ngo_status=1");
                     } else {
                         $ngo_query = mysqli_query($connection, "select * from tbl_ngo where ngo_status=1");
                     }

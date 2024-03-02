@@ -22,7 +22,7 @@
     </li>
     <li class="treeview"><a class="app-menu__item" href="#" data-toggle="treeview"><i class="app-menu__icon bi bi-people"></i><span class="app-menu__label">Users</span><i class="treeview-indicator bi bi-chevron-right"></i></a>
       <ul class="treeview-menu">
-        <li><a class="treeview-item" href="user_form.php"><i class="icon bi bi-circle-fill"></i> User-Form</a></li>
+        <!-- <li><a class="treeview-item" href="user_form.php"><i class="icon bi bi-circle-fill"></i> User-Form</a></li> -->
         <li><a class="treeview-item" href="user_information.php"><i class="icon bi bi-circle-fill"></i> User-Information</a></li>
       </ul>
     </li>
@@ -44,13 +44,13 @@
     </li>
     <li class="treeview"><a class="app-menu__item" href="#" data-toggle="treeview"><i class="app-menu__icon bi bi-card-checklist"></i><span class="app-menu__label">Items Requirements</span><i class="treeview-indicator bi bi-chevron-right"></i></a>
       <ul class="treeview-menu">
-        <li><a class="treeview-item" href="item_requirement_form.php"><i class="icon bi bi-circle-fill"></i> Items Requirements-Form</a></li>
+        <!-- <li><a class="treeview-item" href="item_requirement_form.php"><i class="icon bi bi-circle-fill"></i> Items Requirements-Form</a></li> -->
         <li><a class="treeview-item" href="item_requirement_information.php"><i class="icon bi bi-circle-fill"></i> Items Requirements-Information</a></li>
       </ul>
     </li>
     <li class="treeview"><a class="app-menu__item" href="#" data-toggle="treeview"><i class="app-menu__icon bi bi-box2-heart"></i><span class="app-menu__label">Donation</span><i class="treeview-indicator bi bi-chevron-right"></i></a>
       <ul class="treeview-menu">
-        <li><a class="treeview-item" href="donation_form.php"><i class="icon bi bi-circle-fill"></i> Donation-Form</a></li>
+        <!-- <li><a class="treeview-item" href="donation_form.php"><i class="icon bi bi-circle-fill"></i> Donation-Form</a></li> -->
         <li><a class="treeview-item" href="donation_information.php"><i class="icon bi bi-circle-fill"></i> Donation-Information</a></li>
       </ul>
     </li>
@@ -63,14 +63,14 @@
 
     <li class="treeview"><a class="app-menu__item" href="#" data-toggle="treeview"><i class="app-menu__icon bi bi-calendar-event"></i><span class="app-menu__label">Events</span><i class="treeview-indicator bi bi-chevron-right"></i></a>
       <ul class="treeview-menu">
-        <li><a class="treeview-item" href="event_form.php"><i class="icon bi bi-circle-fill"></i> Event-form</a></li>
+        <!-- <li><a class="treeview-item" href="event_form.php"><i class="icon bi bi-circle-fill"></i> Event-form</a></li> -->
         <li><a class="treeview-item" href="event_information.php"><i class="icon bi bi-circle-fill"></i> Event-Information</a></li>
       </ul>
     </li>
 
     <li class="treeview"><a class="app-menu__item" href="#" data-toggle="treeview"><i class="app-menu__icon bi bi-star-half"></i><span class="app-menu__label">Feedback</span><i class="treeview-indicator bi bi-chevron-right"></i></a>
       <ul class="treeview-menu">
-        <li><a class="treeview-item" href="feedback_form.php"><i class="icon bi bi-circle-fill"></i> Feedback-Form</a></li>
+        <!-- <li><a class="treeview-item" href="feedback_form.php"><i class="icon bi bi-circle-fill"></i> Feedback-Form</a></li> -->
         <li><a class="treeview-item" href="feedback_information.php"><i class="icon bi bi-circle-fill"></i> Feedback-Information</a></li>
       </ul>
     </li>

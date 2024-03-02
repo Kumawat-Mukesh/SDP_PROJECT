@@ -1,3 +1,59 @@
+<?php
+session_start();
+
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\SMTP;
+use PHPMailer\PHPMailer\Exception;
+
+require 'vendor/autoload.php';
+require 'admin_db.php';
+if (isset($_POST['submit'])) {
+    $user_email = $_POST['user_email'];
+    $user_query = mysqli_query($connection, "select * from tbl_user where user_email = '{$user_email}'");
+    $user_count = mysqli_num_rows($user_query);
+    $user_row = mysqli_fetch_array($user_query);
+    if ($user_count == 1) {
+        $user_name = $_POST['user_name'];
+        $user_email = $_POST['user_email'];
+        $user_phone = $_POST['user_phone'];
+        $user_subject = $_POST['user_subject'];
+        $user_message = $_POST['user_message'];
+
+        $contact_msg = "Name: " . $user_name . "<br> Subject: " . $user_subject . "<br> Message: " . $user_message;
+        //Load Composer's autoloader
+        //Create an instance; passing true enables exceptions
+        $mail = new PHPMailer(true);
+        try {
+            //Server settings
+            //$mail->SMTPDebug = SMTP::DEBUG_SERVER;                      //Enable verbose debug output
+            $mail->isSMTP();                                            //Send using SMTP
+            $mail->Host       = 'smtp.gmail.com';                     //Set the SMTP server to send through
+            $mail->SMTPAuth   = true;                                   //Enable SMTP authentication
+            $mail->Username   = 'sdp.project.2024@gmail.com';                     //SMTP username
+            $mail->Password   = 'pguygxdcrdlejszi';                               //SMTP password dgdwalymnmpnndnl
+            $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;            //Enable implicit TLS encryption
+            $mail->Port       = 465;                                    //TCP port to connect to; use 587 if you have set SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS
+
+            //Recipients
+            $mail->setFrom($user_email, $user_name);
+            $mail->addAddress('sdp.project.2024@gmail.com');     //Add a recipient
+
+            //Content
+            $mail->isHTML(true);                                  //Set email format to HTML
+            $mail->Subject = 'Contact Form';
+            $mail->Body    = $contact_msg;
+            $mail->AltBody = $contact_msg;
+
+            $mail->send();
+            echo "<script>alert('Thank you for Contacting us!!');window.location='user_home.php'</script>";
+        } catch (Exception $e) {
+            echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
+        }
+    } else {
+        echo "<script>alert('User Not Found')</script>";
+    }
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -43,10 +99,10 @@
     <link rel="stylesheet" href="assets/css/rtl.css">
     <link rel="stylesheet" href="assets/css/style.css">
     <link rel="stylesheet" href="assets/css/responsive.css">
-    <!-- Favicon
+    <!-- Favicon -->
     <link rel="apple-touch-icon" sizes="180x180" href="assets/images/favicon/apple-touch-icon.png">
     <link rel="icon" type="image/png" href="assets/images/favicon/favicon-32x32.png" sizes="32x32">
-    <link rel="icon" type="image/png" href="assets/images/favicon/favicon-16x16.png" sizes="16x16"> -->
+    <link rel="icon" type="image/png" href="assets/images/favicon/favicon-16x16.png" sizes="16x16">
 
     <!-- Fixing Internet Explorer-->
     <!--[if lt IE 9]>
@@ -109,161 +165,17 @@
         <!-- end switcher menu -->
 
         <!-- Start sidebar widget content -->
-        <?php require './user_sidebar.php'; ?>
+        <?php
+        require 'user_sidebar.php';
+        ?>
         <!-- End sidebar widget content -->
 
 
         <!-- Main header-->
-        <?php require './user_header.php'; ?>
+        <?php
+        require 'user_header.php';
+        ?>
 
-
-        <!-- Start Main Slider -->
-
-        <!-- End Main Slider -->
-
-
-        <!--Start About Style1 Area-->
-
-        <!--End About Style1 Area-->
-
-        <!--Start Cause Style3 Area-->
-
-        <!--End Cause Style3 Area-->
-
-        <!--Start Fact Counter Area-->
-
-        <!--End Fact Counter Area-->
-
-        <!--Start Donate Form Area-->
-
-        <!--End Donate Form Area-->
-
-        <!--Start Team Style1 Area-->
-
-        <!--End Team Style1 Area-->
-
-
-        <!--Start Testimonial style1 Area-->
-
-        <!--End Testimonial Style1 Area-->
-
-
-        <!--Start Blog Style1 Area-->
-        <!-- <section id="news" class="blog-style1-area"> -->
-        <!-- <div class="thm-shape1 float-bob"><img src="assets/images/shape/thm-shape-2.png" alt=""></div> -->
-        <!-- <div class="container">
-                <div class="sec-title text-center">
-                    <div class="sub-title">
-                        <div class="inner">
-                            <h3>We Change Your Life &amp; World</h3>
-                        </div>
-                        <div class="outer"><img src="assets/images/icon/loveicon.png" alt=""></div>
-                    </div>
-                    <h2>News & Happenings</h2>
-                </div>-->
-        <!-- <div class="row text-right-rtl"> -->
-        <!--Start Single blog Style1-->
-        <!-- <div class="col-xl-4 col-lg-4">
-                        <div class="single-blog-style1 wow fadeInUp" data-wow-duration="1500ms">
-                            <div class="img-holder">
-                                <div class="inner">
-                                    <img src="assets/images/blog/blog-v1-1.jpg" alt="">
-                                    <div class="overlay-icon">
-                                        <a href="#"><span class="flaticon-plus"></span></a>
-                                    </div>
-                                </div>
-                                <div class="date-box">
-                                    <h2>03</h2>
-                                    <p>MAR</p>
-                                </div>
-                            </div>
-                            <div class="text-holder">
-                                <h3 class="blog-title">
-                                    <a href="blog-single.html">Rise of Global Charity in Modern World</a>
-                                </h3>
-                                <div class="text">
-                                    <p>Nostrud tem exrcitation duis laboris nisi ut aliquip sed duis aute cupidata con
-                                        proident sunt culpa.</p>
-                                </div>
-                                <ul class="meta-info">
-                                    <li><i class="fa fa-user" aria-hidden="true"></i> <a href="#">Malay D’soza</a></li>
-                                    <li><i class="fa fa-comment-o" aria-hidden="true"></i> <a href="#">597 Comments</a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div> -->
-        <!--End Single blog Style1-->
-        <!--Start Single blog Style1-->
-        <!-- <div class="col-xl-4 col-lg-4">
-                        <div class="single-blog-style1 wow fadeInUp" data-wow-duration="1500ms">
-                            <div class="img-holder">
-                                <div class="inner">
-                                    <img src="assets/images/blog/blog-v1-2.jpg" alt="">
-                                    <div class="overlay-icon">
-                                        <a href="#"><span class="flaticon-plus"></span></a>
-                                    </div>
-                                </div>
-                                <div class="date-box style2">
-                                    <h2>25</h2>
-                                    <p>May</p>
-                                </div>
-                            </div>
-                            <div class="text-holder">
-                                <h3 class="blog-title">
-                                    <a href="blog-single.html">How to become a Good Volunteer Today</a>
-                                </h3>
-                                <div class="text">
-                                    <p>Nostrud tem exrcitation duis laboris nisi ut aliquip sed duis aute cupidata con
-                                        proident sunt culpa.</p>
-                                </div>
-                                <ul class="meta-info">
-                                    <li><i class="fa fa-user" aria-hidden="true"></i> <a href="#">Andrea Kay</a></li>
-                                    <li><i class="fa fa-comment-o" aria-hidden="true"></i> <a href="#">1.3k Comments</a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div> -->
-        <!--End Single blog Style1-->
-        <!--Start Single blog Style1-->
-        <!-- <div class="col-xl-4 col-lg-4">
-                        <div class="single-blog-style1 wow fadeInUp" data-wow-duration="1500ms">
-                            <div class="img-holder">
-                                <div class="inner">
-                                    <img src="assets/images/blog/blog-v1-3.jpg" alt="">
-                                    <div class="overlay-icon">
-                                        <a href="#"><span class="flaticon-plus"></span></a>
-                                    </div>
-                                </div>
-                                <div class="date-box style3">
-                                    <h2>19</h2>
-                                    <p>Apr</p>
-                                </div>
-                            </div>
-                            <div class="text-holder">
-                                <h3 class="blog-title">
-                                    <a href="blog-single.html">Empower the Dropout Innocents is Key</a>
-                                </h3>
-                                <div class="text">
-                                    <p>Nostrud tem exrcitation duis laboris nisi ut aliquip sed duis aute cupidata con
-                                        proident sunt culpa.</p>
-                                </div>
-                                <ul class="meta-info">
-                                    <li><i class="fa fa-user" aria-hidden="true"></i> <a href="#">Jelly Bean</a></li>
-                                    <li><i class="fa fa-comment-o" aria-hidden="true"></i> <a href="#">10k Comments</a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div> -->
-        <!--End Single blog Style1-->
-
-        <!-- </div>
-
-            </div> -->
-        <!-- </section> -->
-        <!--End Blog Style1 Area-->
 
 
         <!--Start Contact Style1 Area-->
@@ -283,17 +195,17 @@
                                 </p>
                             </div>
                             <div class="contact-form">
-                                <form id="user_contact_form" class="default-form2" action="https://mehedi.asiandevelopers.com/loveicon/assets/inc/sendmail.php" method="post">
+                                <form id="user_contact" name="contact_form" action="user_contact_us.php" method="post">
                                     <div class="row">
                                         <div class="col-xl-6">
                                             <div class="input-box">
-                                                <input type="text" name="user_name" value="" placeholder="Your Name" required="">
+                                                <input type="text" name="user_name" placeholder="Your Name" required>
                                                 <div class="icon"><span class="flaticon-user"></span></div>
                                             </div>
                                         </div>
                                         <div class="col-xl-6">
                                             <div class="input-box">
-                                                <input type="email" name="user_email" value="" placeholder="Email" required="">
+                                                <input type="email" name="user_email" placeholder="Email" required>
                                                 <div class="icon"><span class="flaticon-opened"></span></div>
                                             </div>
                                         </div>
@@ -302,13 +214,13 @@
                                     <div class="row">
                                         <div class="col-xl-6">
                                             <div class="input-box">
-                                                <input type="text" name="user_phone" value="" onkeyup="Validate(this)" placeholder="Phone" required>
+                                                <input type="text" name="user_phone" placeholder="Phone" required>
                                                 <div class="icon"><span class="fa fa-phone"></span></div>
                                             </div>
                                         </div>
                                         <div class="col-xl-6">
                                             <div class="input-box">
-                                                <input type="text" name="user_subject" value="" placeholder="Subject" required>
+                                                <input type="text" name="user_subject" placeholder="Subject" required>
                                                 <div class="icon"><span class="fa fa-comment-o"></span></div>
                                             </div>
                                         </div>
@@ -317,12 +229,12 @@
                                     <div class="row">
                                         <div class="col-xl-12">
                                             <div class="input-box">
-                                                <textarea name="form_message" placeholder="message" required=""></textarea>
+                                                <textarea name="user_message" placeholder="message" required></textarea>
                                                 <div class="icon"><span class="fa fa-pencil"></span></div>
                                             </div>
                                             <div class="button-box">
                                                 <input id="form_botcheck" name="form_botcheck" class="form-control" type="hidden" value="">
-                                                <button class="btn-one" type="submit" data-loading-text="Please wait...">
+                                                <button class="btn-one" name="submit" type="submit" data-loading-text="Please wait...">
                                                     <span class="txt"><i class="arrow1 fa fa-check-circle"></i> Send
                                                         Message</span>
                                                 </button>
@@ -360,8 +272,7 @@
                                                 <h3>Phone</h3>
                                             </div>
                                         </div>
-                                        <p>Support <a href="tel:+91 8756412398">+91 80001 47888</a></p>
-                                        <p>Events <a href="tel:+91 9898741235">+91 95862 48516</a></p>
+                                        <p>Support <a href="tel:+91 9898741235">+91 95862 48516</a></p>
                                     </li>
 
                                     <li>
@@ -370,11 +281,10 @@
                                                 <span class="flaticon-opened"></span>
                                             </div>
                                             <div class="title">
-                                                <h3>Phone</h3>
+                                                <h3>Email</h3>
                                             </div>
                                         </div>
                                         <p><a href="mailto:info@aarniktechnology.com">info@aarniktechnology.com</a></p>
-                                        
                                     </li>
 
                                 </ul>
@@ -389,7 +299,9 @@
 
 
         <!--Start footer area -->
-        <?php require './user_footer.php'; ?>
+        <?php
+        require 'user_footer.php';
+        ?>
         <!--End footer area-->
 
 
@@ -439,71 +351,19 @@
 
     <!-- thm custom script -->
     <script src="assets/js/custom.js"></script>
+
+    <script src="tools/jquery-3.7.1.min.js"></script>
+    <script src="tools/jquery.validate.js"></script>
     <script>
         $(document).ready(function() {
-            $("#user_contact_form").validate({
-                rules: {
-
-                    user_name: {
-                        required: true,
-                        minlength: 3
-                    },
-                    user_email: {
-                        required: true,
-                        email: true
-                    },
-                    user_phone: {
-                        required: true,
-                        minlength: 10,
-                        maxlength: 10
-                    },
-                    user_subject: {
-                        required: true,
-                    },
-                    form_message: {
-                        required: true,
-                    }
-
-                },
-                messages: {
-                    user_name: {
-                        required: "Please Enter Name",
-                        minlength: "Your name must consist of at least 3 characters"
-                    },
-                    user_phone: {
-                        required: "Please Enter Your Mobile no.",
-                        minlength: "Enter Your 10 digit Mobile no. only",
-                        maxlength: "Enter Your 10 digit Mobile no. only",
-                    },
-                    user_email: {
-                        required: "Please enter a valid email address",
-                        email: "Email contains (@) and (.)",
-                    },
-
-                    user_subject: {
-                        required: "Enter Subject name",
-
-
-                    },
-                    form_message: {
-                        required: "Enter subject details",
-                    }
-
-
-                }
-            });
+            $("#user_contact").validate();
         });
-
-        function Validate(no) {
-            no.value = no.value.replace(/[^ 0-9\n\r]+/g, '');
-        }
     </script>
     <style>
         .error {
             color: red
         }
     </style>
-
 
 </body>
 

@@ -66,17 +66,7 @@ if ($_POST) {
                     <div class="tile-body">
                         <form method="post" class="row" id="faq_form_js">
                             <div class="mb-3 col-md-3">
-                                <label class="form-label">User ID</label>
-                                <!-- <input class="form-control" type="text" name="user_id" placeholder="Enter user ID" required> -->
-                                <?php
-                                $user_query = mysqli_query($connection, "select*from tbl_user");
-                                echo "<select class='form-control' name='user_id'>";
-                                echo "<option value=''>Select User</option>";
-                                while ($user_row = mysqli_fetch_array($user_query)) {
-                                    echo "<option value='{$user_row['user_id']}'>{$user_row['user_first_name']}  {$user_row['user_last_name']}</option>";
-                                }
-                                echo "</select>";
-                                ?>
+                               
                                 <br>
                                 <label class="form-label">Questions</label>
                                 <textarea name="faq_question" class="form-control" cols="3" rows="5" placeholder="Enter question" required></textarea>
