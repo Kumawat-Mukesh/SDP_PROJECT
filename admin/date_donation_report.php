@@ -46,6 +46,10 @@ if (!isset($_SESSION["admin_id"])) {
             margin: 20px;
             padding: 20px;
         }
+
+        .d {
+            display: flex;
+        }
     </style>
 </head>
 
@@ -60,22 +64,32 @@ if (!isset($_SESSION["admin_id"])) {
             echo "<h6 style='color:teal;'>Date : " . date('d-m-Y') . "</h6> <br>";
             ?>
             <form method="get">
-
-                <input type="date" name="sdate" />
-                <input type="date" name="edate" /><br>
-                <input type="submit" value="search">
+                <div class="d">
+                    <div class="sdate">
+                        <label for="sdate">Select Start Date</label></br>
+                        <input type="date" name="sdate" />
+                    </div>
+                    &nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;
+                    <div class="edate">
+                        <label for="edate">Select End Date</label></br>
+                        <input type="date" name="edate" /><br><br>
+                    </div>
+                </div>
+                <input type="submit" name="submit" value="search">
             </form>
         </div>
         <?php
-        if (isset($_GET['sdate'])) {
+        if (isset($_GET['sdate']) && isset($_GET['edate'])) {
             $sdate = $_GET['sdate'];
             $edate = $_GET['edate'];
 
-            $select = mysqli_query($connection, "select * from tbl_donation where  donation_date between '{$sdate}' and '{$edate}'");
+            $select = mysqli_query($connection, "select * from tbl_donation where  donation_date between '{$sdate}' and '{$edate}' and donation_type='item'");
             $date_select = mysqli_num_rows($select);
             if ($date_select > 0) {
         ?>
                 <table border=1 class="table table-hover" style="width: 95%;">
+                    <h2 style="margin: 30px;">Item Donation Information</h2>
                     <thead>
                         <tr>
                             <!-- <th>Donation ID</th> -->
@@ -83,13 +97,10 @@ if (!isset($_SESSION["admin_id"])) {
                             <th>User Name</th>
                             <th>Item Requirement Details</th>
                             <th>Donation Details</th>
-                            <th>Donation Method</th>
-                            <th>Donation Type</th>
                             <th>Donation Date</th>
                             <th>Donation Address</th>
                             <th>Donation Status</th>
                             <th>Volunteer Name</th>
-                            <th>Donation Amount</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -116,27 +127,70 @@ if (!isset($_SESSION["admin_id"])) {
                             echo "<td>{$user_row['user_first_name']}</td>";
                             echo "<td>{$item_requirement_row['item_requirement_details']}</td>";
                             echo "<td>{$donation_row['donation_details']}</td>";
-                            echo "<td>{$donation_row['donation_method']}</td>";
-                            echo "<td>{$donation_row['donation_type']}</td>";
                             echo "<td>{$donation_row['donation_date']}</td>";
                             echo "<td>{$donation_row['donation_address']}</td>";
                             echo "<td>{$donation_row['donation_status']}</td>";
                             echo "<td>{$volunteer_row['volunteer_first_name']} {$volunteer_row['volunteer_last_name']}</td>";
+                            echo "</tr>";
+                        }
+                        ?>
+                    </tbody>
+                </table>
+        <?php }
+        } ?>
+
+
+
+        <!-- online -->
+        <?php
+        if (isset($_GET['sdate']) && isset($_GET['edate'])) {
+            $sdate = $_GET['sdate'];
+            $edate = $_GET['edate'];
+
+            $select = mysqli_query($connection, "select * from tbl_donation where  donation_date between '{$sdate}' and '{$edate}' and donation_type='online'");
+            $date_select = mysqli_num_rows($select);
+            if ($date_select > 0) {
+        ?>
+                <table border=1 class="table table-hover" style="width: 95%;">
+                    <h2 style="margin: 30px;">Online Donation Information</h2>
+                    <thead>
+                        <tr>
+                            <!-- <th>Donation ID</th> -->
+                            <th>NGO Name</th>
+                            <th>User Name</th>
+                            <th>Donation Method</th>
+                            <th>Donation Type</th>
+                            <th>Donation Date</th>
+                            <th>Donation Amount</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        <?php
+
+
+                        while ($donation_row = mysqli_fetch_array($select)) {
+                            $ngo_query = mysqli_query($connection, "select*from tbl_ngo where ngo_id='{$donation_row['ngo_id']}'");
+                            $ngo_row = mysqli_fetch_array($ngo_query);
+
+                            $user_query = mysqli_query($connection, "select * from tbl_user where user_id = '{$donation_row['user_id']}'");
+                            $user_row = mysqli_fetch_array($user_query);
+
+                            echo "<tr>";
+                            // echo "<td>{$donation_row['donation_id']}</td>";
+                            echo "<td>{$ngo_row['ngo_name']}</td>";
+                            echo "<td>{$user_row['user_first_name']}</td>";
+                            echo "<td>{$donation_row['donation_method']}</td>";
+                            echo "<td>{$donation_row['donation_type']}</td>";
+                            echo "<td>{$donation_row['donation_date']}</td>";
                             echo "<td>{$donation_row['donation_amount']}</td>";
-
-
                             echo "</tr>";
                         }
                         ?>
                     </tbody>
                 </table>
 
-        <?php } else {
-                echo '
-             <div class="page-error">
-             <h1 class="text-danger"><i class="bi bi-exclamation-circle"></i> No Record Found</h1>
-         </div>';
-            }
+        <?php }
         } ?>
     </main>
     <!-- Essential javascripts for application to work-->

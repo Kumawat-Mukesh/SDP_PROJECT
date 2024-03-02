@@ -533,7 +533,7 @@ if ($_POST) {
                                                     <li>
                                                         <div class="inner">
                                                             <div class="img-box">
-                                                                <img src="/project/admin/uploads/<?php echo $blog_data['blog_photo']; ?>" alt="Awesome Image">
+                                                                <img src="assets/images/sidebar/campaigns-1.jpg" alt="Awesome Image">
                                                                 <div class="overlay-content">
                                                                     <a href="#"><i class="fa fa-link" aria-hidden="true"></i></a>
                                                                 </div>
@@ -575,11 +575,6 @@ if ($_POST) {
         </button>
 
     </div>
-
-
-
-
-
 
     <script src="assets/js/jquery.js"></script>
     <script src="assets/js/aos.js"></script>

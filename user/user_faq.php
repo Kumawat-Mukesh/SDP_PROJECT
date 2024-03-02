@@ -175,7 +175,7 @@ require './admin_db.php';
                                     <!--Start single accordion box-->
                                     <div class="accordion accordion-block">
                                         <div class="accord-btn">
-                                            <h4><?php echo $faq_data['faq_question']." "; ?>&nbsp;</h4>
+                                            <h5><?php echo $faq_data['faq_question'] . " "; ?></h5>
                                         </div>
                                         <div class="accord-content">
                                             <p><?php echo $faq_data['faq_answer']; ?></p>

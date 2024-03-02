@@ -9,21 +9,20 @@ if ($_POST) {
     $count = mysqli_num_rows($query);
     $row = mysqli_fetch_array($query);
     if ($count > 0) {
-    if($row['volunteer_verified']=='Yes'){
-        
-        $_SESSION['volunteer_id'] = $row['volunteer_id'];
-        $_SESSION['volunteer_first_name'] = $row['volunteer_first_name'];
-        $_SESSION['volunteer_last_name'] = $row['volunteer_last_name'];
-        header("Location:user_home.php");
-        } 
-        else{
+        if ($row['volunteer_verified'] == 'Yes') {
+
+            $_SESSION['volunteer_id'] = $row['volunteer_id'];
+            $_SESSION['volunteer_first_name'] = $row['volunteer_first_name'];
+            $_SESSION['volunteer_last_name'] = $row['volunteer_last_name'];
+            $_SESSION['set_alert'] = "1";
+            header("Location:user_home.php");
+        } else {
             echo "<script>alert('Your account is not activated');</script>";
         }
-    }
-    else {
+    } else {
+        $_SESSION['set_dalert'] = "1";
         $msg = "Email and password not matched!";
-        }
-    
+    }
 }
 ?>
 <!DOCTYPE html>
@@ -72,9 +71,9 @@ if ($_POST) {
     <link rel="stylesheet" href="assets/css/style.css">
     <link rel="stylesheet" href="assets/css/responsive.css">
     <!-- Favicon -->
-    <link rel="apple-touch-icon" sizes="180x180" href="assets/images/favicon/apple-touch-icon.png">
+    <!-- <link rel="apple-touch-icon" sizes="180x180" href="assets/images/favicon/apple-touch-icon.png">
     <link rel="icon" type="image/png" href="assets/images/favicon/favicon-32x32.png" sizes="32x32">
-    <link rel="icon" type="image/png" href="assets/images/favicon/favicon-16x16.png" sizes="16x16">
+    <link rel="icon" type="image/png" href="assets/images/favicon/favicon-16x16.png" sizes="16x16"> -->
 
     <!-- Fixing Internet Explorer-->
     <!--[if lt IE 9]>
@@ -89,7 +88,10 @@ if ($_POST) {
     <div class="boxed_wrapper ltr">
         <section class="breadcrumb-area" style="background-image: url(assets/images/breadcrumb/breadcrumb-7.jpg);">
             <div class="container">
+
                 <div class="row">
+
+
                     <div class="col-xl-12">
                         <div class="inner-content text-center">
                             <div class="parallax-scene parallax-scene-1">
@@ -127,7 +129,14 @@ if ($_POST) {
             <div class="container">
                 <div class="row">
                     <div class="col-xl-12">
-
+                        <?php
+                        if (isset($_SESSION["set_dalert"])) {
+                            unset($_SESSION["set_dalert"]);
+                        ?>
+                            <div class="alert alert-dismissible alert-danger">
+                                <button class="btn-close" type="button" data-bs-dismiss="alert"></button><strong>Oops! Invalid Login Details.</strong>.
+                            </div>
+                        <?php } ?>
                         <div class="contact-style1_form">
 
                             <div class="sec-title">
@@ -141,7 +150,7 @@ if ($_POST) {
                                 </div>
                             </div>
                             <div class="contact-form">
-                                <form id="user_login" name="contact_form" class="justify-content-center" style="justify-content: center; " method="post">
+                                <form id="volunteer_login" name="contact_form" class="justify-content-center" style="justify-content: center; " method="post">
 
                                     <div class="row">
                                         <div class="mx-auto col-10 col-md-8 col-lg-6">
@@ -241,7 +250,26 @@ if ($_POST) {
     <script src="tools/jquery.validate.js"></script>
     <script>
         $(document).ready(function() {
-            $("#user_login").validate();
+            $("#volunteer_login").validate({
+                rules: {
+                    volunteer_email: {
+                        required: true,
+                        email: true,
+                    },
+                    volunteer_password: {
+                        required: true,
+                    },
+                },
+                msg: {
+                    volunteer_email: {
+                        required: "Please enter proper email",
+                        volunteer_password: "Password not matched!!",
+                    },
+                    volunteer_password: {
+                        required: "Please Enter Password",
+                    }
+                }
+            });
         });
     </script>
     <style>

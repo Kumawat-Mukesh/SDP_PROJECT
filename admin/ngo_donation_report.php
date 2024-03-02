@@ -41,11 +41,11 @@ if (!isset($_SESSION["admin_id"])) {
 
         }
 
-            .info {
-                border-collapse: collapse;
-                margin: 20px;
-                padding: 20px;
-            }
+        .info {
+            border-collapse: collapse;
+            margin: 20px;
+            padding: 20px;
+        }
     </style>
 </head>
 

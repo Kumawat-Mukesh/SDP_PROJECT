@@ -72,7 +72,7 @@ if($_POST)
                     <div class="tile-body">
                         <form method="post" class="row" id="faq_form_js">
                             <div class="mb-3 col-md-3">
-                                <label class="form-label">User ID</label>
+                                <label class="form-label">User Name</label>
                                 <!-- <input class="form-control" type="text" name="user_id" placeholder="Enter user ID" required> -->
                                 <?php
                                 $user_query = mysqli_query($connection, "select*from tbl_user");

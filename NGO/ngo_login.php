@@ -15,17 +15,18 @@ if (isset($_POST['ngo_login_button'])) {
   $count = mysqli_num_rows($query);
   $row = mysqli_fetch_array($query);
 
-
-  if ($count > 0) {
-    if ($row['ngo_status'] == 1) {
+  if ($row['ngo_status'] == 1) {
+    if ($count > 0) {
       $_SESSION['ngo_id'] = $row['ngo_id'];
       $_SESSION['ngo_name'] = $row['ngo_name'];
+      $_SESSION['set_alert'] = "1";
       header("Location:dashboard.php");
     } else {
-      echo "<script>alert('Account is not Activated');</script>";
+      $_SESSION['set_dalert'] = "1";
+      $msg = "Email and password not matched!";
     }
   } else {
-    $msg = "Email and password not matched!";
+    echo "<script>alert('Account is not Activated');</script>";
   }
 }
 
@@ -70,6 +71,7 @@ if (isset($_POST["ngo_forgot_button"])) {
     }
   } else {
     echo "<script>alert('NGO not found.')</script>";
+    $_SESSION['set_user_name_alert'] = "1";
   }
 }
 
@@ -99,6 +101,14 @@ if (isset($_POST["ngo_forgot_button"])) {
     <div class="logo">
       <h1>Connecting Dots</h1>
     </div>
+    <?php
+    if (isset($_SESSION["set_dalert"])) {
+      unset($_SESSION["set_dalert"]);
+    ?>
+      <div class="alert alert-dismissible alert-danger">
+        <button class="btn-close" type="button" data-bs-dismiss="alert"></button><strong>Oops! Invalid Login Details.</strong>.
+      </div>
+    <?php } ?>
     <div class="login-box">
       <form class="login-form" method="POST" id="login_form_js">
         <h3 class="login-head"><i class="bi bi-person me-2"></i>SIGN IN</h3>
@@ -132,6 +142,14 @@ if (isset($_POST["ngo_forgot_button"])) {
         <div class="mb-3 btn-container d-grid">
           <button class="btn btn-primary btn-block" type="submit" name="ngo_forgot_button"><i class="bi bi-unlock me-2 fs-5"></i>RESET</button>
         </div>
+        <?php
+        if (isset($_SESSION["set_user_name_alert"])) {
+          unset($_SESSION["set_user_name_alert"]);
+        ?>
+          <div class="alert alert-dismissible alert-danger">
+            <button class="btn-close" type="button" data-bs-dismiss="alert"></button><strong>Oops! Invalid Email.</strong>.
+          </div>
+        <?php } ?>
         <div class="mb-3 mt-3">
           <p class="semibold-text mb-0"><a href="#" data-toggle="flip"><i class="bi bi-chevron-left me-1"></i> Back to Login</a></p>
         </div>

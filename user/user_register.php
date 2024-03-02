@@ -1,4 +1,5 @@
 <?php
+session_start();
 require './admin_db.php';
 $msg = "";
 if ($_POST) {
@@ -307,7 +308,7 @@ if ($_POST) {
             });
         });
     </script>
-   
+
     <style>
         .error {
             color: red

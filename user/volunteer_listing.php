@@ -241,6 +241,7 @@ require './admin_db.php';
                                         <h3>Categories</h3>
                                     </div>
                                     <ul class="sidebar-categories-box">
+                                        <li><a href='ngo_listing.php'><i class='fa fa-check-circle' aria-hidden='true'></i>All</a></li>
                                         <?php
 
                                         $category_query = mysqli_query($connection, "select * from tbl_category");

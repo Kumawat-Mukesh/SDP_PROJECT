@@ -120,7 +120,7 @@ $ngo_id = $_SESSION["ngo_id"];
         <div class="row">
             <div class="col-md-12">
                 <div class="tile">
-                    <h3 class="tile-title">Item Donation Information</h3>
+                    <h3 class="tile-title">Online Donation Information</h3>
                     <table class="table table-hover">
                         <thead>
                             <tr>

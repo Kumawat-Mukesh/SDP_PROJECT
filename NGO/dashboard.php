@@ -63,19 +63,25 @@ $ngo_id = $_SESSION["ngo_id"];
       </center>
     </div>
     <div class="row">
-
-    <div class="col-md-6 col-lg-3"><a href="donation_information.php" style="text-decoration:none">
-        <div class="widget-small primary coloured-icon"><i class="icon bi bi-heart fs-1" style="background-color:steelblue;"></i>
-      </a>
-      <div class="info">
-        <h4>Donation</h4>
-        <?php
-        $select = mysqli_query($connection, "select * from tbl_donation where ngo_id='{$ngo_id}'");
-        $count = mysqli_num_rows($select);
-        echo "<p><b>{$count}</b></p>";
-        ?>
+      <?php if (isset($_SESSION['set_alert'])) {
+        unset($_SESSION["set_alert"]);
+      ?>
+        <div class="alert alert-dismissible alert-success">
+          <button class="btn-close" type="button" data-bs-dismiss="alert"></button><strong>You successfully Logged In</strong>.
+        </div>
+      <?php } ?>
+      <div class="col-md-6 col-lg-3"><a href="donation_information.php" style="text-decoration:none">
+          <div class="widget-small primary coloured-icon"><i class="icon bi bi-heart fs-1" style="background-color:steelblue;"></i>
+        </a>
+        <div class="info">
+          <h4>Donation</h4>
+          <?php
+          $select = mysqli_query($connection, "select * from tbl_donation where ngo_id='{$ngo_id}'");
+          $count = mysqli_num_rows($select);
+          echo "<p><b>{$count}</b></p>";
+          ?>
+        </div>
       </div>
-    </div>
     </div>
 
     <div class="col-md-6 col-lg-3"><a href="user_information.php" style="text-decoration:none">
@@ -107,7 +113,7 @@ $ngo_id = $_SESSION["ngo_id"];
     </div>
 
     </div>
-   <br>
+    <br>
     <div class="row">
       <?php
       $select = mysqli_query($connection, "select * from tbl_ngo where ngo_id='{$ngo_id}'");

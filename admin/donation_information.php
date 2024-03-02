@@ -1,5 +1,6 @@
 <?php
 session_start();
+require './admin_db.php';
 if (!isset($_SESSION["admin_id"])) {
     header("Location:admin_login.php");
 }
@@ -53,6 +54,8 @@ if (!isset($_SESSION["admin_id"])) {
             </ul>
         </div>
         <!-- item -->
+        <?php ?>
+
         <div class="row">
             <div class="col-md-12">
                 <div class="tile">
@@ -61,7 +64,7 @@ if (!isset($_SESSION["admin_id"])) {
                         <table class="table table-hover table-bordered" id="itemDonation">
                             <thead>
                                 <tr>
-                                    <!-- <th>Donation ID</th> -->
+                                    <th>Donation ID</th>
                                     <th>NGO Name</th>
                                     <th>User Name</th>
                                     <th>Item Requirement Details</th>
@@ -74,7 +77,6 @@ if (!isset($_SESSION["admin_id"])) {
                             </thead>
                             <tbody>
                                 <?php
-                                include 'admin_db.php';
                                 if (isset($_GET['delete_id'])) {
                                     $delete_id = $_GET['delete_id'];
                                     $delete_query = "delete from tbl_donation where donation_id = $delete_id";
@@ -102,7 +104,7 @@ if (!isset($_SESSION["admin_id"])) {
                                     $user_row = mysqli_fetch_array($user_query);
 
                                     echo "<tr>";
-                                    // echo "<td>{$donation_row['donation_id']}</td>";
+                                    echo "<td>{$donation_row['donation_id']}</td>";
                                     echo "<td>{$ngo_row['ngo_name']}</td>";
                                     echo "<td>{$user_row['user_first_name']}</td>";
                                     echo "<td>{$item_requirement_row['item_requirement_details']}</td>";
@@ -134,7 +136,7 @@ if (!isset($_SESSION["admin_id"])) {
                         <table class="table table-hover table-bordered" id="onlineDonation">
                             <thead>
                                 <tr>
-                                    <!-- <th>Donation ID</th> -->
+                                    <th style="visibility:hidden;">Donation ID</th>
                                     <th>NGO Name</th>
                                     <th>User Name</th>
                                     <th>Donation Method</th>
@@ -168,13 +170,13 @@ if (!isset($_SESSION["admin_id"])) {
                                     $user_row = mysqli_fetch_array($user_query);
 
                                     echo "<tr>";
-                                    // echo "<td>{$donation_row['donation_id']}</td>";
+                                    echo "<td style='visibility:hidden'>{$donation_row['donation_id']}</td>";
                                     echo "<td>{$ngo_row['ngo_name']}</td>";
                                     echo "<td>{$user_row['user_first_name']}</td>";
                                     echo "<td>{$donation_row['donation_method']}</td>";
                                     echo "<td>{$donation_row['donation_type']}</td>";
                                     echo "<td>{$donation_row['donation_date']}</td>";
-                                   
+
                                     echo "<td>{$donation_row['donation_amount']}</td>";
                                     echo "<td>
                                 <a href='donation_information.php?delete_id={$donation_row['donation_id']}' 

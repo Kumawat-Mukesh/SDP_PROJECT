@@ -187,7 +187,7 @@ require './admin_db.php';
                                     <?php
                                     while ($donation_row = mysqli_fetch_array($item_select)) {
 
-                                        $ngo_query = mysqli_query($connection, "select*from tbl_ngo where ngo_id='{$donation_row['ngo_id']}'"); 
+                                        $ngo_query = mysqli_query($connection, "select*from tbl_ngo where ngo_id='{$donation_row['ngo_id']}'");
                                         $ngo_row = mysqli_fetch_array($ngo_query);
 
                                         $item_requirement_query = mysqli_query($connection, "select*from tbl_item_requirement where item_requirement_id='{$donation_row['item_requirement_id']}'");
@@ -249,12 +249,15 @@ require './admin_db.php';
                                             <th>Donation Method</th>
                                             <th>Donation Type</th>
                                             <th>Donation Amount</th>
-
                                         </tr>
                                     </thead>
                                     <tbody>
                                     <?php
                                     while ($online_row = mysqli_fetch_array($online_select)) {
+                                        $ngo_query = mysqli_query($connection, "select*from tbl_ngo where ngo_id='{$online_row['ngo_id']}'");
+                                        $ngo_row = mysqli_fetch_array($ngo_query);
+                                        $user_query = mysqli_query($connection, "select * from tbl_user where user_id = '{$online_row['user_id']}'");
+                                        $user_row = mysqli_fetch_array($user_query);
                                         echo "<tr>";
                                         echo "<td>{$ngo_row['ngo_name']}</td>";
                                         echo "<td>{$user_row['user_first_name']}</td>";

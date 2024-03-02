@@ -74,7 +74,7 @@ if ($_POST) {
                     <div class="tile-body">
                         <form class="row" method="post" id="child_form_js" enctype="multipart/form-data">
                             <div class="mb-3 col-md-3">
-                                <label class="form-label">NGO ID</label>
+                                <label class="form-label">NGO Name</label>
                                 <?php
                                 $ngo_query = mysqli_query($connection, "select * from tbl_ngo");
                                 echo "<select class='form-control' name = 'ngo_id'>";
@@ -101,9 +101,6 @@ if ($_POST) {
                                         <input class="form-check-input" type="radio" name="child_gender" value="Female">Female
                                     </label>
                                 </div>
-
-
-
                                 <br>
                                 <label class="form-label">Age</label>
                                 <input class="form-control" type="text" name="child_age" placeholder="Enter child age" onkeyup="Validate(this)" required>

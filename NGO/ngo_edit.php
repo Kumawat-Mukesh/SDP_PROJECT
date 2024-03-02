@@ -109,7 +109,7 @@ if (isset($_POST['add'])) {
                             <input class="form-control" type="tel" placeholder="Enter contact number" name="ngo_contact_no" value="<?php echo $ngo_row['ngo_contact_no']; ?>" required>
                             <br>
 
-                            <label class="form-label">Category ID</label>
+                            <label class="form-label">Category Name</label>
                             <!-- <input class="form-control" type="text" placeholder="Enter category id" name="category_id" required> -->
                             <?php
                             $category_query = mysqli_query($connection, "select*from tbl_category");
@@ -137,7 +137,7 @@ if (isset($_POST['add'])) {
                             <label class="form-label">Photo</label>
                             <input class="form-control" type="file" placeholder="Upload NGO photo" name="ngo_photo" required>
                             <br>
-                            <label class="form-label">Area ID</label>
+                            <label class="form-label">Area Name</label>
                             <!-- <input class="form-control" type="text" placeholder="Enter area id" name="area_id" required> -->
                             <?php
                             $area_query = mysqli_query($connection, "select*from tbl_area");

@@ -89,6 +89,7 @@ if (!isset($_SESSION["admin_id"])) {
                             <th>User Name</th>
                             <th>Item Requirement Details</th>
                             <th>Donation Details</th>
+                            <th>Donation Date</th>
                             <th>Donation Status</th>
                             <th>Volunteer Name</th>
 
@@ -117,6 +118,7 @@ if (!isset($_SESSION["admin_id"])) {
                             echo "<td>{$user_row['user_first_name']}</td>";
                             echo "<td>{$item_requirement_row['item_requirement_details']}</td>";
                             echo "<td>{$donation_row['donation_details']}</td>";
+                            echo "<td>{$donation_row['donation_date ']}</td>";
                             echo "<td>{$donation_row['donation_status']}</td>";
                             echo "<td>{$volunteer_row['volunteer_first_name']} {$volunteer_row['volunteer_last_name']}</td>";
                             echo "</tr>";
@@ -149,8 +151,8 @@ if (!isset($_SESSION["admin_id"])) {
                             <!-- <th>Donation ID</th> -->
                             <th>NGO Name</th>
                             <th>User Name</th>
-                            <th>User Date</th>
-                            <th>Donation Method</th>
+                            <th>Donation Date</th>
+                            <th>Donation Method</th>    
                             <th>Donation Type</th>
                             <th>Donation Amount</th>
 

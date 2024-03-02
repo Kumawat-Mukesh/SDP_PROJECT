@@ -1,30 +1,29 @@
 <?php
 session_start();
 require  'admin_db.php';
+$msg = "";
+if ($_POST) {
+    $volunteer_first_name = $_POST['volunteer_first_name'];
+    $volunteer_last_name = $_POST['volunteer_last_name'];
+    $volunteer_email = $_POST['volunteer_email'];
+    $volunteer_password = $_POST['volunteer_password'];
+    $volunteer_gender = $_POST['volunteer_gender'];
+    $volunteer_mobile_no = $_POST['volunteer_mobile_no'];
+    $volunteer_address = $_POST['volunteer_address'];
+    $volunteer_photo = $_POST['volunteer_photo'];
+    $volunteer_verified = $_POST['volunteer_verified'];
 
-if($_POST)
-{
-  $volunteer_first_name=$_POST['volunteer_first_name'];
-  $volunteer_last_name=$_POST['volunteer_last_name'];
-  $volunteer_email=$_POST['volunteer_email'];
-  $volunteer_password=$_POST['volunteer_password'];
-  $volunteer_gender=$_POST['volunteer_gender'];
-  $volunteer_mobile_no=$_POST['volunteer_mobile_no'];
-  $volunteer_address=$_POST['volunteer_address'];
-  $volunteer_photo=$_POST['volunteer_photo'];
-  $volunteer_verified=$_POST['volunteer_verified'];
-
-  $volunteer_photo_name=$_FILES['volunteer_photo']['name'];
-  $volunteer_photo_tmp_name=$_FILES['volunteer_photo']['tmp_name'];
+    $volunteer_photo_name = $_FILES['volunteer_photo']['name'];
+    $volunteer_photo_tmp_name = $_FILES['volunteer_photo']['tmp_name'];
 
 
-  $query=mysqli_query($connection,"insert into tbl_volunteer(volunteer_first_name,volunteer_last_name,volunteer_email,volunteer_password,volunteer_gender,volunteer_mobile_no,volunteer_address,volunteer_photo,volunteer_verified) values('{$volunteer_first_name}','{$volunteer_last_name}','{$volunteer_email}','{$volunteer_password}','{$volunteer_gender}','{$volunteer_mobile_no}','{$volunteer_address}','{$volunteer_photo_name}','{$volunteer_verified}')");
+    $query = mysqli_query($connection, "insert into tbl_volunteer(volunteer_first_name,volunteer_last_name,volunteer_email,volunteer_password,volunteer_gender,volunteer_mobile_no,volunteer_address,volunteer_photo,volunteer_verified) values('{$volunteer_first_name}','{$volunteer_last_name}','{$volunteer_email}','{$volunteer_password}','{$volunteer_gender}','{$volunteer_mobile_no}','{$volunteer_address}','{$volunteer_photo_name}','{$volunteer_verified}')");
 
-  move_uploaded_file($volunteer_photo_tmp_name,"/SDP/Admin/uploads/".$volunteer_photo_name);
-  if($query)
-  {
-    echo "<script>alert('Thanks for Registration');window.location='user_home.php'</script>";
-  }
+    move_uploaded_file($volunteer_photo_tmp_name, "/SDP/Admin/uploads/" . $volunteer_photo_name);
+    if ($query) {
+
+        $msg = "<div class='alert alert-success' role='alert'><a href='volunteer_login.php' class='alert-link'>Login</a>. You are Sucessfully registered .</div>";
+    }
 }
 ?>
 <!DOCTYPE html>
@@ -73,9 +72,9 @@ if($_POST)
     <link rel="stylesheet" href="assets/css/style.css">
     <link rel="stylesheet" href="assets/css/responsive.css">
     <!-- Favicon -->
-    <link rel="apple-touch-icon" sizes="180x180" href="assets/images/favicon/apple-touch-icon.png">
+    <!-- <link rel="apple-touch-icon" sizes="180x180" href="assets/images/favicon/apple-touch-icon.png">
     <link rel="icon" type="image/png" href="assets/images/favicon/favicon-32x32.png" sizes="32x32">
-    <link rel="icon" type="image/png" href="assets/images/favicon/favicon-16x16.png" sizes="16x16">
+    <link rel="icon" type="image/png" href="assets/images/favicon/favicon-16x16.png" sizes="16x16"> -->
 
     <!-- Fixing Internet Explorer-->
     <!--[if lt IE 9]>
@@ -131,9 +130,8 @@ if($_POST)
             <div class="container">
                 <div class="row">
                     <div class="col-xl-12">
-
+                        <?php echo $msg; ?>
                         <div class="contact-style1_form">
-
                             <div class="sec-title">
                                 <div class="mx-auto col-10 col-md-8 col-lg-6">
                                     <h2>Registration <i class="fa fa-pencil-square-o" aria-hidden="true"></i></h2>
@@ -145,10 +143,10 @@ if($_POST)
                                     <div class="row">
                                         <div class="mx-auto col-10 col-md-8 col-lg-6">
                                             <div class="input-box">
-                                                <input type="text" name="volunteer_first_name" placeholder="Enter your first name" required>
+                                                <input type="text" name="volunteer_first_name" onkeyup="Validatestring(this)" placeholder="Enter your first name" required>
                                             </div>
                                             <div class="input-box">
-                                                <input type="text" name="volunteer_last_name" placeholder="Enter your last name" required>
+                                                <input type="text" name="volunteer_last_name" onkeyup="Validatestring(this)" placeholder="Enter your last name" required>
                                             </div>
                                             <div class="input-box">
                                                 <input type="email" name="volunteer_email" placeholder="Enter your email" required>
@@ -164,14 +162,14 @@ if($_POST)
                                                 <input type="radio" name="volunteer_gender" value="female" required=""> Female
                                             </div>
                                             <div class="input-box">
-                                                <input type="text" name="volunteer_mobile_no" placeholder="Enter mobile number " minlength="10" maxlength="10" title="Please enter 10 digit number" required>
+                                                <input type="text" name="volunteer_mobile_no" onkeyup="Validate(this)" placeholder="Enter mobile number " minlength="10" maxlength="10" title="Please enter 10 digit number" required>
                                             </div>
                                             <div class="input-box">
                                                 <textarea name="volunteer_address" class="form-control" placeholder="Enter your address" rows="5" cols="15" required></textarea>
                                             </div>
                                             <div class="input-box">
-                                            <label>Photo : </label>
-                                                 <input type="file" name="volunteer_photo" placeholder="Upload your photo" required>
+                                                <label>Photo : </label>
+                                                <input type="file" name="volunteer_photo" placeholder="Upload your photo" required>
                                             </div>
                                         </div>
                                     </div>
@@ -191,9 +189,6 @@ if($_POST)
                             </div>
                         </div>
                     </div>
-
-
-
                 </div>
             </div>
         </section>
@@ -244,8 +239,76 @@ if($_POST)
     <script src="tools/jquery.validate.js"></script>
     <script>
         $(document).ready(function() {
-            $("#volunteer_register").validate();
+            $("#volunteer_register").validate({
+                rules: {
+
+                    volunteer_first_name: {
+                        required: true,
+                        minlength: 2
+                    },
+                    volunteer_last_name: {
+                        required: true,
+                        minlength: 2
+                    },
+                    volunteer_mobile_no: {
+                        required: true,
+                        minlength: 10,
+                        maxlength: 10
+                    },
+                    volunteer_address: "required",
+                    volunteer_email: {
+                        required: true,
+                        email: true
+                    },
+                    volunteer_password: {
+                        required: true,
+                        minlength: 6,
+                        maxlength: 20,
+                    },
+                    volunteer_gender: {
+                        required: true
+                    },
+                    file: "Required",
+                },
+                messages: {
+
+                    volunteer_first_name: {
+                        required: "Please Enter Name",
+                        minlength: "Your name must consist of at least 2 characters"
+                    },
+                    volunteer_last_name: {
+                        required: "Please Enter Name",
+                        minlength: "Your name must consist of at least 2 characters"
+                    },
+                    volunteer_mobile_no: {
+                        required: "Please Enter Your Mobile no.",
+                        minlength: "Enter Your 10 digit Mobile no. only",
+                        maxlength: "Enter Your 10 digit Mobile no. only",
+                    },
+                    volunteer_gender: {
+                        required: "Select Gender"
+                    },
+                    volunteer_email: {
+                        required: "Please enter a valid email address",
+                        email: "Email contains (@) and (.)",
+                    },
+                    user_password: {
+                        required: "Please Enter Password",
+                        minlength: "Your password must be at least 6 characters long",
+                        maxlength: "Enter password less than 20 characters",
+                    },
+
+                }
+            });
         });
+
+        function Validate(no) {
+            no.value = no.value.replace(/[^ 0-9\n\r]+/g, '');
+        }
+
+        function Validatestring(no) {
+            no.value = no.value.replace(/[^ a-z A-Z\n\r]+/g, '');
+        }
     </script>
     <style>
         .error {
@@ -254,8 +317,5 @@ if($_POST)
     </style>
 
 </body>
-
-
-<!-- Mirrored from mehedi.asiandevelopers.com/loveicon/contact.html by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 16 Sep 2023 07:55:48 GMT -->
 
 </html>

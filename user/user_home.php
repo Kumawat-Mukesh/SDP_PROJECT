@@ -1,6 +1,15 @@
 <?php
 session_start();
 require './admin_db.php';
+
+$donation_query = mysqli_query($connection, 'select * from tbl_donation');
+$donation_count = mysqli_num_rows($donation_query);
+
+$user_query = mysqli_query($connection, 'select * from tbl_user');
+$user_count = mysqli_num_rows($user_query);
+
+$volunteer_query_db = mysqli_query($connection, 'select * from tbl_volunteer');
+$volunteer_count = mysqli_num_rows($volunteer_query_db);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -298,6 +307,7 @@ require './admin_db.php';
         <!--End Cause Style3 Area-->
 
         <!--Start Fact Counter Area-->
+
         <section class="fact-counter-area">
             <div class="fact-counter-area_bg" style="background-image: url(assets/images/parallax-background/fact-counter-area_bg.jpg);"></div>
             <div class="container">
@@ -315,7 +325,7 @@ require './admin_db.php';
                                                 </div>
                                             </div>
                                             <div class="count-outer count-box">
-                                                <span class="count-text" data-speed="3000" data-stop="1.5">0</span><span>K</span>
+                                                <span class="count-text" data-speed="3000" data-stop="<?php echo $donation_count; ?>"><?php echo $donation_count; ?></span>
                                             </div>
                                         </div>
                                         <div class="text">
@@ -333,7 +343,7 @@ require './admin_db.php';
                                                 </div>
                                             </div>
                                             <div class="count-outer count-box style2">
-                                                <span class="count-text" data-speed="3000" data-stop="1.4">0</span><span>K</span>
+                                                <span class="count-text" data-speed="3000" data-stop="<?php echo $user_count; ?>"><?php echo $user_count; ?></span>
                                             </div>
                                         </div>
                                         <div class="text">
@@ -369,7 +379,7 @@ require './admin_db.php';
                                                 </div>
                                             </div>
                                             <div class="count-outer count-box style4">
-                                                <span class="count-text" data-speed="3000" data-stop="10">0</span>
+                                                <span class="count-text" data-speed="3000" data-stop="<?php echo $volunteer_count; ?>"><?php echo $volunteer_count; ?></span>
                                             </div>
                                         </div>
                                         <div class="text">
@@ -417,7 +427,7 @@ require './admin_db.php';
                                     <div class="img-holder">
                                         <div class="inner">
                                             <a href="volunteer_listing.php">
-                                            <img src="/project/admin/uploads/<?php echo $volunteer_data['volunteer_photo']; ?>" style="height: 250px; width:400px;" />
+                                                <img src="/project/admin/uploads/<?php echo $volunteer_data['volunteer_photo']; ?>" style="height: 250px; width:400px;" />
                                             </a>
                                             <div class=" icon">
                                                 <span class=""></span>
@@ -610,7 +620,7 @@ require './admin_db.php';
             $("#user_contact_form").validate();
         });
     </script>
-  
+
     <style>
         .error {
             color: red

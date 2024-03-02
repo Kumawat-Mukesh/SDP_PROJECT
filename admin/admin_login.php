@@ -39,19 +39,7 @@ if (isset($_POST["admin_forgot_button"])) {
 
     // $forgot_msg = "Hi {$forgot_row['admin_name']},<br/> your password is " . $otp . " <br/>Do not Share with anyone";
 
-    $forgot_msg = "Dear {$forgot_row['admin_name']},</br>
-
-    We have received a request to reset the password for your administrator account associated with Connecting Dots.</br>
-    As a security measure, we require you to verify your identity before proceeding with the password reset.</br>  
-    To complete the password reset process, please use the following One-Time Password (OTP):</br>
-
-  OTP: $otp </br>
-
-  Please enter this OTP on the password reset page to verify your identity and create a new password.";
-
-
-
-
+    $forgot_msg = "Dear {$forgot_row['admin_name']},</br>We have received a request to reset the password for your administrator account associated with Connecting Dots.</br>As a security measure, we require you to verify your identity before proceeding with the password reset.</br>To complete the password reset process, please use the following One-Time Password (OTP):</br>OTP: $otp </br>Please enter this OTP on the password reset page to verify your identity and create a new password.";
 
 
     //Load Composer's autoloader
@@ -115,9 +103,6 @@ if (isset($_POST["admin_forgot_button"])) {
       <h1>Connecting Dots</h1>
     </div>
     <?php
-
-
-
     if (isset($_SESSION["set_dalert"])) {
       unset($_SESSION["set_dalert"]);
     ?>

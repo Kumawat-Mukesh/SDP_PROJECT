@@ -12,8 +12,7 @@ if ($_POST) {
     $forgot_query = mysqli_query($connection, "select * from tbl_volunteer where volunteer_email = '{$volunteer_forgot_email}'");
     $forgot_count = mysqli_num_rows($forgot_query);
     $forgot_row = mysqli_fetch_array($forgot_query);
-    if ($forgot_count == 1) 
-    {
+    if ($forgot_count == 1) {
         $otp = rand(1111, 9999);
         mysqli_query($connection, "update tbl_volunteer set volunteer_password = '{$otp}' where volunteer_email='{$volunteer_forgot_email}'");
         $forgot_msg = "Hi {$forgot_row['volunteer_first_name']},<br/> your password is " . $otp . " <br/>Do not Share with anyone";
@@ -47,7 +46,8 @@ if ($_POST) {
             echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
         }
     } else {
-        echo "<script>alert('volunteer Not Found')</script>";
+        // echo "<script>alert('volunteer Not Found')</script>";
+        $_SESSION['set_user_name_alert'] = "1";
     }
 }
 ?>
@@ -154,6 +154,14 @@ if ($_POST) {
             <div class="container">
                 <div class="row">
                     <div class="col-xl-12">
+                        <?php
+                        if (isset($_SESSION["set_user_name_alert"])) {
+                            unset($_SESSION["set_user_name_alert"]);
+                        ?>
+                            <div class="alert alert-dismissible alert-danger">
+                                <button class="btn-close" type="button" data-bs-dismiss="alert"></button><strong>Oops! Invalid Email.</strong>.
+                            </div>
+                        <?php } ?>
 
                         <div class="contact-style1_form">
 
@@ -189,7 +197,7 @@ if ($_POST) {
                                     <br>
                                     <div class="row">
                                         <div class="mx-auto col-10 col-md-8 col-lg-6">
-                                            <a href="user_login.php"><span class="flaticon-left-arrow"></span> Back to login</a>
+                                            <a href="volunteer_login.php"><span class="flaticon-left-arrow"></span> Back to login</a>
                                         </div>
 
                                     </div>

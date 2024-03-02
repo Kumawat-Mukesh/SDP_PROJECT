@@ -71,7 +71,7 @@ if ($_POST) {
                     <div class="tile-body">
                         <form method="post" class="row" id="donation_form_js">
                             <div class="mb-3 col-md-3">
-                                <label class="form-label">Requirement ID</label>
+                                <label class="form-label">Requirement </label>
                                 <!-- <input class="form-control" type="text" name="item_requirement_id" placeholder="Enter Requirement ID" required> -->
                                 <?php
                                 $item_requirement_query = mysqli_query($connection, "select*from tbl_item_requirement");
@@ -90,7 +90,7 @@ if ($_POST) {
                                 <label class="form-label">Donation Status</label>
                                 <input class="form-control" type="text" name="donation_status" placeholder="Enter status" value="<?php echo $donation_data['donation_status']; ?>" required>
                                 <br>
-                                <label class="form-label">Volunteer ID</label>
+                                <label class="form-label">Volunteer Name</label>
                                 <?php
                                 $volunteer_query = mysqli_query($connection, "select*from tbl_volunteer");
                                 echo "<select class='form-control' name='volunteer_id'>";

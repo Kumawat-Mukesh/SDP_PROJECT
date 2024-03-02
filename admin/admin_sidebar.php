@@ -28,8 +28,8 @@
     </li>
     <li class="treeview"><a class="app-menu__item" href="#" data-toggle="treeview">
         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-standing" viewBox="0 0 16 16">
-          <path d="M8 3a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3ZM6 6.75v8.5a.75.75 0 0 0 1.5 0V10.5a.5.5 0 0 1 1 0v4.75a.75.75 0 0 0 1.5 0v-8.5a.25.25 0 1 1 .5 0v2.5a.75.75 0 0 0 1.5 0V6.5a3 3 0 0 0-3-3H7a3 3 0 0 0-3 3v2.75a.75.75 0 0 0 1.5 0v-2.5a.25.25 0 0 1 .5 0Z" />
-        </svg>
+        <path d="M8 3a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3ZM6 6.75v8.5a.75.75 0 0 0 1.5 0V10.5a.5.5 0 0 1 1 0v4.75a.75.75 0 0 0 1.5 0v-8.5a.25.25 0 1 1 .5 0v2.5a.75.75 0 0 0 1.5 0V6.5a3 3 0 0 0-3-3H7a3 3 0 0 0-3 3v2.75a.75.75 0 0 0 1.5 0v-2.5a.25.25 0 0 1 .5 0Z" />
+        </svg>&nbsp;&nbsp;&nbsp;
         <span class="app-menu__label">Volunteer</span><i class="treeview-indicator bi bi-chevron-right"></i></a>
       <ul class="treeview-menu">
         <li><a class="treeview-item" href="volunteer_form.php"><i class="icon bi bi-circle-fill"></i> Volunteer-Form</a></li>
@@ -54,14 +54,14 @@
         <li><a class="treeview-item" href="donation_information.php"><i class="icon bi bi-circle-fill"></i> Donation-Information</a></li>
       </ul>
     </li>
-    <li class="treeview"><a class="app-menu__item" href="#" data-toggle="treeview">👶🏻<i class="app-menu__icon bi"></i><span class="app-menu__label">Child</span><i class="treeview-indicator bi bi-chevron-right"></i></a>
+    <li class="treeview"><a class="app-menu__item" href="#" data-toggle="treeview"><span class="app-menu__icon bi">👶🏻</span><span class="app-menu__label">Child</span><i class="treeview-indicator bi bi-chevron-right"></i></a>
       <ul class="treeview-menu">
         <li><a class="treeview-item" href="child_form.php"><i class="icon bi bi-circle-fill"></i> Child-Form</a></li>
         <li><a class="treeview-item" href="child_information.php"><i class="icon bi bi-circle-fill"></i> Child-Information</a></li>
       </ul>
     </li>
 
-    <li class="treeview"><a class="app-menu__item" href="#" data-toggle="treeview"><i class="app-menuicon bi bi-box2-heart"></i><i class="app-menu__icon bi"></i><span class="app-menu__label">Events</span><i class="treeview-indicator bi bi-chevron-right"></i></a>
+    <li class="treeview"><a class="app-menu__item" href="#" data-toggle="treeview"><i class="app-menu__icon bi bi-calendar-event"></i><span class="app-menu__label">Events</span><i class="treeview-indicator bi bi-chevron-right"></i></a>
       <ul class="treeview-menu">
         <li><a class="treeview-item" href="event_form.php"><i class="icon bi bi-circle-fill"></i> Event-form</a></li>
         <li><a class="treeview-item" href="event_information.php"><i class="icon bi bi-circle-fill"></i> Event-Information</a></li>
