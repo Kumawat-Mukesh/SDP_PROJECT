@@ -169,7 +169,7 @@ $volunteer_id=$_SESSION['volunteer_id'];
                                     <tr style="color:black">
                                         <th>NGO Name</th>
                                         <th>User Name</th>
-                                       
+                                        <th>User Mobile No.</th>
                                         <th>Donation Details</th>
                                         <th>Donation Date</th>
                                         <th>Donation Address</th>
@@ -200,7 +200,7 @@ $volunteer_id=$_SESSION['volunteer_id'];
                                         echo "<tr>";
                                         echo "<td>{$ngo_row['ngo_name']}</td>";
                                         echo "<td>{$user_row['user_first_name']}</td>";
-                                       
+                                        echo "<td>{$user_row['user_mobile_no']}</td>";
                                         echo "<td>{$donation_row['donation_details']}</td>";
                                         echo "<td>{$donation_row['donation_date']}</td>";
                                         echo "<td>{$donation_row['donation_address']}</td>";

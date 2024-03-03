@@ -173,6 +173,11 @@ require './admin_db.php';
         <section class="cause-page-one">
             <div class="auto-container">
                 <div class="row">
+
+
+
+
+
                     <?php
                     if (isset($_GET['category_id'])) {
                         $category_id = $_GET['category_id'];
@@ -191,31 +196,35 @@ require './admin_db.php';
                     }
 
                     $row = mysqli_num_rows($ngo_query);
+                    // $row =0;
                     if ($row > 0) {
                         while ($ngo_data = mysqli_fetch_array($ngo_query)) {
                     ?>
-                            <div class="col-xl-4 col-lg-6 col-md-6">
-                                <div class="single-cause-style1">
-                                    <div class="img-holder">
-                                        <img src="/project/admin/uploads/<?php echo $ngo_data['ngo_photo']; ?> " alt="">
-                                        <div class="overlay-icon">
-                                            <a class="lightbox-image" data-fancybox="gallery" href="/project/admin/uploads/<?php echo $ngo_data['ngo_photo']; ?> ">
-                                                <img src="/project/admin/uploads/<?php echo $ngo_data['ngo_photo']; ?> " alt="">
-                                            </a>
-                                        </div>
-                                    </div>
-                                    <div class="text-holder">
-                                        <h3><a href="ngo_details.php?ngo_id=<?php echo $ngo_data['ngo_id']; ?>"><?php echo $ngo_data['ngo_name']; ?></a></h3>
 
-                                        <div class="btns-box">
-                                            <a class="btn-one" href="ngo_details.php?ngo_id=<?php echo $ngo_data['ngo_id']; ?>"><span class="txt"><i class="arrow1 fa fa-check-circle"></i>Donate Now</span></a>
+                            <div class="col-xl-4 col-lg-6 col-md-6">
+                                <div class="col-md-12">
+                                    <div class="single-cause-style1">
+                                        <div class="img-holder">
+                                            <img src="/project/admin/uploads/<?php echo $ngo_data['ngo_photo']; ?>" style="width:1220px;" alt="">
+                                            <div class="overlay-icon">
+                                                <a class="lightbox-image" data-fancybox="gallery" href="/project/admin/uploads/<?php echo $ngo_data['ngo_photo']; ?> ">
+                                                    <img src="/project/admin/uploads/<?php echo $ngo_data['ngo_photo']; ?>" alt="">
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div class="text-holder">
+                                            <h3><a href="ngo_details.php?ngo_id=<?php echo $ngo_data['ngo_id']; ?>"><?php echo $ngo_data['ngo_name']; ?></a></h3>
+
+                                            <div class="btns-box">
+                                                <a class="btn-one" href="ngo_details.php?ngo_id=<?php echo $ngo_data['ngo_id']; ?>"><span class="txt"><i class="arrow1 fa fa-check-circle"></i>Donate Now</span></a>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                     <?php }
                     } else {
-                        echo "<h3>No Record Found!!!</h3>";
+                        // echo "<h3>No Record Found!!!</h3>";
                     } ?>
                     <!--End Single Cause Style1-->
                 </div>

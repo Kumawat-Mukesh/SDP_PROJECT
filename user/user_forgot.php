@@ -15,7 +15,22 @@ if ($_POST) {
     if ($forgot_count == 1) {
         $otp = rand(1111, 9999);
         mysqli_query($connection, "update tbl_user set user_password = '{$otp}' where user_email='{$user_forgot_email}'");
-        $forgot_msg = "Hi {$forgot_row['user_first_name']},<br/> your password is " . $otp . " <br/>Do not Share with anyone";
+
+
+        $forgot_msg = "
+
+Dear {$forgot_row['user_first_name']},<br><br>
+
+We have received a request to reset the password for your account on Connecting Dots. To proceed with the password reset, please use the following One-Time Password (OTP):<br>
+
+OTP: $otp<br>
+
+Please enter this OTP on the password reset page to verify your identity and create a new password. Please note that don't share this OTP with anyone. <br>
+If you did not request this password reset, please ignore this email. Your account security is important to us, and no changes have been made to your account.<br>
+<br>
+Thank you,<br>
+Connecting Dots Team.
+        ";
         //Load Composer's autoloader
         //Create an instance; passing true enables exceptions
         $mail = new PHPMailer(true);
@@ -36,7 +51,7 @@ if ($_POST) {
 
             //Content
             $mail->isHTML(true);                                  //Set email format to HTML
-            $mail->Subject = 'Forgot password';
+            $mail->Subject = 'Password Reset OTP for Connecting Dots';
             $mail->Body    = $forgot_msg;
             $mail->AltBody = $forgot_msg;
 

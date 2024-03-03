@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Feb 28, 2024 at 07:50 PM
+-- Generation Time: Mar 03, 2024 at 09:41 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -40,7 +40,7 @@ CREATE TABLE `tbl_admin` (
 
 INSERT INTO `tbl_admin` (`admin_id`, `admin_name`, `admin_email`, `admin_password`) VALUES
 (1, 'Zayn', 'zaynam87@gmail.com', 'zyan1234'),
-(2, 'Drashti', 'sdp.project.2024@gmail.com', '2064');
+(2, 'Mukesh', 'sdp.project.2024@gmail.com', '4704');
 
 -- --------------------------------------------------------
 
@@ -81,9 +81,6 @@ INSERT INTO `tbl_area` (`area_id`, `area_name`, `area_pincode`) VALUES
 (20, 'Maninagar', 380008),
 (21, 'Kalupur', 380001),
 (22, 'Ghatlodiya', 380061),
-(23, 'abcd', 231),
-(24, 'abcd', 231),
-(25, 'abcd', 231),
 (26, 'abcd', 123456);
 
 -- --------------------------------------------------------
@@ -163,21 +160,6 @@ INSERT INTO `tbl_child` (`child_id`, `ngo_id`, `child_name`, `child_gender`, `ch
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tbl_contact_us`
---
-
-CREATE TABLE `tbl_contact_us` (
-  `contact_us_id` int(11) NOT NULL,
-  `user_name` varchar(70) NOT NULL,
-  `user_email` varchar(50) NOT NULL,
-  `user_phone` bigint(15) NOT NULL,
-  `user_subject` text NOT NULL,
-  `user_message` text NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `tbl_donation`
 --
 
@@ -189,7 +171,7 @@ CREATE TABLE `tbl_donation` (
   `donation_details` text DEFAULT NULL,
   `donation_method` varchar(50) DEFAULT NULL,
   `donation_type` varchar(50) DEFAULT NULL,
-  `donation_date` varchar(25) NOT NULL,
+  `donation_date` varchar(25) NOT NULL DEFAULT current_timestamp(),
   `donation_address` text DEFAULT NULL,
   `donation_status` varchar(50) DEFAULT NULL,
   `volunteer_id` int(11) DEFAULT NULL,
@@ -201,16 +183,19 @@ CREATE TABLE `tbl_donation` (
 --
 
 INSERT INTO `tbl_donation` (`donation_id`, `ngo_id`, `user_id`, `item_requirement_id`, `donation_details`, `donation_method`, `donation_type`, `donation_date`, `donation_address`, `donation_status`, `volunteer_id`, `donation_amount`) VALUES
-(1, 2, 2, 2, '1 Dining table and 10 chairs', '', 'item', '2024-02-28', '17,Shiv Shakti Society,Opp.Uimya Dairy,Jivraj Park,Ahmedabad', 'pending', 5, ''),
-(2, 1, 1, 11, '30 notebooks and 100 pen', '', 'item', '2024-02-28', '18,Vina Kunj Society,RRR Trivedi School Road,vejalpur,Ahmedabad', 'pending', 6, ''),
-(3, 3, 4, 3, '2 Refridgerator', 'UPI', 'item', '2024-02-28', '39,Earth Bonglows,Near.Surdhara Bunglows,Prahlad Nagar,Ahmedabad', 'pending', 5, '200'),
-(4, 3, 3, NULL, NULL, NULL, 'online', '2024-02-28', NULL, NULL, NULL, '200'),
-(5, 4, 4, NULL, NULL, NULL, 'online', '', NULL, NULL, NULL, '500'),
-(6, 5, 7, 5, '10 Flashlights', NULL, 'item', '', 'B12,Venus Ground,Surendra Mangaldas Rd, Opposite Gallery Mall, Niyojan Nagar, Nehru Nagar, Ambawadi, Ahmedabad, Gujarat 380015', 'Dispatched', 12, NULL),
-(7, 6, 9, 6, '15 bedsheets,1 bed', NULL, 'item', '', 'Gopal Palace, Satellite Rd, opp. Ocean Park, Nehru Nagar, Acharya Narendradev Nagar, Ambawadi, Ahmedabad, Gujarat 380015', 'Delivered', 8, NULL),
-(8, 7, 12, NULL, NULL, 'UPI', 'online', '', NULL, NULL, NULL, '1200'),
-(9, 8, 10, NULL, NULL, 'UPI', 'online', '', NULL, NULL, NULL, '2000'),
-(10, 5, 10, 10, '20 blankates', '', 'item', '2024-02-28', 'aasdfghj', 'pending', 10, '');
+(1, 2, 2, 2, '1 Dining table and 10 chairs', '', 'item', '2023-11-22', '17,Shiv Shakti Society,Opp.Uimya Dairy,Jivraj Park,Ahmedabad', 'pending', 5, ''),
+(2, 1, 1, 11, '30 notebooks and 100 pen', '', 'item', '2023-11-25', '18,Vina Kunj Society,RRR Trivedi School Road,vejalpur,Ahmedabad', 'pending', 6, ''),
+(3, 3, 4, 3, '2 Refridgerator', 'UPI', 'item', '2023-11-28', '39,Earth Bonglows,Near.Surdhara Bunglows,Prahlad Nagar,Ahmedabad', 'pending', 5, '200'),
+(4, 3, 3, NULL, NULL, 'UPI', 'online', '2023-12-01', NULL, NULL, NULL, '200'),
+(5, 4, 4, NULL, NULL, 'UPI', 'online', '2023-12-05', NULL, NULL, NULL, '500'),
+(6, 5, 7, 5, '10 Flashlights', NULL, 'item', '2023-12-12', 'B12,Venus Ground,Surendra Mangaldas Rd, Opposite Gallery Mall, Niyojan Nagar, Nehru Nagar, Ambawadi, Ahmedabad, Gujarat 380015', 'Dispatched', 12, NULL),
+(7, 6, 9, 6, '15 bedsheets,1 bed', NULL, 'item', '2023-12-27', 'Gopal Palace, Satellite Rd, opp. Ocean Park, Nehru Nagar, Acharya Narendradev Nagar, Ambawadi, Ahmedabad, Gujarat 380015', 'Delivered', 8, NULL),
+(8, 7, 12, NULL, NULL, 'UPI', 'online', '2024-01-14', NULL, NULL, NULL, '1200'),
+(9, 8, 10, NULL, NULL, 'Net Banking', 'online', '2024-01-19', NULL, NULL, NULL, '2000'),
+(10, 5, 10, 10, '20 blankates', '', 'item', '2024-02-12', 'A12,Ratnakar Apartment-3, Near Shyamal Char Rasta, Satellite Road, 100 Feet Anand Nagar Rd, Jodhpur Village, Ahmedabad, Gujarat 380015', 'pending', 10, ''),
+(11, 1, 3, 9, '10 clothes for girls', NULL, 'item', '2024-02-29', 'B12,Himavan Appartment,near.Nandan Park,Bopal,Ahmedabad', 'pending', 4, NULL),
+(12, 2, 3, NULL, NULL, 'UPI', 'online', '2024-02-29', NULL, NULL, NULL, '100'),
+(13, 7, 2, NULL, NULL, 'UPI', 'online', '2024-03-02 22:42:27', NULL, NULL, NULL, '50.00');
 
 -- --------------------------------------------------------
 
@@ -235,13 +220,10 @@ CREATE TABLE `tbl_event` (
 
 INSERT INTO `tbl_event` (`event_id`, `ngo_id`, `event_title`, `event_date`, `event_time`, `event_location`, `event_details`, `event_photo`) VALUES
 (2, 1, 'Celebrate Children’s Day with NGO\'s children ', '2023-09-14', '10:00:00', 'Gujarat State Balkanji Bari,Near Session Court,Treasury Office Compound, Lal Darwaja, Ahmedabad, Gujarat 380001', ' Gujarat State Balkanji Bari conducted a sensitisation and awareness programme and at the same time, provided platforms to the children to share their problems as well as their views to resolve different social evils. Besides, these underprivileged and deprived children  were also taken on a fun-filled trip.\r\n\r\nInitially, Gujarat State Balkanji Bari felt that it would not be able to organise the programme due to lack of resources and financial assistance but with some Good Samaritans joining the cause and coming forward to assist the organisation to celebrate the Day, Gujarat State Balkanji Bari could finally implement the ideas.\r\n\r\nDuring these five days, hundreds of underprivileged children participated and had a very good time interacting with the guests and participating in cultural activities and other different games.', 'children-day.jpg'),
-(3, 3, 'Birthday Celebration at Blind Orphange', '2024-01-01', '05:00:00', 'Navjyot Andhajan Mandal,Khodiyar Chok, nr. Khodiyar Temple, Paldi Gaam, Paldi, Ahmedabad, Gujarat 380007', 'On the 1st January , 2023, the volunteers of the Foundation celebrated the Birthday of Mrs Manju Singhwi President of the SSS Foundation at Navjyot Andhajan Mandal for the Blind. A small dinner was organised for 80 in-mates of the NGO. The moments were filled with laughter care & support for the members of the School by the Volunteers.', 'birthday-celebration(blind).webp'),
+(3, 3, 'Birthday Celebration at Blind Orphange', '2024-01-01', '17:00:00', 'Navjyot Andhajan Mandal,Khodiyar Chok, nr. Khodiyar Temple, Paldi Gaam, Paldi, Ahmedabad, Gujarat 380007', 'On the 1st January , 2023, the volunteers of the Foundation celebrated the Birthday of Mrs Manju Singhwi President of the SSS Foundation at Navjyot Andhajan Mandal for the Blind. A small dinner was organised for 80 in-mates of the NGO. The moments were filled with laughter care & support for the members of the School by the Volunteers.', 'birthday-celebration(blind).webp'),
 (4, 2, 'Independence Day-Old Age Home', '2024-02-15', '08:00:00', 'Swarg Community Care,Plot 128, Greenwood phase 1, Garden city road, Sardar Patel Ring Rd, near Vaishnav Devi Circle, Ognaj, Ahmedabad, Gujarat 380060', 'The Independence Day celebration at Swarg Community Care was a beautiful amalgamation of cultures, emotions, and experiences. The beneficiaries, hailing from different backgrounds and regions, came together as one big family to celebrate the spirit of unity in diversity. The event was a reminder that regardless of age, background, or circumstances, the feeling of being part of something bigger can create a bond that transcends all differences.\r\n\r\nThe celebration went beyond the flag hoisting ceremony. It included cultural performances, patriotic songs, and heartfelt speeches by both the beneficiaries and the Swarg Community Care team. These activities aimed to empower the elderly by providing them a platform to express themselves and showcase their talents. It was an affirmation that age does not define one’s ability to contribute to society and enjoy life to the fullest.', 'independence-day(old-age).jpg'),
 (5, 4, 'Holi Celebration at Child Orphanage', '2023-03-25', '10:00:00', 'Manav Kartavya,51-B, Someshwara Bunglows 2, Opp. Star Bazar, Satellite, Ahmedabad- 380015.', 'Manav Kartavya foundation followed the same and celebrated their holi on the 5th of march with all the children in the NGO and volunteers. The event consisted of multiple activities like Phoolo ki holi, Drawing Competition, Rango Ki Holi etc. All the students along with volunteers had a good time at the Holi rangotsav.\r\n\r\nThe highlight of the event was the grand celebration of Holi, where everyone enthusiastically played with flower petals and natural colours. The sheer delight on the faces of the children was infectious, spreading smiles and pure joy throughout the entire gathering. The air was filled with music, and people danced their hearts out, making it an unforgettable experience for everyone who was fortunate enough to be there.', 'holi-child.jpg'),
-(6, 1, 'Diwali Celebration at Child Orphanage', '2022-11-03', '07:00:00', 'Gujarat State Balkanji Bari,Near Session Court,Treasury Office Compound, Lal Darwaja, Ahmedabad, Gujarat 380001', 'Like other festivals and events, the children were made to understand the origin behind the start of this Festival of Lights, it’s meaning and significance which is to move from darkness to light and spread and share the light of wisdom, love, peace and prosperity with each other to make a better society.\r\n\r\nThe children, with the help of their volunteer Didi’s very enthusiastically take part in the preparations of the festival. They put up the traditional Lantern which is self made by them, they also make beautiful and colourful rangoli  which looks like the eye catching imprint of an artist and are decorated with diyas, candles and flowers.\r\n\r\nWith the onset of darkness as soon as we all light up the diyas and candles, the whole place comes alive not only with the brightness of the diyas or string of colourful lights all around but also with the energy of the children. Sweets, candles and sparklers are distributed to them and sharing the immense joy that their face radiates is a sight to behold.\r\n\r\nTogether, everyone celebrates the occasion lighting up anar, charkhi and phuljhari with a wholesome experience as these little angels help us realize the joy of sharing, the need to be grateful and the real essence of the festival of Deepawali.', 'diwali.jpg'),
-(7, 1, 'sdfghj', '2024-09-09', '10:00:00', 'asdgfhghj', 'asdfghj', 'holi-child.jpg'),
-(8, 1, 'e2', '2023-08-08', '12:12:12', 'asdfghjk', 'sdfghj', 'contact_us.png'),
-(9, 1, 'sdfgh', '2023-04-03', '03:12:45', 'sdfg', 'aasdfgh', 'profile.png');
+(6, 1, 'Diwali Celebration at Child Orphanage', '2022-11-03', '19:00:00', 'Gujarat State Balkanji Bari,Near Session Court,Treasury Office Compound, Lal Darwaja, Ahmedabad, Gujarat 380001', 'Like other festivals and events, the children were made to understand the origin behind the start of this Festival of Lights, it’s meaning and significance which is to move from darkness to light and spread and share the light of wisdom, love, peace and prosperity with each other to make a better society.\r\n\r\nThe children, with the help of their volunteer Didi’s very enthusiastically take part in the preparations of the festival. They put up the traditional Lantern which is self made by them, they also make beautiful and colourful rangoli  which looks like the eye catching imprint of an artist and are decorated with diyas, candles and flowers.\r\n\r\nWith the onset of darkness as soon as we all light up the diyas and candles, the whole place comes alive not only with the brightness of the diyas or string of colourful lights all around but also with the energy of the children. Sweets, candles and sparklers are distributed to them and sharing the immense joy that their face radiates is a sight to behold.\r\n\r\nTogether, everyone celebrates the occasion lighting up anar, charkhi and phuljhari with a wholesome experience as these little angels help us realize the joy of sharing, the need to be grateful and the real essence of the festival of Deepawali.', 'diwali.jpg');
 
 -- --------------------------------------------------------
 
@@ -261,7 +243,7 @@ CREATE TABLE `tbl_faq` (
 --
 
 INSERT INTO `tbl_faq` (`faq_id`, `user_id`, `faq_question`, `faq_answer`) VALUES
-(2, 1, 'Can I designate how my donation is used?', 'In some cases, donors may have the option to designate their donation to specific programs or projects within our organization. We strive to accommodate donor preferences whenever possible, but please note that unrestricted donations allow us to allocate funds where they are needed most.'),
+(2, 1, 'Can I designate how my donation is  used?', 'In some cases, donors may have the option to designate their donation to specific programs or projects within our organization. We strive to accommodate donor preferences whenever possible, but please note that unrestricted donations allow us to allocate funds where they are needed most.'),
 (3, 1, 'What happens if you receive more donations than needed for a specific program or project?', 'In the event that we receive more donations than needed for a specific program or project, we may reallocate those funds to other areas of our work where they can have the greatest impact. Rest assured that every donation is used thoughtfully and responsibly to advance our mission.'),
 (4, 4, 'What steps do you take to ensure that donations are used efficiently and effectively?', 'We have robust internal processes and systems in place to ensure that donations are used efficiently and effectively to achieve maximum impact. This includes regular monitoring and evaluation of programs, financial oversight, and adherence to industry best practices in nonprofit management.'),
 (5, 5, 'Is my donation tax-deductible? ', 'Yes, your donation may be tax-deductible, depending on the tax laws in your country and the status of the organization you\'re donating to. In many countries, donations made to registered nonprofit organizations or charities are eligible for tax deductions. However, it\'s essential to verify the tax-exempt status of the organization you\'re donating to and consult with a tax professional for guidance on how your donation may impact your tax situation. Keep records of your donation, such as receipts or acknowledgment letters from the organization, to support your tax deductions.'),
@@ -300,12 +282,7 @@ INSERT INTO `tbl_feedback` (`feedback_id`, `ngo_id`, `user_id`, `feedback_detail
 (8, 8, 15, 'Its a beautiful small old age home. Must visit on your special day, and make their day special also by donating them.', 4, '2024-02-29'),
 (9, 6, 12, 'One of the best place to donate money. I came to know about this place couple years ago but so far I have a great experience. Accountant Jayeshbhai is such a great person and very down to earth, he has always helped me to donate the money specially from America. Thank you to all workers, stat safe and healthy. God bless you and your family.', 5, '2024-02-29'),
 (10, 1, 8, 'Very inspiring institute for people giving good program for extra curriculum activity through out the year,especially in vacation.', 3, '2024-02-29'),
-(11, 1, 8, 'Very inspiring institute for people giving good program for extra curriculum activity through out the year,especially in vacation.', 3, '2024-02-29'),
-(12, 2, 1, 'Best NGO they always ready to help people who need.', 4, '2024-02-29'),
-(13, 4, 3, 'gooood', 5, '2024-02-29'),
-(14, 4, 3, 'average', 2, '2024-02-29'),
-(15, 4, 3, 'srevcevderr', 5, '2024-02-29'),
-(16, 4, 3, 'r tbdftnybujbfrervt', 4, '2024-02-29');
+(12, 2, 3, 'Best NGO they always ready to help people who need.', 4, '2024-02-29');
 
 -- --------------------------------------------------------
 
@@ -325,7 +302,7 @@ CREATE TABLE `tbl_item_requirement` (
 --
 
 INSERT INTO `tbl_item_requirement` (`item_requirement_id`, `ngo_id`, `item_requirement_details`, `item_requirement_status`) VALUES
-(1, 1, 'We\'re reaching out for support to provide clothes and toys for 10 children in need. These children come from families facing economic hardship, and many of them lack basic necessities. By donating clothes and toys, you can help bring joy and comfort to these children\'s lives. Your contribution will make a tangible difference in their day-to-day well-being, ensuring they have warm clothes to wear and toys to play with. Together, we can make sure these children feel cared for and cherished. Thank you for considering supporting this cause.', 'Pending...'),
+(1, 1, 'We\'re reaching out for support to provide clothes and toys for 10 children in need.', 'Pending...'),
 (2, 2, 'Dining table and chairs..', 'Pending...'),
 (3, 3, 'Kitchen appliances : Stoves ,Refrigerator ,Toaster ,etc... ', 'Completed'),
 (4, 4, '1kg sugar,15kg wheat,5kg rice for our ngo', 'Pending...'),
@@ -362,29 +339,27 @@ CREATE TABLE `tbl_ngo` (
   `ngo_password` varchar(100) NOT NULL,
   `ngo_contact_no` bigint(13) NOT NULL,
   `ngo_address` text NOT NULL,
-  `ngo_certificate` varchar(50) NOT NULL,
   `ngo_photo` varchar(50) NOT NULL,
   `area_id` int(11) NOT NULL,
   `category_id` int(11) NOT NULL,
-  `ngo_status` int(11) NOT NULL DEFAULT 0
+  `ngo_status` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `tbl_ngo`
 --
 
-INSERT INTO `tbl_ngo` (`ngo_id`, `ngo_name`, `ngo_details`, `ngo_email`, `ngo_password`, `ngo_contact_no`, `ngo_address`, `ngo_certificate`, `ngo_photo`, `area_id`, `category_id`, `ngo_status`) VALUES
-(1, 'Gujarat State Balkanji Bari', 'We, Gujarat State Balkanji Bari, situated at Lal Darwaja, Ahmedabad, Gujarat, are a non-profit organisation with a mission to provide children and individuals from low-income communities with high-quality education, enabling them to maximize their potential and transform their lives completely. We work in the field of education by collecting funds from influential and financially well-aided people and provide a supplemental education to the needy. We are also actively engaged in the areas of rural and urban development and women empowerment through advocacy, direct program interventions and capacity building of the community to access the benefits of the state program.', 'gujaratstatebalkanjibari@gmail.com', '12234', 1276543456, 'Near Session Court,Treasury Office Compound, Lal Darwaja, Ahmedabad, Gujarat 380001', 'gujarat_state_balkanji_photo.jpg', 'gujarat_state_balkanji_certificate.jpg', 2, 1, 1),
-(2, 'Swarg Community Care', 'Swarg care facility for bedridden is a very unique care model which will help family members to provide a healthy option to keep their bedridden family member. Here we intend to recover our care recipients from their fragile bedridden condition towards an in-dependency.', 'care@swargcommunitycare.org', 'hello', 7016000760, ' Plot 128, Greenwood phase 1, Garden city road, Sardar Patel Ring Rd, near Vaishnav Devi Circle, Ognaj, Ahmedabad, Gujarat 380060', 'swarg_certificate.jpeg', 'swarg_photo.jpeg', 3, 2, 1),
-(3, 'Navjyot Andhajan Mandal', 'The Navjyot Andhajan Mandal is a non-profit organization dedicated to empowering and advocating for the rights of visually impaired individuals. Through various programs and services, they strive to enhance the quality of life for the blind by promoting education, employment opportunities, and social inclusion.', 'navjyotandhjanmandal@gmail.com', 'navjyot@andhjan', 9726884422, 'Khodiyar Chok, nr. Khodiyar Temple, Paldi Gaam, Paldi, Ahmedabad, Gujarat 380007', 'navjyot_certificate.jpg', 'navjyot_photo.jpg', 4, 3, 1),
-(4, 'Manav Kartavya', 'Manav Kartavya would like to ask you, “Have you ever wondered what kartavya a Manav shall does?” Manav Kartavya has not only wondered, but explored it to experience it! Manav has the hands to perform his kartavya by helping others. Manav has the feet to perform his kartavya by hastening to poor and needy. And Manav has the head to perform his kartavya by considering everyone as inclusive to uplift an individual from his state of neediness to a state of self-reliant.', 'friends@manavkartavya.org', 'manav@kartavya@1234', 9726168133, '51-B, Someshwara Bunglows 2, Opp. Star Bazar, Satellite, Ahmedabad- 380015.', 'manavkartavya_certificate.png', 'manav_kartavya_photo.jpg', 5, 1, 0),
-(5, 'shree ram foundation old age home', '\"shree ram foundation . old age home . Non profit ourganizan\"', 'shreeramfoundation24@gmail.com', 'shreeram12foundation', 8735040301, 'Alpha One Mall, 1. nand deep bunglow . b/h, Vastrapur, Ahmedabad, Gujarat 380054', 'shree_ram_certificate.jpeg', 'shree_ram_photo.jpeg', 6, 2, 1),
-(6, 'Jeevan Sandhya Old Age Home - Vanprasth Sewa Samaj', '\"A modest ‘home for the aged’ was stared in Ramkrishna Ashram building some sixty years back. With increasing demand to accommodate more and more ‘AGED’ people, and the necessity of having larger space, in 1978 Dr. Bachabai Nanavati donated her movable and immovable Trusts’ properties to run the home for old age people, Impressed by good work done by “Jeevan Sandhya” the Ahmedabad Municipal Corporation gave us 6000 sq. meters of land in most healthy area where we have constructed the spacious and most beautiful Building to accommodate 200 Aged people. The institution has built convenient rooms with Healthy Food, Medical Facilities, Prayer Room, Lecture Hall, Library, Physiotherapy Center, Beautiful Garden and other facilities.\"', 'jivansandhya@gmail.com', 'jivanSandhya247', 7927475521, '132 feet Ring Road, Gharda Ghar Rd, near Ankur Bus Stop, Near Kalptaru Part 1 & 2, Naranpura, Ahmedabad, Gujarat 380013', 'jivan_sandhya_certificate.jpg', 'jivan_sandhya_photo.JPG', 12, 2, 1),
-(7, 'Matoshree Vrudhashram', 'A J Charitable Trust Established in 2020 at Gujarat for the elders. This organization manage by some Trustees with the supports of whole doners who gave small donation and help make a big difference in elders lives. Also this organization done so many differents activities likes Food Donation, Blankets Donation, Stationary Donation Etc. And A J Charitable Trust manage Matoshree Vrudhashram who supports free of charge for abandoned seniors also providing all types medicines and manage health issues. This Vruddhashram running at Gujarat major cities Ahmedabad & Surat.', 'ajcharitable@gmail.com', 'motishreecharitable', 9586108786, '25 Vandana Park Society, Opp. Kadamb Hospital, Nr Bank Of India Akhabar Nagar Cross Road, Chandlodiya Rd, Nava Vadaj, Ahmedabad, Gujarat 380013', 'motishree_certificate.jpeg', 'motishree_photo.jpeg', 13, 2, 1),
-(8, 'Krishna Dham Old Age Home', 'Krishnadham Senior Living Home is formed with the main objective of providing succor and care for the old people.Do visit our Krishnadham Old Age Home.We accept Newspapers(paccti), Old Clothes, Old Vessels, New & Old Household Items and Donation Like Money, Grocery Items(haldi,mirchi,sugar), Old Furniture things, Old TV etc. for our Krishnadham Old Age Home.You can celebrate your Birthday,Marriage anniversary,Death ceremony (Thithi) or any special day of yours.You can serve food to our old age home on any special occasions', 'krishnadhamoldagehome@gmail.com', 'Krishnadham24OLDHome', 9723282541, 'Before Just, 3 Chaitanya Society Between Vastrapur Gam Bus Stand Aandh Jan Mandal IIM Road beside Kendriya Vidhalaya, Ahmedabad, Gujarat 380015', 'krishnadham_certificate.jpeg', 'krishnadham_photo.jpg', 5, 2, 0),
-(9, 'Blind People\'s Association', 'The Blind People’s Association (India) is one of the largest NGOs in India working for the entire continuum of services for all categories of Persons with Disabilities (PwDs). \r\n\r\nBPA is a multi-campus organization with 15 campuses all over Gujarat and one in Rajasthan.  It also has 13 Vision Centres and 10 Day Care Centres for Persons with Multiple Disabilities and Deafblindness in addition to the above. \r\n', 'gensecbpa@gmail.com ', 'association4blindPeople', 7926304070, '132 Ft Ring Road, Andhjan Mandal BRTS bus stop,\r\nVastrapur, Ahmedabad - 380015, Gujarat', 'krishnadham_photo.jpg', 'blind_people_as_photo.jpg', 6, 3, 0),
-(10, 'asfdgfhg', 'adsd', 'sdp.project.2024@gmail.com', '1234', 9876546789, 'gjnkm', 'xyz.jpg', 'abc.jpg', 2, 2, 0),
-(11, 'Andh Apang Kalyan Kendra', 'Andh Apang Kalyan Kendra in Ahmedabad is one of the leading businesses in the NGOS For Physically Challenged. Also known for Charitable Trusts,NGOS, NGOS For Food Donation, NGOS For Physically Challenged, NGOS For Blind, NGOS For Education, NGOS For Unemployed, Charitable Trusts For Disabled and much more. Find Address, Contact Number, Reviews & Ratings, Photos, Maps of Andh Apang Kalyan Kendra, Ahmedabad.', 'andhapangkalyankendra@gmail.com', 'AndhApangKalyna@Kendra', 7927665681, 'Near Janta Nagar, Railway, Crossing Road, Ghatlodiya, Ahmedabad, Gujarat 380061', 'navjyot_certificate.jpg', 'andh_apang_kalyan_photo.jpg', 22, 3, 0);
+INSERT INTO `tbl_ngo` (`ngo_id`, `ngo_name`, `ngo_details`, `ngo_email`, `ngo_password`, `ngo_contact_no`, `ngo_address`, `ngo_photo`, `area_id`, `category_id`, `ngo_status`) VALUES
+(1, 'Gujarat State Balkanji Bari', 'We, Gujarat State Balkanji Bari, situated at Lal Darwaja, Ahmedabad, Gujarat, are a non-profit organisation with a mission to provide children and individuals from low-income communities with high-quality education, enabling them to maximize their potential and transform their lives completely. We work in the field of education by collecting funds from influential and financially well-aided people and provide a supplemental education to the needy. We are also actively engaged in the areas of rural and urban development and women empowerment through advocacy, direct program interventions and capacity building of the community to access the benefits of the state program.', 'sdp.project.2024@gmail.com', '1234', 1276543456, 'Near Session Court,Treasury Office Compound, Lal Darwaja, Ahmedabad, Gujarat 380001', 'gujarat_state_balkanji_photo.jpg', 2, 1, 1),
+(2, 'Swarg Community Care', 'Swarg care facility for bedridden is a very unique care model which will help family members to provide a healthy option to keep their bedridden family member. Here we intend to recover our care recipients from their fragile bedridden condition towards an in-dependency.', 'mukesh2862004@gmail.com', '1234', 7016000760, ' Plot 128, Greenwood phase 1, Garden city road, Sardar Patel Ring Rd, near Vaishnav Devi Circle, Ognaj, Ahmedabad, Gujarat 380060', 'swarg_photo.jpeg', 3, 2, 1),
+(3, 'Navjyot Andhajan Mandal', 'The Navjyot Andhajan Mandal is a non-profit organization dedicated to empowering and advocating for the rights of visually impaired individuals. Through various programs and services, they strive to enhance the quality of life for the blind by promoting education, employment opportunities, and social inclusion.', 'navjyotandhjanmandal@gmail.com', 'navjyot@andhjan', 9726884422, 'Khodiyar Chok, nr. Khodiyar Temple, Paldi Gaam, Paldi, Ahmedabad, Gujarat 380007', 'navjyot_photo.jpg', 4, 3, 1),
+(4, 'Manav Kartavya', 'Manav Kartavya would like to ask you, ï¿½Have you ever wondered what kartavya a Manav shall does?ï¿½ Manav Kartavya has not only wondered, but explored it to experience it! Manav has the hands to perform his kartavya by helping others. Manav has the feet to perform his kartavya by hastening to poor and needy. And Manav has the head to perform his kartavya by considering everyone as inclusive to uplift an individual from his state of neediness to a state of self-reliant.', 'friends@manavkartavya.org', 'manav@kartavya1234', 9726168133, '51-B, Someshwara Bunglows 2, Opp. Star Bazar, Satellite, Ahmedabad- 380015.', 'manav_kartavya_photo.jpg', 5, 1, 1),
+(5, 'shree ram foundation old age home', '\"shree ram foundation . old age home . Non profit ourganizan\"', 'shreeramfoundation24@gmail.com', 'shreeram12foundation', 8735040301, 'Alpha One Mall, 1. nand deep bunglow . b/h, Vastrapur, Ahmedabad, Gujarat 380054', 'shree_ram_photo.jpeg', 6, 2, 1),
+(6, 'Jeevan Sandhya Old Age Home - Vanprasth Sewa Samaj', '\"A modest ‘home for the aged’ was stared in Ramkrishna Ashram building some sixty years back. With increasing demand to accommodate more and more ‘AGED’ people, and the necessity of having larger space, in 1978 Dr. Bachabai Nanavati donated her movable and immovable Trusts’ properties to run the home for old age people, Impressed by good work done by “Jeevan Sandhya” the Ahmedabad Municipal Corporation gave us 6000 sq. meters of land in most healthy area where we have constructed the spacious and most beautiful Building to accommodate 200 Aged people. The institution has built convenient rooms with Healthy Food, Medical Facilities, Prayer Room, Lecture Hall, Library, Physiotherapy Center, Beautiful Garden and other facilities.\"', 'jivansandhya@gmail.com', 'jivanSandhya247', 7927475521, '132 feet Ring Road, Gharda Ghar Rd, near Ankur Bus Stop, Near Kalptaru Part 1 & 2, Naranpura, Ahmedabad, Gujarat 380013', 'jivan_sandhya_photo.JPG', 12, 2, 1),
+(7, 'Matoshree Vrudhashram', 'A J Charitable Trust Established in 2020 at Gujarat for the elders. This organization manage by some Trustees with the supports of whole doners who gave small donation and help make a big difference in elders lives. Also this organization done so many differents activities likes Food Donation, Blankets Donation, Stationary Donation Etc. And A J Charitable Trust manage Matoshree Vrudhashram who supports free of charge for abandoned seniors also providing all types medicines and manage health issues. This Vruddhashram running at Gujarat major cities Ahmedabad & Surat.', 'ajcharitable@gmail.com', 'motishreecharitable', 9586108786, '25 Vandana Park Society, Opp. Kadamb Hospital, Nr Bank Of India Akhabar Nagar Cross Road, Chandlodiya Rd, Nava Vadaj, Ahmedabad, Gujarat 380013', 'motishree_photo.jpeg', 13, 2, 1),
+(8, 'Krishna Dham Old Age Home', 'Krishnadham Senior Living Home is formed with the main objective of providing succor and care for the old people.Do visit our Krishnadham Old Age Home.We accept Newspapers(paccti), Old Clothes, Old Vessels, New & Old Household Items and Donation Like Money, Grocery Items(haldi,mirchi,sugar), Old Furniture things, Old TV etc. for our Krishnadham Old Age Home.You can celebrate your Birthday,Marriage anniversary,Death ceremony (Thithi) or any special day of yours.You can serve food to our old age home on any special occasions', 'krishnadhamoldagehome@gmail.com', 'Krishnadham24OLDHome', 9723282541, 'Before Just, 3 Chaitanya Society Between Vastrapur Gam Bus Stand Aandh Jan Mandal IIM Road beside Kendriya Vidhalaya, Ahmedabad, Gujarat 380015', 'krishnadham_photo.jpg', 5, 2, 1),
+(9, 'Blind People\'s Association', 'The Blind People’s Association (India) is one of the largest NGOs in India working for the entire continuum of services for all categories of Persons with Disabilities (PwDs). \r\n\r\nBPA is a multi-campus organization with 15 campuses all over Gujarat and one in Rajasthan.  It also has 13 Vision Centres and 10 Day Care Centres for Persons with Multiple Disabilities and Deafblindness in addition to the above. \r\n', 'gensecbpa@gmail.com ', 'association4blindPeople', 7926304070, '132 Ft Ring Road, Andhjan Mandal BRTS bus stop,\r\nVastrapur, Ahmedabad - 380015, Gujarat', 'blind_people_as_photo.jpg', 6, 3, 1),
+(11, 'Andh Apang Kalyan Kendra', 'Andh Apang Kalyan Kendra in Ahmedabad is one of the leading businesses in the NGOS For Physically Challenged. Also known for Charitable Trusts,NGOS, NGOS For Food Donation, NGOS For Physically Challenged, NGOS For Blind, NGOS For Education, NGOS For Unemployed, Charitable Trusts For Disabled and much more. Find Address, Contact Number, Reviews & Ratings, Photos, Maps of Andh Apang Kalyan Kendra, Ahmedabad.', 'andhapangkalyankendra@gmail.com', 'AndhApangKalyna@Kendra', 7927665681, 'Near Janta Nagar, Railway, Crossing Road, Ghatlodiya, Ahmedabad, Gujarat 380061', 'andh_apang_kalyan_photo.jpg', 22, 3, 1);
 
 -- --------------------------------------------------------
 
@@ -412,7 +387,7 @@ CREATE TABLE `tbl_user` (
 INSERT INTO `tbl_user` (`user_id`, `user_first_name`, `user_last_name`, `user_email`, `user_password`, `user_gender`, `user_mobile_no`, `user_address`, `user_pincode`, `area_id`) VALUES
 (1, 'Laxmi', 'Prajapati', 'laxmip@gmail.com', 'laxmi1234', 'Female', 9104052877, '18,Vina Kunj Society,RRR Trivedi School Road,vejalpur,Ahmedabad', 380051, 10),
 (2, 'Drashti', 'Lil', 'sdp.project.2024@gmail.com', '123', 'Female', 9054568018, '17,Shiv Shakti Society,Opp.Uimya Dairy,Jivraj Park,Ahmedabad', 380051, 9),
-(3, 'Mukesh', 'Kumawat', 'mukeshkumawat24@gmail.com', 'mukesh@kumawat12', 'Male', 7043138974, 'B12,Himavan Appartment,near.Nandan Park,Bopal,Ahmedabad', 380058, 1),
+(3, 'Mukesh', 'Kumawat', 'mukesh2862004@gmail.com', '123', 'Male', 7043138974, 'B12,Himavan Appartment,near.Nandan Park,Bopal,Ahmedabad', 380058, 1),
 (4, 'Durga', 'Prajapati', 'durgap78@gmail.com', 'prajapati@12durga', 'Female', 8965347809, '39,Earth Bonglows,Near.Surdhara Bunglows,Prahlad Nagar,Ahmedabad', 380015, 10),
 (5, 'Jugal', 'Patel', 'patelj26@gmail.com', 'pateljugal@23', 'Male', 9586248516, 'K/8,Shree Krishna,Above Crossword Library,Mithakali Six Road,Navrangpura,Ahmedabad', 380009, 11),
 (6, 'Priya', 'Jagad', 'jagadpriya@gmail.com', 'priya7@jagad', 'Female', 9845674312, 'D-1/16, KK Nagar Rd, Manilal Nagar, Madhuvrund Society, Nirnay Nagar, Ahmedabad, Gujarat 380081', 382481, 14),
@@ -450,22 +425,16 @@ CREATE TABLE `tbl_volunteer` (
 --
 
 INSERT INTO `tbl_volunteer` (`volunteer_id`, `volunteer_first_name`, `volunteer_last_name`, `volunteer_email`, `volunteer_password`, `volunteer_gender`, `volunteer_mobile_no`, `volunteer_address`, `volunteer_photo`, `volunteer_verified`) VALUES
-(1, 'Ayushi', 'Patel', 'patelayushi@gmail.com', 'ayuship12', 'Female', 6709345609, 'B05,vidhya Appartment,Ramdev Nagar, ISRO Colony Rd, near Super Society, Satellite, Ahmedabad', 'ayushi_patel.jpg', 'No'),
-(4, 'Saloni', 'Patel', 'saloni7patel@gmail.com', 'patel34', 'Female', 9094789212, '10,Nirmal Apartment,Pritam Nagar Rd, Paldi, Ahmedabad', 'saloni_patel.jpg', 'No'),
-(5, 'Ridhhi', 'Parmar', 'ridhiparmar@gmail.com', 'parmar24ridhhi', 'Female', 9898132467, '9, Aradhana Society, Ashapura Temple Lane, Jivraj Park Vejalpur Rd, Jivraj Park, Ahmedabad', 'ridhhi_parmar.jpg', 'No'),
+(1, 'Ayushi', 'Patel', 'mukesh2862004@gmail.com', '1522', 'Female', 6709345609, 'B05,vidhya Appartment,Ramdev Nagar, ISRO Colony Rd, near Super Society, Satellite, Ahmedabad', 'ayushi_patel.jpg', 'Yes'),
+(4, 'Saloni', 'Patel', 'saloni7patel@gmail.com', 'patel34', 'Female', 9094789212, '10,Nirmal Apartment,Pritam Nagar Rd, Paldi, Ahmedabad', 'saloni_patel.jpg', 'Yes'),
+(5, 'Ridhhi', 'Parmar', 'ridhiparmar@gmail.com', 'parmar24ridhhi', 'Female', 9898132467, '9, Aradhana Society, Ashapura Temple Lane, Jivraj Park Vejalpur Rd, Jivraj Park, Ahmedabad', 'ridhhi_parmar.jpg', 'Yes'),
 (6, 'Parth', 'Shah', 'shahparth78@gmail.com', '1814', 'Male', 9870895678, 'D7, Gokuldham Apartment, opp. Rajwadu, Malav Talav, Jivraj Park, Ahmedabad', 'parth_shah.jpg', 'Yes'),
-(7, 'Ashish', 'Pawar', 'ashishpwr98@gmail.com', 'ashish@pawar34', 'Male', 9724174506, 'C04,Samarpan Tower,Ghatlodiya, Ahmedabad\r\n', 'ashish_pawar.jpg', 'No'),
+(7, 'Ashish', 'Pawar', 'ashishpwr98@gmail.com', 'ashish@pawar34', 'Male', 9724174506, 'C04,Samarpan Tower,Ghatlodiya, Ahmedabad\r\n', 'ashish_pawar.jpg', 'Yes'),
 (8, 'Mohit', 'Rao', 'rmohit45@gmail.com', 'mohitr@v12', 'Male', 8767898909, 'G2,Parishkaar II Phase II, nr. Khokhra Circle, Parishkaar-2 Phase-2, Khokhra, Ahmedabad, Gujarat 380008', 'mohit_rao.jpg', 'Yes'),
 (9, 'Mihir', 'Mistry', 'mihir2mistry@gmail.com', 'm2mmistry', 'Male', 7654678765, 'B06,Sun Rising Homes, Besides, Godrej Garden City, Jagatpur, Ahmedabad, Gujarat 382470', 'mihir.webp', 'Yes'),
 (10, 'Ayesha', 'Gandhi', 'ayeshagandhi2004@gmail.com', 'a@yeshagandhi@2004', 'Female', 6778909876, '17,PRATHAM RESIDENCY, Jigyasha Society, Vibhavari Society, Vejalpur, Ahmedabad, Gujarat 380051', 'ayesha.webp', 'Yes'),
-(11, 'Kashish', 'Dave', 'dkashish@gmail.com', 'kashishdave14235', 'Female', 7865890987, 'C08,Vaidehi Shree Hari Arjun Block-A, Ghatlodiya, Chanakyapuri, Ahmedabad, Gujarat 380061', 'kashish.png', 'No'),
-(12, 'Bhavya', 'Modi', 'modibhavya78@gmail.com', 'bhavyamodi1209', 'Male', 8745236789, 'D15,OraBella Residency,Thaltej Rd, opp. Lake, Menaka Society, Thaltej, Ahmedabad, Gujarat 380059', 'bhavya.jpeg', 'Yes'),
-(13, 'Parth', 'Dave', 'daveparth13@gmail.com', 'd@ve@1234', 'Male', 9867890987, 'xyz', 'parth_shah.jpg', 'Yes'),
-(14, 'Kiya', 'Shah', 'shahkiya@gmail.com', 'Kiya@1234shah', 'Female', 9898768909, 'abc', '', ''),
-(15, 'Piya', 'Vaghela', 'vpiya@gmail.com', 'piy@@vaghela', 'Female', 7878908767, 'pqr', '', ''),
-(16, 'abc', 'pqr', 'abcpqr@gmail.com', 'abcprwe', 'Female', 8765432134, 'asdzfxghj', 'mohit_rao.jpg', 'No'),
-(17, 'sdfghj', 'asdf', 'asdfg@gmail.com', 'asgcb132', 'Male', 8978675432, 'asdgfghjk', 'team-v2-1.jpg', ''),
-(18, 'khushbu', 'prajapati', 'khushbup@gmail.com', '1234', 'female', 8956231470, 'xyz', 'team-v3-3.jpg', '');
+(11, 'Kashish', 'Dave', 'dkashish@gmail.com', 'kashishdave14235', 'Female', 7865890987, 'C08,Vaidehi Shree Hari Arjun Block-A, Ghatlodiya, Chanakyapuri, Ahmedabad, Gujarat 380061', 'kashish.png', 'Yes'),
+(12, 'Bhavya', 'Modi', 'modibhavya78@gmail.com', 'bhavyamodi1209', 'Male', 8745236789, 'D15,OraBella Residency,Thaltej Rd, opp. Lake, Menaka Society, Thaltej, Ahmedabad, Gujarat 380059', 'bhavya.jpeg', 'No');
 
 --
 -- Indexes for dumped tables
@@ -501,12 +470,6 @@ ALTER TABLE `tbl_category`
 --
 ALTER TABLE `tbl_child`
   ADD PRIMARY KEY (`child_id`);
-
---
--- Indexes for table `tbl_contact_us`
---
-ALTER TABLE `tbl_contact_us`
-  ADD PRIMARY KEY (`contact_us_id`);
 
 --
 -- Indexes for table `tbl_donation`
@@ -585,7 +548,7 @@ ALTER TABLE `tbl_blog`
 -- AUTO_INCREMENT for table `tbl_category`
 --
 ALTER TABLE `tbl_category`
-  MODIFY `category_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `category_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `tbl_child`
@@ -594,22 +557,16 @@ ALTER TABLE `tbl_child`
   MODIFY `child_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
--- AUTO_INCREMENT for table `tbl_contact_us`
---
-ALTER TABLE `tbl_contact_us`
-  MODIFY `contact_us_id` int(11) NOT NULL AUTO_INCREMENT;
-
---
 -- AUTO_INCREMENT for table `tbl_donation`
 --
 ALTER TABLE `tbl_donation`
-  MODIFY `donation_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `donation_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `tbl_event`
 --
 ALTER TABLE `tbl_event`
-  MODIFY `event_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `event_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `tbl_faq`
@@ -621,7 +578,7 @@ ALTER TABLE `tbl_faq`
 -- AUTO_INCREMENT for table `tbl_feedback`
 --
 ALTER TABLE `tbl_feedback`
-  MODIFY `feedback_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `feedback_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `tbl_item_requirement`
@@ -633,7 +590,7 @@ ALTER TABLE `tbl_item_requirement`
 -- AUTO_INCREMENT for table `tbl_ngo`
 --
 ALTER TABLE `tbl_ngo`
-  MODIFY `ngo_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `ngo_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `tbl_user`
@@ -645,7 +602,7 @@ ALTER TABLE `tbl_user`
 -- AUTO_INCREMENT for table `tbl_volunteer`
 --
 ALTER TABLE `tbl_volunteer`
-  MODIFY `volunteer_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `volunteer_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

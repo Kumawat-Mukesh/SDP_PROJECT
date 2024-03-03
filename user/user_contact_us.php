@@ -7,6 +7,7 @@ use PHPMailer\PHPMailer\Exception;
 
 require 'vendor/autoload.php';
 require 'admin_db.php';
+
 if (isset($_POST['submit'])) {
     $user_email = $_POST['user_email'];
     $user_query = mysqli_query($connection, "select * from tbl_user where user_email = '{$user_email}'");
@@ -18,11 +19,57 @@ if (isset($_POST['submit'])) {
         $user_phone = $_POST['user_phone'];
         $user_subject = $_POST['user_subject'];
         $user_message = $_POST['user_message'];
+        // $user_pass = $user_row['user_pas']
+        // $contact_msg = "Name: " . $user_name . "<br> Subject: " . $user_subject . "<br> Message: " . $user_message;
 
-        $contact_msg = "Name: " . $user_name . "<br> Subject: " . $user_subject . "<br> Message: " . $user_message;
+        $contact_msg = " 
+
+        Dear ,$user_name <br><br>
+
+        Thank you for contacting us regarding '$user_subject'. <br><br> 
+        Your Message is: $user_message <br><br><br>
+        We have also received your contact information:<br>
+
+        &nbsp;&nbsp;&nbsp;&nbsp;Email: $user_email <br>
+        Thank you for reaching out to us. Your inquiry is important to us, and we are dedicated to providing you with the assistance you need.<br>
+        
+        Our team will review your message promptly and get back to you as soon as possible. We strive to respond to all inquiries within working days, but please understand that during peak periods, it may take a little longer.<br>
+        
+        In the meantime, if you have any urgent concerns or additional information to add, please feel free to reply to this email, and we'll prioritize your request.<br>
+        
+        Once again, thank you for contacting us. We appreciate your patience and look forward to assisting you.<br><br>
+        
+        Best regards,<br>
+        Connecting Dots.";
+
+        $admin_msg = "
+        <table><th>Inquiry about $user_subject</th>
+        
+        <tr>
+            <td>User Name</td>
+            <td>{$user_name}</td>
+        </tr>
+        <tr>
+            <td>User Email</td>
+            <td>{$user_email}</td>
+        </tr>
+        <tr>
+            <td>Subject</td>
+            <td>{$user_subject}</td>
+        </tr>
+        <tr >
+            <td>Message</td>
+            <td>{$user_message}</td>
+        </tr>
+        </table>
+        
+         ";
+
+
         //Load Composer's autoloader
         //Create an instance; passing true enables exceptions
         $mail = new PHPMailer(true);
+        $mail2 = new PHPMailer(true);
         try {
             //Server settings
             //$mail->SMTPDebug = SMTP::DEBUG_SERVER;                      //Enable verbose debug output
@@ -36,14 +83,26 @@ if (isset($_POST['submit'])) {
 
             //Recipients
             $mail->setFrom($user_email, $user_name);
+            $mail->addAddress($user_email);     //Add a recipient
+
+
+            //Content
+            $mail->isHTML(true);                                  //Set email format to HTML
+            $mail->Subject = $user_subject;
+            $mail->Body    = $contact_msg;
+            $mail->AltBody = $contact_msg;
+            $mail->send();
+
+            $mail->ClearAllRecipients();
+
+            $mail->setFrom($user_email, $user_name);
             $mail->addAddress('sdp.project.2024@gmail.com');     //Add a recipient
 
             //Content
             $mail->isHTML(true);                                  //Set email format to HTML
-            $mail->Subject = 'Contact Form';
-            $mail->Body    = $contact_msg;
-            $mail->AltBody = $contact_msg;
-
+            $mail->Subject = 'Inquery';
+            $mail->Body    = $admin_msg;
+            $mail->AltBody = $admin_msg;
             $mail->send();
             echo "<script>alert('Thank you for Contacting us!!');window.location='user_home.php'</script>";
         } catch (Exception $e) {
@@ -54,6 +113,9 @@ if (isset($_POST['submit'])) {
     }
 }
 ?>
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -100,15 +162,30 @@ if (isset($_POST['submit'])) {
     <link rel="stylesheet" href="assets/css/style.css">
     <link rel="stylesheet" href="assets/css/responsive.css">
     <!-- Favicon -->
-    <link rel="apple-touch-icon" sizes="180x180" href="assets/images/favicon/apple-touch-icon.png">
+    <!-- <link rel="apple-touch-icon" sizes="180x180" href="assets/images/favicon/apple-touch-icon.png">
     <link rel="icon" type="image/png" href="assets/images/favicon/favicon-32x32.png" sizes="32x32">
-    <link rel="icon" type="image/png" href="assets/images/favicon/favicon-16x16.png" sizes="16x16">
+    <link rel="icon" type="image/png" href="assets/images/favicon/favicon-16x16.png" sizes="16x16"> -->
 
     <!-- Fixing Internet Explorer-->
     <!--[if lt IE 9]>
         <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
         <script src="assets/js/html5shiv.js"></script>
     <![endif]-->
+    <style>
+        table,
+
+        td {
+            border: 1px solid;
+            border-style: inset;
+            padding: 50px;
+            margin: 50px;
+        }
+
+        th {
+            padding: 30px;
+            margin: 30px;
+        }
+    </style>
 
 </head>
 
@@ -241,11 +318,11 @@ if (isset($_POST['submit'])) {
                                             </div>
                                         </div>
                                     </div>
-
                                 </form>
                             </div>
                         </div>
                     </div>
+
 
                     <div class="col-xl-4">
                         <div class="sidebar-content-box">

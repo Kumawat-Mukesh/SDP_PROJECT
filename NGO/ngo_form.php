@@ -9,21 +9,16 @@ if (isset($_POST['add'])) {
   $ngo_password = $_POST['ngo_password'];
   $ngo_contact_no = $_POST['ngo_contact_no'];
   $ngo_address = $_POST['ngo_address'];
-  $ngo_certificate = $_POST['ngo_certificate'];
   $ngo_photo = $_POST['ngo_photo'];
   $area_id = $_POST['area_id'];
   $category_id = $_POST['category_id'];
 
-  $ngo_photo_name=$_FILES['ngo_photo']['name'];
-  $ngo_photo_tmp_name=$_FILES['ngo_photo']['tmp_name'];
-
-  $certificate_photo_name=$_FILES['ngo_certificate']['name'];
-  $certificate_photo_tmp_name=$_FILES['ngo_certificate']['tmp_name'];
+  $ngo_photo_name = $_FILES['ngo_photo']['name'];
+  $ngo_photo_tmp_name = $_FILES['ngo_photo']['tmp_name'];
 
 
-  $query = mysqli_query($connection, "insert into tbl_ngo(ngo_name,ngo_details,ngo_email,ngo_password,ngo_contact_no,ngo_address,ngo_certificate,ngo_photo,area_id,category_id) values('{$ngo_name}','{$ngo_details}','{$ngo_email}','{$ngo_password}','{$ngo_contact_no}','{$ngo_address}','{$certificate_photo_name}','{$ngo_photo_name}','{$area_id}','{$category_id}')");
-move_uploaded_file($ngo_photo_tmp_name,"uploads/".$ngo_photo_name);
-move_uploaded_file($certificate_photo_tmp_name,"uploads/".$certificate_photo_name);
+  $query = mysqli_query($connection, "insert into tbl_ngo(ngo_name,ngo_details,ngo_email,ngo_password,ngo_contact_no,ngo_address,ngo_photo,area_id,category_id) values('{$ngo_name}','{$ngo_details}','{$ngo_email}','{$ngo_password}','{$ngo_contact_no}','{$ngo_address}','{$ngo_photo_name}','{$area_id}','{$category_id}')");
+  move_uploaded_file($ngo_photo_tmp_name, "uploads/" . $ngo_photo_name);
 
 
   if ($query) {
@@ -57,22 +52,20 @@ move_uploaded_file($certificate_photo_tmp_name,"uploads/".$certificate_photo_nam
   <!-- Font-icon css-->
   <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
   <style>
-        .center {
-            margin: auto;
-            width: 50%;
-            padding: 10px;
-            /* vh stands for viewport height */
-        }
-
-        
-    </style>
+    .center {
+      margin: auto;
+      width: 50%;
+      padding: 10px;
+      /* vh stands for viewport height */
+    }
+  </style>
 </head>
 
 <body class="app sidebar-mini" style="background-color: #00695c;">
   <!-- Navbar-->
-  
+
   <!-- Sidebar menu-->
- 
+
   <br><br><br><br><br>
 
   <main class="center">
@@ -101,15 +94,13 @@ move_uploaded_file($certificate_photo_tmp_name,"uploads/".$certificate_photo_nam
               <label class="form-label">Category ID</label>
               <!-- <input class="form-control" type="text" placeholder="Enter category id" name="category_id" required> -->
               <?php
-                $category_query=mysqli_query($connection,"select*from tbl_category");
-                echo "<select class='form-control' name='category_id'>";
-                echo "<option value=''>Select Category</option>";
-                while($category_row=mysqli_fetch_array($category_query))
-                {
+              $category_query = mysqli_query($connection, "select*from tbl_category");
+              echo "<select class='form-control' name='category_id'>";
+              echo "<option value=''>Select Category</option>";
+              while ($category_row = mysqli_fetch_array($category_query)) {
                 echo "<option value='{$category_row['category_id']}'>{$category_row['category_name']}</option>";
-
-                }
-                echo "</select>";
+              }
+              echo "</select>";
               ?>
               <br>
 
@@ -123,27 +114,23 @@ move_uploaded_file($certificate_photo_tmp_name,"uploads/".$certificate_photo_nam
               <!-- <input class="form-control" type="text" placeholder="Enter details" name="ngo_details"> -->
               <textarea name="ngo_address" placeholder="Enter NGO address" rows=5 cols=15 class="form-control" required></textarea>
               <br>
-              <label class="form-label">Certificate</label>
-              <input class="form-control" type="file" placeholder="Upload NGO Certificate" name="ngo_certificate" required>
-              <br>
               <label class="form-label">Photo</label>
               <input class="form-control" type="file" placeholder="Upload NGO photo" name="ngo_photo" required>
               <br>
               <label class="form-label">Area ID</label>
               <!-- <input class="form-control" type="text" placeholder="Enter area id" name="area_id" required> -->
               <?php
-                $area_query=mysqli_query($connection,"select*from tbl_area");
-                echo "<select class='form-control' name='area_id'>";
-                echo "<option value=''>Select Area</option>";
-                while($area_row=mysqli_fetch_array($area_query))
-                {
+              $area_query = mysqli_query($connection, "select*from tbl_area");
+              echo "<select class='form-control' name='area_id'>";
+              echo "<option value=''>Select Area</option>";
+              while ($area_row = mysqli_fetch_array($area_query)) {
                 echo "<option value='{$area_row['area_id']}'>{$area_row['area_name']}</option>";
-
-                }
-                echo "</select>";
+              }
+              echo "</select>";
               ?>
               <br>
             </div>
+            <!-- <center><a href="ngo_login.php">Login</a></center> -->
           </form>
         </div>
       </div>
@@ -174,17 +161,17 @@ move_uploaded_file($certificate_photo_tmp_name,"uploads/".$certificate_photo_nam
     }
   </script>
   <script src="tools/jquery-3.7.1.min.js"></script>
-    <script src="tools/jquery.validate.js"></script>
-    <script>
-    $(document).ready(function(){
+  <script src="tools/jquery.validate.js"></script>
+  <script>
+    $(document).ready(function() {
       $("#ngo_form_js").validate();
-      });
-    </script>
-    <style>
-      .error{
-        color:red
-      }
-      </style>
+    });
+  </script>
+  <style>
+    .error {
+      color: red
+    }
+  </style>
 </body>
 
 </html>

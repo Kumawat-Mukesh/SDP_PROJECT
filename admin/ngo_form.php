@@ -12,22 +12,17 @@ if (isset($_POST['add'])) {
   $ngo_password = $_POST['ngo_password'];
   $ngo_contact_no = $_POST['ngo_contact_no'];
   $ngo_address = $_POST['ngo_address'];
-  $ngo_certificate = $_POST['ngo_certificate'];
   $ngo_photo = $_POST['ngo_photo'];
   $area_id = $_POST['area_id'];
   $category_id = $_POST['category_id'];
+  $ngo_status = $_POST['ngo_status'];
 
   $ngo_photo_name = $_FILES['ngo_photo']['name'];
   $ngo_photo_tmp_name = $_FILES['ngo_photo']['tmp_name'];
 
-  $certificate_photo_name = $_FILES['ngo_certificate']['name'];
-  $certificate_photo_tmp_name = $_FILES['ngo_certificate']['tmp_name'];
 
-
-  $query = mysqli_query($connection, "insert into tbl_ngo(ngo_name,ngo_details,ngo_email,ngo_password,ngo_contact_no,ngo_address,ngo_certificate,ngo_photo,area_id,category_id) values('{$ngo_name}','{$ngo_details}','{$ngo_email}','{$ngo_password}','{$ngo_contact_no}','{$ngo_address}','{$certificate_photo_name}','{$ngo_photo_name}','{$area_id}','{$category_id}')");
+  $query = mysqli_query($connection, "insert into tbl_ngo(ngo_name,ngo_details,ngo_email,ngo_password,ngo_contact_no,ngo_address,ngo_photo,area_id,category_id,ngo_status) values('{$ngo_name}','{$ngo_details}','{$ngo_email}','{$ngo_password}','{$ngo_contact_no}','{$ngo_address}','{$ngo_photo_name}','{$area_id}','{$category_id}','{$ngo_status}')");
   move_uploaded_file($ngo_photo_tmp_name, "uploads/" . $ngo_photo_name);
-  move_uploaded_file($certificate_photo_tmp_name, "uploads/" . $certificate_photo_name);
-
 
   if ($query) {
     echo "<script>alert('NGO added to the database');window.location='ngo_form.php'</script>";
@@ -105,7 +100,7 @@ if (isset($_POST['add'])) {
               <label class="form-label">Password</label>
               <input class="form-control" type="password" placeholder="Enter email password" name="ngo_password" required>
               <br>
-              <label class="form-label">Category ID</label>
+              <label class="form-label">Category Name</label>
               <!-- <input class="form-control" type="text" placeholder="Enter category id" name="category_id" required> -->
               <?php
               $category_query = mysqli_query($connection, "select*from tbl_category");
@@ -122,19 +117,16 @@ if (isset($_POST['add'])) {
             </div>
             <div class="mb-3 col-md-3">
               <label class="form-label">Contact NO.</label>
-              <input class="form-control" type="tel" maxlength="10"  onkeyup="Validate(this)" placeholder="Enter contact number" name="ngo_contact_no" required>
+              <input class="form-control" type="tel" maxlength="10" onkeyup="Validate(this)" placeholder="Enter contact number" name="ngo_contact_no" required>
               <br>
               <label class="form-label">Address</label>
               <!-- <input class="form-control" type="text" placeholder="Enter details" name="ngo_details"> -->
               <textarea name="ngo_address" placeholder="Enter NGO address" rows=5 cols=15 class="form-control" required></textarea>
               <br>
-              <label class="form-label">Certificate</label>
-              <input class="form-control" type="file" placeholder="Upload NGO Certificate" name="ngo_certificate" required>
-              <br>
               <label class="form-label">Photo</label>
               <input class="form-control" type="file" placeholder="Upload NGO photo" name="ngo_photo" required>
               <br>
-              <label class="form-label">Area ID</label>
+              <label class="form-label">Area Name</label>
               <!-- <input class="form-control" type="text" placeholder="Enter area id" name="area_id" required> -->
               <?php
               $area_query = mysqli_query($connection, "select*from tbl_area");
@@ -146,6 +138,18 @@ if (isset($_POST['add'])) {
               echo "</select>";
               ?>
               <br>
+              <label class="form-label">Verified</label>
+              <label id="ngo_status-error" class="error" for="ngo_status"></label>
+              <div class="form-check">
+                <label class="form-check-label">
+                  <input class="form-check-input" type="radio" name="ngo_status" value="1">Yes
+                </label>
+              </div>
+              <div class="form-check">
+                <label class="form-check-label">
+                  <input class="form-check-input" type="radio" name="ngo_status" value="0">No
+                </label>
+              </div>
             </div>
           </form>
         </div>
@@ -211,6 +215,9 @@ if (isset($_POST['add'])) {
           area_id: {
             required: true
           },
+          ngo_status: {
+            required: true
+          }
         },
         messages: {
 
@@ -239,6 +246,9 @@ if (isset($_POST['add'])) {
           area_id: {
             required: "Select",
           },
+          ngo_status: {
+            required: "select"
+          }
         }
       });
     });

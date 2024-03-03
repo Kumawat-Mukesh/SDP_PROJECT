@@ -39,7 +39,28 @@ if (isset($_POST["ngo_forgot_button"])) {
   if ($forgot_count == 1) {
     $otp = rand(1111, 9999);
     mysqli_query($connection, "update tbl_ngo set ngo_password = '{$otp}' where ngo_email = '{$ngo_forgot_email}'");
-    $forgot_msg = "Hi {$forgot_row['ngo_name']},<br/> your password is " . $otp . " <br/>Do not Share with anyone";
+
+
+
+    $forgot_msg = "Dear {$forgot_row['ngo_name']},<br><br>
+
+    You are receiving this email because you have requested a password reset for your account on the NGO panel.<br>
+    
+    To proceed with resetting your password, please use the following One-Time Password (OTP):<br>
+    
+    OTP: $otp<br>
+    
+    Please enter this OTP on the password reset page within the NGO panel to verify your identity and create a new password. Please don't share this OTP with any other person.<br>
+    
+    If you did not request this password reset, please disregard this email. Your account security is of utmost importance to us.<br>
+    
+    Thank you for your cooperation.<br>
+    <br>
+    Best regards,<br>
+    NGO Panel Administrator";
+
+
+
     //Load Composer's autoloader
     //Create an instance; passing true enables exceptions
     $mail = new PHPMailer(true);
@@ -60,7 +81,7 @@ if (isset($_POST["ngo_forgot_button"])) {
 
       //Content
       $mail->isHTML(true);                                  //Set email format to HTML
-      $mail->Subject = 'Forgot password';
+      $mail->Subject = 'Password Reset OTP for NGO Panel Access.';
       $mail->Body    = $forgot_msg;
       $mail->AltBody = $forgot_msg;
 

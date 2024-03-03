@@ -71,6 +71,7 @@ if (!isset($_SESSION["admin_id"])) {
                                     <th>Photo</th>
                                     <th>Area Name</th>
                                     <th>Category Name</th>
+                                    <th>Ngo Status</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -87,7 +88,7 @@ if (!isset($_SESSION["admin_id"])) {
                                         echo "<script>alert('Record not deleted from the database');window.location='ngo_information.php'</script>";
                                     }
                                 }
-                                $select = mysqli_query($connection, "select * from tbl_ngo where ngo_status='1'");
+                                $select = mysqli_query($connection, "select * from tbl_ngo");
                                 while ($ngo_row = mysqli_fetch_array($select)) {
                                     $area_query = mysqli_query($connection, "select*from tbl_area where area_id='{$ngo_row['area_id']}'");
                                     $area_row = mysqli_fetch_array($area_query);
@@ -103,10 +104,11 @@ if (!isset($_SESSION["admin_id"])) {
                                     echo "<td>{$ngo_row['ngo_contact_no']}</td>";
                                     echo "<td>{$ngo_row['ngo_address']}</td>";
 
-                                   
+
                                     echo "<td><a target='_blank' href='uploads/{$ngo_row['ngo_photo']}'><img src='uploads/{$ngo_row['ngo_photo']}' width='50'></a></td>";
                                     echo "<td>{$area_row['area_name']}</td>";
                                     echo "<td>{$category_row['category_name']}</td>";
+                                    echo "<td>{$ngo_row['ngo_status']}</td>";
                                     echo "<td>
                                     <a href='ngo_information.php?delete_id={$ngo_row['ngo_id']}' 
                                     onclick='return confirmDelete()'>

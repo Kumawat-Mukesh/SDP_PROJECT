@@ -15,7 +15,24 @@ if ($_POST) {
     if ($forgot_count == 1) {
         $otp = rand(1111, 9999);
         mysqli_query($connection, "update tbl_volunteer set volunteer_password = '{$otp}' where volunteer_email='{$volunteer_forgot_email}'");
-        $forgot_msg = "Hi {$forgot_row['volunteer_first_name']},<br/> your password is " . $otp . " <br/>Do not Share with anyone";
+
+        $forgot_msg = "
+
+        Dear {$forgot_row['volunteer_name']},<br><br>
+        
+        We've received a request to reset the password for your volunteer account. To proceed with the password reset, please use the following One-Time Password (OTP):<br>
+        
+        OTP: $otp <br>
+        Then you'll be redirected to a page where you can reset your password. Please create a new password that is strong and unique.<br>
+        
+        If you did not initiate this password reset request, please disregard this email. Your account will remain secure.<br>
+        
+        Thank you for your commitment to our cause. If you have any questions or need further assistance, please don't hesitate to contact us at sdp.project.2024@gmail.com .<br>
+        <br>
+        Best regards,<br>
+        Connecting Dots Team";
+
+
         //Load Composer's autoloader
         //Create an instance; passing true enables exceptions
         $mail = new PHPMailer(true);
@@ -36,7 +53,7 @@ if ($_POST) {
 
             //Content
             $mail->isHTML(true);                                  //Set email format to HTML
-            $mail->Subject = 'Forgot password';
+            $mail->Subject = 'Password Reset Request for Volunteer Account';
             $mail->Body    = $forgot_msg;
             $mail->AltBody = $forgot_msg;
 

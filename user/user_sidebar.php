@@ -15,6 +15,10 @@
                             <h4>About Us</h4>
                             <p>Dedicated to making a positive impact, our NGO is a beacon of compassion and change. With a mission to uplift communities, we tirelessly work towards providing essential services, education, and fostering hope. Join us in building a world where kindness knows no bounds.</p>
                         </div>
+                        <div class="content-box">
+                            <img src="ngo11.png" alt="">
+                        </div>
+
                     </div>
                 </div>
             </div>

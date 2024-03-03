@@ -61,7 +61,7 @@ $ngo_id=$_SESSION["ngo_id"];
                     <table class="table table-hover">
                         <thead>
                             <tr>
-                                <th>Name</th>
+                                <!-- <th>Name</th> -->
                                 <th>Details</th>
                                 <th>Email</th>
                                 <th>Password</th>
@@ -83,7 +83,7 @@ $ngo_id=$_SESSION["ngo_id"];
                                 $category_query = mysqli_query($connection, "select*from tbl_category where category_id='{$ngo_row['category_id']}'");
                                 $category_row = mysqli_fetch_array($category_query);
                                 echo "<tr>";
-                                echo "<td>{$ngo_row['ngo_name']}</td>";
+                                // echo "<td>{$ngo_row['ngo_name']}</td>";
                                 echo "<td>{$ngo_row['ngo_details']}</td>";
                                 echo "<td>{$ngo_row['ngo_email']}</td>";
                                 echo "<td>{$ngo_row['ngo_password']}</td>";

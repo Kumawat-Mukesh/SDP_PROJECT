@@ -14,19 +14,16 @@ if (isset($_POST['add'])) {
     $ngo_email = $_POST['ngo_email'];
     $ngo_contact_no = $_POST['ngo_contact_no'];
     $ngo_address = $_POST['ngo_address'];
-    $ngo_certificate = $_POST['ngo_certificate'];
     $ngo_photo = $_POST['ngo_photo'];
     $area_id = $_POST['area_id'];
     $category_id = $_POST['category_id'];
+    $ngo_status = $_POST['ngo_status'];
 
     $ngo_photo_name = $_FILES['ngo_photo']['name'];
     $ngo_photo_tmp_name = $_FILES['ngo_photo']['tmp_name'];
 
-    $certificate_photo_name = $_FILES['ngo_certificate']['name'];
-    $certificate_photo_tmp_name = $_FILES['ngo_certificate']['tmp_name'];
 
-
-    $query = mysqli_query($connection, "update tbl_ngo set ngo_name='{$ngo_name}',ngo_details='{$ngo_details}',ngo_email='{$ngo_email}',ngo_contact_no='{$ngo_contact_no}',ngo_address='{$ngo_address}',ngo_certificate='{$certificate_photo_name}',ngo_photo='{$ngo_photo_name}',area_id='{$area_id}',category_id='{$category_id}' where ngo_id='{$edit_id}'");
+    $query = mysqli_query($connection, "update tbl_ngo set ngo_name='{$ngo_name}',ngo_details='{$ngo_details}',ngo_email='{$ngo_email}',ngo_contact_no='{$ngo_contact_no}',ngo_address='{$ngo_address}',ngo_photo='{$ngo_photo_name}',area_id='{$area_id}',category_id='{$category_id}',ngo_status='{$ngo_status}' where ngo_id='{$edit_id}'");
     move_uploaded_file($ngo_photo_tmp_name, "uploads/" . $ngo_photo_name);
     move_uploaded_file($certificate_photo_tmp_name, "uploads/" . $certificate_photo_name);
 
@@ -107,7 +104,20 @@ if (isset($_POST['add'])) {
                             <label class="form-label">Contact NO.</label>
                             <input class="form-control" type="tel" placeholder="Enter contact number" name="ngo_contact_no" value="<?php echo $ngo_row['ngo_contact_no']; ?>" required>
                             <br>
+                            <br>
+                            <br>
 
+                            <button class="btn btn-primary" type="submit" name="add"><i class="bi bi-check-circle-fill me-2"></i>Update</button>
+                        </div>
+                        <div class="mb-3 col-md-3">
+
+                            <label class="form-label">Address</label>
+                            <!-- <input class="form-control" type="text" placeholder="Enter details" name="ngo_details"> -->
+                            <textarea name="ngo_address" placeholder="Enter NGO address" rows=5 cols=15 class="form-control" required><?php echo $ngo_row['ngo_address']; ?></textarea>
+                            <br>
+                            <label class="form-label">Photo</label>
+                            <input class="form-control" type="file" placeholder="Upload NGO photo" name="ngo_photo" required>
+                            <br>
                             <label class="form-label">Category ID</label>
                             <!-- <input class="form-control" type="text" placeholder="Enter category id" name="category_id" required> -->
                             <?php
@@ -121,21 +131,6 @@ if (isset($_POST['add'])) {
                             echo "</select>";
                             ?>
                             <br>
-
-                            <button class="btn btn-primary" type="submit" name="add"><i class="bi bi-check-circle-fill me-2"></i>Update</button>
-                        </div>
-                        <div class="mb-3 col-md-3">
-
-                            <label class="form-label">Address</label>
-                            <!-- <input class="form-control" type="text" placeholder="Enter details" name="ngo_details"> -->
-                            <textarea name="ngo_address" placeholder="Enter NGO address" rows=5 cols=15 class="form-control" required><?php echo $ngo_row['ngo_address']; ?></textarea>
-                            <br>
-                            <label class="form-label">Certificate</label>
-                            <input class="form-control" type="file" placeholder="Upload NGO Certificate" name="ngo_certificate" value="<?php echo $ngo_row['ngo_certificate']; ?>" required>
-                            <br>
-                            <label class="form-label">Photo</label>
-                            <input class="form-control" type="file" placeholder="Upload NGO photo" name="ngo_photo" required>
-                            <br>
                             <label class="form-label">Area ID</label>
                             <!-- <input class="form-control" type="text" placeholder="Enter area id" name="area_id" required> -->
                             <?php
@@ -148,6 +143,25 @@ if (isset($_POST['add'])) {
                             }
                             echo "</select>";
                             ?>
+                            <br>
+
+                            <label class="form-label">Verified</label>
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                    <input class="form-check-input" type="radio" name="ngo_status" <?php if ($ngo_row['ngo_status'] == 1) {
+                                                                                                        echo "checked";
+                                                                                                    }
+                                                                                                    ?> value="1">Yes
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                    <input class="form-check-input" type="radio" name="ngo_status" <?php if ($ngo_row['ngo_status'] == 0) {
+                                                                                                        echo "checked";
+                                                                                                    }
+                                                                                                    ?> value="0">No
+                                </label>
+                            </div>
                             <br>
                         </div>
                     </form>
