@@ -69,7 +69,6 @@ if (isset($_POST['submit'])) {
         //Load Composer's autoloader
         //Create an instance; passing true enables exceptions
         $mail = new PHPMailer(true);
-        $mail2 = new PHPMailer(true);
         try {
             //Server settings
             //$mail->SMTPDebug = SMTP::DEBUG_SERVER;                      //Enable verbose debug output
@@ -100,7 +99,7 @@ if (isset($_POST['submit'])) {
 
             //Content
             $mail->isHTML(true);                                  //Set email format to HTML
-            $mail->Subject = 'Inquery';
+            $mail->Subject = 'Inquiry';
             $mail->Body    = $admin_msg;
             $mail->AltBody = $admin_msg;
             $mail->send();

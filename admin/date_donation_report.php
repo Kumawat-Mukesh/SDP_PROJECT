@@ -168,7 +168,6 @@ if (!isset($_SESSION["admin_id"])) {
 
                         <?php
 
-
                         while ($donation_row = mysqli_fetch_array($select)) {
                             $ngo_query = mysqli_query($connection, "select*from tbl_ngo where ngo_id='{$donation_row['ngo_id']}'");
                             $ngo_row = mysqli_fetch_array($ngo_query);

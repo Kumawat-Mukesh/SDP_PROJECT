@@ -178,7 +178,7 @@ if (!isset($_SESSION["admin_id"])) {
       <div class="col-md-12">
         <div class="tile">
           <div class="tile-body">
-          <h3 class="tile-title">User Information</h3>
+            <h3 class="tile-title">User Information</h3>
             <table class="table table-hover table-bordered" id="sampleTable2">
               <thead>
                 <tr>
@@ -251,7 +251,7 @@ if (!isset($_SESSION["admin_id"])) {
         ],
         datasets: [{
           label: 'Number of ngo:',
-          data: [250, 100, 100],
+          data: [25, 1, 10],
           backgroundColor: [
             '#EFCC00',
             '#5AD3D1',

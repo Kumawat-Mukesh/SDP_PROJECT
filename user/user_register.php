@@ -142,7 +142,7 @@ if ($_POST) {
                                                 <input type="text" name="user_last_name" value="" placeholder="Enter Your Last Name" required>
                                             </div>
                                             <div class="input-box">
-                                                <input type="text" name="user_mobile_no" value="" placeholder="Enter Your Phone Number" required>
+                                                <input type="text" name="user_mobile_no" maxlength="10" value="" placeholder="Enter Your Phone Number" required>
                                             </div>
                                             <div class="input-box">
                                                 <textarea rows="10" cols="20" name="user_address" placeholder="Enter Your Address" required=""></textarea>
@@ -245,11 +245,11 @@ if ($_POST) {
 
                     user_first_name: {
                         required: true,
-                        minlength: 3
+                        minlength: 2
                     },
                     user_last_name: {
                         required: true,
-                        minlength: 3
+                        minlength: 2
                     },
                     user_mobile_no: {
                         required: true,
@@ -269,7 +269,6 @@ if ($_POST) {
                         required: true,
                         minlength: 6
                     },
-                    file: "required",
                     area_id: {
                         required: true
                     },
@@ -278,11 +277,11 @@ if ($_POST) {
 
                     user_first_name: {
                         required: "Please Enter Name",
-                        minlength: "Your name must consist of at least 3 characters"
+                        minlength: "Your name must consist of at least 2 characters"
                     },
                     user_last_name: {
                         required: "Please Enter Name",
-                        minlength: "Your name must consist of at least 3 characters"
+                        minlength: "Your name must consist of at least 2 characters"
                     },
                     user_mobile_no: {
                         required: "Please Enter Your Mobile no.",

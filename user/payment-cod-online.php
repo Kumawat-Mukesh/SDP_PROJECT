@@ -71,8 +71,8 @@ if (isset($_POST['payment_now'])) {
                             <div class="tab-pane fade" id="vert-tabs-settings" role="tabpanel" aria-labelledby="vert-tabs-settings-tab" style="padding: 20px;">
                                 <center>
                                     <form name="myForm2" id="myForm2" method="POST" action="">
-                                        <p><b>Payment Amount :</b>Rs.<?php echo $_POST['amount'] ?> <br />
-                                            <input type="hidden" name="amount" value="<?php echo $_POST['amount'] ?>">
+                                        <p><b>Payment Amount :</b>Rs.<?php echo $_POST['amount']; ?> <br />
+                                            <input type="hidden" name="amount" value="<?php echo $_POST['amount']; ?>">
                                             <img src="https://miro.medium.com/max/1168/1*X4FqGngbIt9AxuRlSaAFJw.png" style="width: 200px;">
                                         <p>UPI Id: abc@icici</p>
                                         <input hidden name="payment_method" value="UPI" hidden>
@@ -80,7 +80,6 @@ if (isset($_POST['payment_now'])) {
                                         <button class="btn btn-primary form-control" type="submit" name="payment_now">Click Here After Pay</button>
                                     </form>
                                 </center>
-
                             </div>
                             <div class="tab-pane fade" id="vert-tabs-profile" role="tabpanel" aria-labelledby="vert-tabs-profile-tab">
                                 <form name="myForm3" id="myForm3" method="POST" action="">

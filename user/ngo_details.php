@@ -249,7 +249,6 @@ if ($_POST) {
                             ?>
 
                                 <section class="mission-vision-area">
-
                                     <div class="container">
                                         <div class="row">
                                             <div class="col-xl-12">
@@ -294,7 +293,6 @@ if ($_POST) {
                                                                                     while ($redata = mysqli_fetch_array($csq)) {
                                                                                         echo "<option value='{$redata["item_requirement_id"]}'>{$redata['item_requirement_details']}</option>";
                                                                                     }
-
                                                                                     echo "</select>";
                                                                                     ?>
 
@@ -337,10 +335,7 @@ if ($_POST) {
                                                                                     <div class="bottom-box">
                                                                                         <div class="btns">
                                                                                             <input class="btn-one" type="submit" value="Donate Now" />
-                                                                                            <!-- <a class="btn-one" target="_blank" rel="nofollow">
-                                                                                                <span class="txt"><i class="arrow1 fa fa-check-circle"></i>Donate
-                                                                                                    Now</span>
-                                                                                            </a> -->
+                                                                                           
                                                                                         </div>
                                                                                     </div>
                                                                                 </div>
@@ -429,7 +424,7 @@ if ($_POST) {
                                     <div class="row">
                                         <div class="col-md-8">
                                             <div class="input-box">
-                                                <textarea name="details" placeholder="Enter Review" required></textarea>
+                                                <textarea name="details" placeholder="Enter Review"></textarea>
                                                 <div class="icon"><span class="fa fa-pencil"></span></div>
                                             </div>
                                         </div>

@@ -184,7 +184,7 @@ require './admin_db.php';
                         <!--Start Single Event Style2-->
                         <div class="col-xl-4 col-lg-6 col-md-6">
                             <div class="single-event-style1 single-event-style2">
-                                <div class="single-event-style2_bg" style="background-image: url('/project/NGO/uploads/<?php echo $event_row['event_photo']; ?>'">
+                                <div class="single-event-style2_bg" style="background-image: url('/project/admin/uploads/<?php echo $event_row['event_photo']; ?>'">
                                 </div>
                                 <div class="static-content">
                                     <div class="date-box">
@@ -211,10 +211,7 @@ require './admin_db.php';
                                     <div class="title">
                                         <h2><a href=''><?php echo $event_row['event_title']; ?></a></h2>
                                     </div>
-                                    <!-- <div class="inner-text">
-                                    <p>Nostrud tem exrcitation duis laboris nisi ut aliquip sed duis aute cupidata con
-                                        proident sunt culpa.</p>
-                                </div> -->
+                                   
                                     <div class="border-box"></div>
                                     <div class="event-time">
                                         <div class="icon">
